@@ -45,6 +45,10 @@ private:
 	// Right Motion Controller
 	UMotionControllerComponent* MCRight;
 
+	// Left GripperBase
+	UPROPERTY(EditAnywhere, Category = "Gripper")
+		UStaticMeshComponent* GBLeft;
+
 
 	// Right GripperBase
 	UPROPERTY(EditAnywhere, Category = "Gripper")

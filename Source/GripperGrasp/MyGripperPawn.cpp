@@ -37,14 +37,15 @@ AMyGripperPawn::AMyGripperPawn()
 	MCRight->MotionSource = FXRMotionControllerBase::RightHandSourceId;
 	MCRight->SetupAttachment(MCRoot);
 
+	
 	//Create Left GripperBase Component
-	GBRight = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GripperBaseLeft"));
-	GBRight->SetupAttachment(MCLeft);
+	GBLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GripperBaseLeft"));
+	GBLeft->SetupAttachment(MCLeft);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>GBLeftAsset(TEXT("/Game/Models/Gripper/GripperBase/SM_GripperBase.SM_GripperBase"));
 	if (GBLeftAsset.Succeeded())
 	{
-		GBRight->SetStaticMesh(GBLeftAsset.Object);
-		GBRight->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+		GBLeft->SetStaticMesh(GBLeftAsset.Object);
+		GBLeft->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	}
 
 	//Create Right GripperBase Component
@@ -54,20 +55,24 @@ AMyGripperPawn::AMyGripperPawn()
 	if (GBRightAsset.Succeeded())
 	{
 		GBRight->SetStaticMesh(GBRightAsset.Object);
-		GBRight->SetRelativeLocation(FVector(90.0f, 0.0f, 0.0f));
-		GBRight->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f));
+		//GBRight->SetRelativeLocation(FVector(90.0f, 0.0f, 0.0f));
+		//GBRight->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f));
+		GBRight->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	}
 
 	//Create Right GripperFingerl Component
 	GFRightl = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GripperFingerRightl"));
 	GFRightl->SetupAttachment(MCRight);
 	GFRightl->SetSimulatePhysics(true);
+	
 	GFRightl->BodyInstance.bLockXRotation = true;
 	GFRightl->BodyInstance.bLockYRotation = true;
 	GFRightl->BodyInstance.bLockZRotation = true;
+	
+	
 	GFRightl->SetEnableGravity(false);
 	GFRightl->SetCollisionProfileName(TEXT("BlockAll"));
-	GFRightl_ORL = FVector(90.0f, 7.0f, -5.2f);
+	GFRightl_ORL = FVector(0.0f, 7.0f, -5.2f);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>GFRightlAsset(TEXT("/Game/Models/Gripper/GripperFinger/GripperFingerLeft/SM_GripperFingerLeft.SM_GripperFingerLeft"));
 	if (GFRightlAsset.Succeeded())
 	{
@@ -86,7 +91,7 @@ AMyGripperPawn::AMyGripperPawn()
 	GFRightr->BodyInstance.bLockZRotation = true;
 	GFRightr->SetEnableGravity(false);
 	GFRightr->SetCollisionProfileName(TEXT("BlockAll"));
-	GFRightr_ORL = FVector(90.0f, 7.0f, 7.2f);
+	GFRightr_ORL = FVector(0.0f, 7.0f, 7.2f);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>GFRightrAsset(TEXT("/Game/Models/Gripper/GripperFinger/GripperFingerRight/SM_GripperFingerRight.SM_GripperFingerRight"));
 	if (GFRightrAsset.Succeeded())
 	{
@@ -94,7 +99,7 @@ AMyGripperPawn::AMyGripperPawn()
 		GFRightr->SetRelativeLocation(GFRightr_ORL);
 		GFRightr->SetRelativeRotation(FRotator(270.0f, 0.0f, 0.0f));
 	}
-
+   
 }
 
 // Called when the game starts or when spawned
@@ -110,6 +115,7 @@ void AMyGripperPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	//UE_LOG(LogTemp, Warning, TEXT("Add force to GripperFingerLeft is %f"),Force );
 
+	
 	// Set GripperFingerLeft back to position when no force
 	if (Force == 0)
 	{
