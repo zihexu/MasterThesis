@@ -16,7 +16,7 @@ ARobotView::ARobotView()
 
 	// Possess player automatically
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
-
+	bVisualizeMCMeshes = true;
 	//Create Root Component
 	MCRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = MCRoot;
@@ -36,12 +36,24 @@ ARobotView::ARobotView()
 	MCRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MCRight"));
 	MCRight->MotionSource = FXRMotionControllerBase::RightHandSourceId;
 	MCRight->SetupAttachment(MCRoot);
+
+	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
+	TriggerBox->SetupAttachment(VRCamera);
+
 }
 
 // Called when the game starts or when spawned
 void ARobotView::BeginPlay()
 {
 	Super::BeginPlay();
+	IHeadMountedDisplay* HMD = GEngine->XRSystem.IsValid() ? GEngine->XRSystem->GetHMDDevice() : nullptr;
+
+	if (HMD)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("found HMD here"));
+		HMD->SetClippingPlanes(NearClippingPlane, FarClippingPlane);
+	}
+
 	
 }
 
@@ -50,7 +62,7 @@ void ARobotView::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	SetClippingPlanes(1.0, 100.0);
+	
 }
 
 // Called to bind functionality to input

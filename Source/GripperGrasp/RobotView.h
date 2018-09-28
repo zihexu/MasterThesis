@@ -8,6 +8,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMeshActor.h"
 #include "HeadMountedDisplay/Public/MotionControllerComponent.h"
+#include "Components/BoxComponent.h"
 #include "RobotView.generated.h"
 
 UCLASS()
@@ -44,13 +45,19 @@ private:
 	// Right Motion Controller
 	UMotionControllerComponent* MCRight;
 
+	// Display MC controller mesh
+	UPROPERTY(EditAnywhere, Category = "MC", DisplayName = "Visualize MC Meshes")
+	bool bVisualizeMCMeshes;
+
 	UPROPERTY(EditAnywhere, Category = "HMD")
 	float NearClippingPlane;
 
 	UPROPERTY(EditAnywhere, Category = "HMD")
 	float FarClippingPlane;
 
-	UFUNCTION()
-	virtual void SetClippingPlanes(float NCP, float FCP) {}
+	UPROPERTY(EditAnywhere, Category = "TriggerBox")
+	UBoxComponent* TriggerBox;
+
+	
 	
 };
