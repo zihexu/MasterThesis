@@ -1,11 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
+
 #include "RobotView.h"
 #include "CoreUObject/Public/UObject/ConstructorHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "XRMotionControllerBase.h"
 #include "IHeadMountedDisplay.h"
 #include "IXRTrackingSystem.h"
+#include "HeadMountedDisplayFunctionLibrary.h"
+
 
 
 // Sets default values
@@ -39,6 +43,10 @@ ARobotView::ARobotView()
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetupAttachment(VRCamera);
+	//TriggerBox->bGenerateOverlapEvents = true;
+	//Register Events
+	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnOverlapBegin);
+	TriggerBox->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnOverlapEnd);
 
 }
 
@@ -46,11 +54,15 @@ ARobotView::ARobotView()
 void ARobotView::BeginPlay()
 {
 	Super::BeginPlay();
+
+
+
 	IHeadMountedDisplay* HMD = GEngine->XRSystem.IsValid() ? GEngine->XRSystem->GetHMDDevice() : nullptr;
 
 	if (HMD)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("found HMD here"));
+		HMD->EnableHMD(true);
+		//UE_LOG(LogTemp, Warning, TEXT("found HMD here"));
 		HMD->SetClippingPlanes(NearClippingPlane, FarClippingPlane);
 	}
 
@@ -61,7 +73,6 @@ void ARobotView::BeginPlay()
 void ARobotView::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 	
 }
 
@@ -71,6 +82,26 @@ void ARobotView::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+
+void ARobotView::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	
+	// check if Actors do not equal nullptr and that 
+	if (OtherActor&&OtherComp) {
+		UE_LOG(LogTemp, Warning, TEXT("Overlap Begin"));
+		//printFString("Overlapped Actor = %s", *OverlappedComp->GetName());
+	}
+}
+
+void ARobotView::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor&&OtherComp ) {
+
+		//printFString("%s has left the Trigger Box", *OtherActor->GetName());
+	}
+}
+
+
 
 
 

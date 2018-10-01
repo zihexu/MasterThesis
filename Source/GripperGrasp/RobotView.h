@@ -35,14 +35,27 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "MC")
 	UCameraComponent* VRCamera;
 
+	UPROPERTY(EditAnywhere, Category = "TriggerBox")
+		UBoxComponent* TriggerBox;
+
+	// declare overlap begin function
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// declare overlap end function
+	UFUNCTION()
+		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 private:
 	// MC Root
 	USceneComponent * MCRoot;
 
 	// Left Motion Controller
+	UPROPERTY(EditAnywhere, Category = "MC")
 	UMotionControllerComponent* MCLeft;
 
 	// Right Motion Controller
+	UPROPERTY(EditAnywhere, Category = "MC")
 	UMotionControllerComponent* MCRight;
 
 	// Display MC controller mesh
@@ -55,8 +68,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "HMD")
 	float FarClippingPlane;
 
-	UPROPERTY(EditAnywhere, Category = "TriggerBox")
-	UBoxComponent* TriggerBox;
+
+
+	
 
 	
 	
