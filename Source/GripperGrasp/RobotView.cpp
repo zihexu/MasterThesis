@@ -43,6 +43,7 @@ ARobotView::ARobotView()
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetupAttachment(VRCamera);
+	TriggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	//TriggerBox->bGenerateOverlapEvents = true;
 	//Register Events
 	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnOverlapBegin);
