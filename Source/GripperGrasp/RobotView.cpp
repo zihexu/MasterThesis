@@ -25,10 +25,14 @@ ARobotView::ARobotView()
 	MCRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = MCRoot;
 
+	//Create Camera RootComponent
+	CameraRoot = CreateDefaultSubobject<USceneComponent>(TEXT("CameraRootComponent"));
+	CameraRoot->SetupAttachment(MCRoot);
+
+
 	// Create camera component
 	VRCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("VRCamera"));
-	
-	VRCamera->SetupAttachment(MCRoot);
+	VRCamera->SetupAttachment(CameraRoot);
 
 
 	// Create the left motion controller
@@ -42,7 +46,7 @@ ARobotView::ARobotView()
 	MCRight->SetupAttachment(MCRoot);
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
-	TriggerBox->SetupAttachment(VRCamera);
+	TriggerBox->SetupAttachment(CameraRoot);
 	TriggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	//TriggerBox->bGenerateOverlapEvents = true;
 	//Register Events
@@ -56,16 +60,17 @@ void ARobotView::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-
+	UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor "));
+/*
 	IHeadMountedDisplay* HMD = GEngine->XRSystem.IsValid() ? GEngine->XRSystem->GetHMDDevice() : nullptr;
-
 	if (HMD)
 	{
 		HMD->EnableHMD(true);
 		//UE_LOG(LogTemp, Warning, TEXT("found HMD here"));
 		HMD->SetClippingPlanes(NearClippingPlane, FarClippingPlane);
 	}
+*/
+
 
 	
 }
@@ -88,16 +93,16 @@ void ARobotView::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 {
 	
 	// check if Actors do not equal nullptr and that 
-	if (OtherActor&&OtherComp) {
-		UE_LOG(LogTemp, Warning, TEXT("Overlap Begin"));
-		//printFString("Overlapped Actor = %s", *OverlappedComp->GetName());
+	if (OtherActor!=nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherComp->GetName());
+		
 	}
 }
 
 void ARobotView::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
 	if (OtherActor&&OtherComp ) {
-
+		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left = %s"), *OtherComp->GetName());
 		//printFString("%s has left the Trigger Box", *OtherActor->GetName());
 	}
 }

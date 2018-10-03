@@ -50,6 +50,9 @@ private:
 	// MC Root
 	USceneComponent * MCRoot;
 
+	// MC Root
+	USceneComponent * CameraRoot;
+
 	// Left Motion Controller
 	UPROPERTY(EditAnywhere, Category = "MC")
 	UMotionControllerComponent* MCLeft;
