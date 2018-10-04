@@ -9,6 +9,10 @@
 #include "IHeadMountedDisplay.h"
 #include "IXRTrackingSystem.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
+#include "Haptics/HapticFeedbackEffect_Base.h"
+#include "InputCoreTypes.h"
+#include "Public/EngineUtils.h"
+
 
 
 
@@ -46,12 +50,39 @@ ARobotView::ARobotView()
 	MCRight->SetupAttachment(MCRoot);
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
-	TriggerBox->SetupAttachment(CameraRoot);
+	TriggerBox->SetupAttachment(VRCamera);
 	TriggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	//TriggerBox->bGenerateOverlapEvents = true;
 	//Register Events
 	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnOverlapBegin);
 	TriggerBox->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnOverlapEnd);
+
+	//Create Left GripperBase Component
+	GBLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GripperBaseLeft"));
+	GBLeft->SetupAttachment(MCLeft);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>GBLeftAsset(TEXT("/Game/Models/Gripper/GripperBase/SM_GripperBase.SM_GripperBase"));
+	if (GBLeftAsset.Succeeded())
+	{
+		GBLeft->SetStaticMesh(GBLeftAsset.Object);
+		GBLeft->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+	}
+
+	//Create Right GripperBase Component
+	GBRight = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GripperBaseRight"));
+	GBRight->SetupAttachment(MCRight);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>GBRightAsset(TEXT("/Game/Models/Gripper/GripperBase/SM_GripperBase.SM_GripperBase"));
+	if (GBRightAsset.Succeeded())
+	{
+		GBRight->SetStaticMesh(GBRightAsset.Object);
+		//GBRight->SetRelativeLocation(FVector(90.0f, 0.0f, 0.0f));
+		//GBRight->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f));
+		GBRight->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+	}
+
+	ConstructorHelpers::FObjectFinder<UHapticFeedbackEffect_Base> hapticFeedbackFinder(TEXT("/Game/HapticFeedback/HapticFeedback.HapticFeedback"));
+	if(hapticFeedbackFinder.Succeeded())
+		UE_LOG(LogTemp, Warning, TEXT("find object"));
+	mHapticFeedback = hapticFeedbackFinder.Object;
 
 }
 
@@ -60,7 +91,18 @@ void ARobotView::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor "));
+	//Iterate all actors and disable the visability of the moving objects
+	for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		//AStaticMeshActor *Mesh = *ActorItr;
+		if (ActorItr->IsRootComponentMovable())
+		{
+			ActorItr->SetActorHiddenInGame(true);
+		}
+			
+	}
+
+
 /*
 	IHeadMountedDisplay* HMD = GEngine->XRSystem.IsValid() ? GEngine->XRSystem->GetHMDDevice() : nullptr;
 	if (HMD)
@@ -79,6 +121,11 @@ void ARobotView::BeginPlay()
 void ARobotView::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (bControllerVibrate)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("start vibrate"));
+		PlayHapticFeedback();
+	}
 	
 }
 
@@ -93,18 +140,29 @@ void ARobotView::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 {
 	
 	// check if Actors do not equal nullptr and that 
-	if (OtherActor!=nullptr) {
+	if (OtherActor != nullptr)
+	{
+		if (OtherComp->GetName().Contains(FString("GripperBase")))
+		{
+			bControllerVibrate = false;
 		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherComp->GetName());
-		
+		}
 	}
 }
 
 void ARobotView::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	if (OtherActor&&OtherComp ) {
-		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left = %s"), *OtherComp->GetName());
-		//printFString("%s has left the Trigger Box", *OtherActor->GetName());
+	if (OtherComp->GetName().Contains(FString("GripperBase")))
+	{
+		bControllerVibrate = true;
+		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left= %s"), *OtherComp->GetName());
 	}
+}
+
+void ARobotView::PlayHapticFeedback()
+{
+	
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayHapticEffect(mHapticFeedback, EControllerHand::Left);
 }
 
 

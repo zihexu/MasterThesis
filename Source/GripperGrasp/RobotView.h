@@ -31,12 +31,43 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// MC Root
+	USceneComponent * MCRoot;
+
+	// MC Root
+	USceneComponent * CameraRoot;
+
+	// Left Motion Controller
+	UPROPERTY(EditAnywhere, Category = "MC")
+		UMotionControllerComponent* MCLeft;
+
+	// Right Motion Controller
+	UPROPERTY(EditAnywhere, Category = "MC")
+		UMotionControllerComponent* MCRight;
+
+	// Display MC controller mesh
+	UPROPERTY(EditAnywhere, Category = "MC", DisplayName = "Visualize MC Meshes")
+		bool bVisualizeMCMeshes;
+
+
 	// VR Camera
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "MC")
 	UCameraComponent* VRCamera;
 
 	UPROPERTY(EditAnywhere, Category = "TriggerBox")
 		UBoxComponent* TriggerBox;
+
+	// Left GripperBase
+	UPROPERTY(EditAnywhere, Category = "Gripper")
+		UStaticMeshComponent* GBLeft;
+
+
+	// Right GripperBase
+	UPROPERTY(EditAnywhere, Category = "Gripper")
+		UStaticMeshComponent* GBRight;
+
+	UPROPERTY(EditAnywhere)
+		UHapticFeedbackEffect_Base* mHapticFeedback;
 
 	// declare overlap begin function
 	UFUNCTION()
@@ -46,30 +77,19 @@ public:
 	UFUNCTION()
 		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	UFUNCTION()
+		void PlayHapticFeedback();
+
 private:
-	// MC Root
-	USceneComponent * MCRoot;
-
-	// MC Root
-	USceneComponent * CameraRoot;
-
-	// Left Motion Controller
-	UPROPERTY(EditAnywhere, Category = "MC")
-	UMotionControllerComponent* MCLeft;
-
-	// Right Motion Controller
-	UPROPERTY(EditAnywhere, Category = "MC")
-	UMotionControllerComponent* MCRight;
-
-	// Display MC controller mesh
-	UPROPERTY(EditAnywhere, Category = "MC", DisplayName = "Visualize MC Meshes")
-	bool bVisualizeMCMeshes;
-
+	
 	UPROPERTY(EditAnywhere, Category = "HMD")
 	float NearClippingPlane;
 
 	UPROPERTY(EditAnywhere, Category = "HMD")
 	float FarClippingPlane;
+
+	UPROPERTY(EditAnywhere, Category = "HMD")
+		float bControllerVibrate;
 
 
 
