@@ -9,6 +9,7 @@
 #include "Engine/StaticMeshActor.h"
 #include "HeadMountedDisplay/Public/MotionControllerComponent.h"
 #include "Components/BoxComponent.h"
+#include "SpawnActor.h"
 #include "RobotView.generated.h"
 
 UCLASS()
@@ -54,6 +55,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "MC")
 	UCameraComponent* VRCamera;
 
+	// Trigger Box 
 	UPROPERTY(EditAnywhere, Category = "TriggerBox")
 		UBoxComponent* TriggerBox;
 
@@ -69,16 +71,27 @@ public:
 	UPROPERTY(EditAnywhere)
 		UHapticFeedbackEffect_Base* mHapticFeedback;
 
-	// declare overlap begin function
+	// Declare overlap begin function
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	// declare overlap end function
+	// Declare overlap end function
 	UFUNCTION()
 		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UFUNCTION()
 		void PlayHapticFeedback();
+
+	// Left trigger pressed
+	UFUNCTION()
+		virtual void MotionControlLeftTriggerPressed();
+
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<ASpawnActor> ActorToSpawn;
+
+	UPROPERTY(EditAnywhere)
+		UForceFeedbackEffect* ForceFeedbackEffect;
+
 
 private:
 	

@@ -12,6 +12,11 @@
 #include "Haptics/HapticFeedbackEffect_Base.h"
 #include "InputCoreTypes.h"
 #include "Public/EngineUtils.h"
+#include "Classes/Kismet/KismetMathLibrary.h"
+#include "GameFramework/PlayerController.h"
+#include "GameFramework/ForceFeedbackEffect.h"
+#include "Engine/World.h"
+
 
 
 
@@ -78,11 +83,12 @@ ARobotView::ARobotView()
 		//GBRight->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f));
 		GBRight->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	}
-
+	/*
 	ConstructorHelpers::FObjectFinder<UHapticFeedbackEffect_Base> hapticFeedbackFinder(TEXT("/Game/HapticFeedback/HapticFeedback.HapticFeedback"));
 	if(hapticFeedbackFinder.Succeeded())
 		UE_LOG(LogTemp, Warning, TEXT("find object"));
 	mHapticFeedback = hapticFeedbackFinder.Object;
+	*/
 
 }
 
@@ -97,7 +103,8 @@ void ARobotView::BeginPlay()
 		//AStaticMeshActor *Mesh = *ActorItr;
 		if (ActorItr->IsRootComponentMovable())
 		{
-			ActorItr->SetActorHiddenInGame(true);
+			ActorItr->SetActorHiddenInGame(false);
+			ActorItr->GetStaticMeshComponent()->SetHiddenInGame(true);
 		}
 			
 	}
@@ -124,8 +131,16 @@ void ARobotView::Tick(float DeltaTime)
 	if (bControllerVibrate)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("start vibrate"));
+		
+	}
+
+	APlayerController * MyPc = Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (MyPc)
+	{
+		//MyPc->ClientPlayForceFeedback(ForceFeedbackEffect, false, false, NAME_None);
 		PlayHapticFeedback();
 	}
+
 	
 }
 
@@ -133,13 +148,13 @@ void ARobotView::Tick(float DeltaTime)
 void ARobotView::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	// Motion Controller input binding
+	InputComponent->BindAction("LeftTriggerPressed", EInputEvent::IE_Pressed, this, &ARobotView::MotionControlLeftTriggerPressed);
 
 }
 
 void ARobotView::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	
-	// check if Actors do not equal nullptr and that 
 	if (OtherActor != nullptr)
 	{
 		if (OtherComp->GetName().Contains(FString("GripperBase")))
@@ -161,8 +176,57 @@ void ARobotView::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * Oth
 
 void ARobotView::PlayHapticFeedback()
 {
-	
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayHapticEffect(mHapticFeedback, EControllerHand::Left);
+}
+
+void ARobotView::MotionControlLeftTriggerPressed()
+{
+	
+	// Find all movable objects
+	for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		AStaticMeshActor* Mesh = Cast<AStaticMeshActor>(*ActorItr);
+		if (ActorItr->IsRootComponentMovable())
+		{
+			// If objects are inside the viewport
+
+		// for each, generate a fake mesh without collision and physics at a random error position
+			if (*ActorItr != NULL)
+			{
+				UWorld* const World = GetWorld();
+				if (World)
+				{
+					// Set the spawn parameters
+					FActorSpawnParameters SpawnParams;
+					//SpawnParams.Template = Mesh;
+					SpawnParams.Owner = this;
+					SpawnParams.Instigator = Instigator;				
+					// The random error location to spawn  + FMath::VRand() * 5
+					FVector SpawnLocation = ActorItr->GetActorLocation() + FMath::VRand()*5;
+					// The rotation to spawn
+					FRotator SpawnRotation = ActorItr->GetActorRotation();
+					// Spawn the objects
+					ASpawnActor* SpawnActor = World->SpawnActor<ASpawnActor>(ActorToSpawn, SpawnLocation, SpawnRotation,  SpawnParams);
+					//SpawnActor->SetActorEnableCollision(false);
+					//SpawnActor->SetActorHiddenInGame(false);
+					//SpawnActor->GetStaticMeshComponent()->SetHiddenInGame(false);
+					//SpawnActor->SetMobility(EComponentMobility::Movable);
+					//SpawnActor->GetStaticMeshComponent()->SetStaticMesh(ActorItr->GetStaticMeshComponent()->GetStaticMesh());
+					//UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"),*SpawnActor->GetStaticMeshComponent()->GetName());
+					UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"), *SpawnActor->GetName());
+					UE_LOG(LogTemp, Warning, TEXT("SpawnActor location= %s"), *SpawnActor->GetActorLocation().ToString());
+
+				}
+			}
+		}
+		
+	}
+	
+
+	
+	
+	
+
 }
 
 

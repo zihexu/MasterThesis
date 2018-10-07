@@ -13,18 +13,7 @@ ATestPawn::ATestPawn()
 	MCRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = MCRoot;
 
-	// Create the left motion controller
-	MCLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MCLeft"));
-	MCLeft->MotionSource = FXRMotionControllerBase::LeftHandSourceId;
-	MCLeft->SetupAttachment(MCRoot);
-
-	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
-	TriggerBox->SetupAttachment(MCRoot);
-	TriggerBox->SetCollisionProfileName(TEXT("Trigger"));
-	//TriggerBox->bGenerateOverlapEvents = true;
-	//Register Events
-	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ATestPawn::OnOverlapBegin);
-	TriggerBox->OnComponentEndOverlap.AddDynamic(this, &ATestPawn::OnOverlapEnd);
+	
 
 }
 
@@ -49,21 +38,4 @@ void ATestPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void ATestPawn::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
-{
-	UStaticMeshComponent* myComp = Cast<UStaticMeshComponent>(OtherComp);
-	if ((OtherActor != nullptr) && (myComp != NULL))
-	{
-		
-		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherComp->GetName());
-	}
-	
-	
-
-}
-
-void ATestPawn::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left = %s"), *OtherComp->GetName());
-}
 
