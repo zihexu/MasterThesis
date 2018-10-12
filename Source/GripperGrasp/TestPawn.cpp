@@ -9,11 +9,17 @@ ATestPawn::ATestPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	// Possess player automatically
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
 	//Create Root Component
 	MCRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = MCRoot;
 
-	
+	// Create camera component
+	VRCamera = CreateDefaultSubobject<UMyCameraComponent>(TEXT("VRCamera"));
+	VRCamera->SetupAttachment(MCRoot);
+
 
 }
 

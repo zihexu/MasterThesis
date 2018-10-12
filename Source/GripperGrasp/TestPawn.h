@@ -5,7 +5,8 @@
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
-#include "HeadMountedDisplay/Public/MotionControllerComponent.h"
+#include "Camera/CameraComponent.h"
+#include "MyCameraComponent.h"
 #include "TestPawn.generated.h"
 
 UCLASS()
@@ -21,7 +22,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -29,14 +30,13 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// MC Root
+	UPROPERTY(EditAnywhere, Category = "MC")
 	USceneComponent * MCRoot;
 
-	// Left Motion Controller
+
+	// VR Camera
 	UPROPERTY(EditAnywhere, Category = "MC")
-		UMotionControllerComponent* MCLeft;
-	
-	UPROPERTY(EditAnywhere, Category = "TriggerBox")
-		UBoxComponent* TriggerBox;
+	UMyCameraComponent* VRCamera;
 
 
 	
