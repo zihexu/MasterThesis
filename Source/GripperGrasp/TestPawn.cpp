@@ -16,9 +16,7 @@ ATestPawn::ATestPawn()
 	MCRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = MCRoot;
 
-	// Create camera component
-	VRCamera = CreateDefaultSubobject<UMyCameraComponent>(TEXT("VRCamera"));
-	VRCamera->SetupAttachment(MCRoot);
+
 
 
 }

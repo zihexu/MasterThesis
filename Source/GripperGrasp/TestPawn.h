@@ -6,7 +6,6 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Camera/CameraComponent.h"
-#include "MyCameraComponent.h"
 #include "TestPawn.generated.h"
 
 UCLASS()
@@ -34,9 +33,7 @@ public:
 	USceneComponent * MCRoot;
 
 
-	// VR Camera
-	UPROPERTY(EditAnywhere, Category = "MC")
-	UMyCameraComponent* VRCamera;
+
 
 
 	
