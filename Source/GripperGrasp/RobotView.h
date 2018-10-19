@@ -59,6 +59,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "TriggerBox")
 		UBoxComponent* TriggerBox;
 
+	// Frustum Component
+	UPROPERTY(EditAnywhere, Category = "Frustum")
+		UStaticMeshComponent* Frustum;
+
 	// Left GripperBase
 	UPROPERTY(EditAnywhere, Category = "Gripper")
 		UStaticMeshComponent* GBLeft;

@@ -43,6 +43,18 @@ ARobotView::ARobotView()
 	VRCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("VRCamera"));
 	VRCamera->SetupAttachment(CameraRoot);
 
+	// Create Frustum Component
+	Frustum = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Frustum"));
+	Frustum->SetupAttachment(VRCamera);
+	Frustum->SetCollisionProfileName(TEXT("No Collision"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>FrustumAsset(TEXT("/Game/Models/Frustum/SM_Frustum.SM_Frustum"));
+	if (FrustumAsset.Succeeded())
+	{
+		Frustum->SetStaticMesh(FrustumAsset.Object);
+		Frustum->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));
+		Frustum->SetRelativeLocation(FVector(97.0f, 0.0f, 0.0f));
+		Frustum->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
+	}
 
 	// Create the left motion controller
 	MCLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MCLeft"));
@@ -105,6 +117,7 @@ void ARobotView::BeginPlay()
 		{
 			ActorItr->SetActorHiddenInGame(false);
 			ActorItr->GetStaticMeshComponent()->SetHiddenInGame(true);
+			
 		}
 			
 	}
@@ -133,7 +146,7 @@ void ARobotView::Tick(float DeltaTime)
 		//UE_LOG(LogTemp, Warning, TEXT("start vibrate"));
 		
 	}
-
+	TriggerBox->SetRenderCustomDepth(true);
 	APlayerController * MyPc = Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (MyPc)
 	{
@@ -185,40 +198,50 @@ void ARobotView::MotionControlLeftTriggerPressed()
 	// Find all movable objects
 	for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
-		AStaticMeshActor* Mesh = Cast<AStaticMeshActor>(*ActorItr);
-		if (ActorItr->IsRootComponentMovable())
+		if (ActorItr)
 		{
-			// If objects are inside the viewport
-
-		// for each, generate a fake mesh without collision and physics at a random error position
-			if (*ActorItr != NULL)
+			AActor* Mesh = Cast<AActor>(*ActorItr);
+			if (ActorItr->IsRootComponentMovable())
 			{
-				UWorld* const World = GetWorld();
-				if (World)
-				{
-					// Set the spawn parameters
-					FActorSpawnParameters SpawnParams;
-					//SpawnParams.Template = Mesh;
-					SpawnParams.Owner = this;
-					SpawnParams.Instigator = Instigator;				
-					// The random error location to spawn  + FMath::VRand() * 5
-					FVector SpawnLocation = ActorItr->GetActorLocation() + FMath::VRand()*5;
-					// The rotation to spawn
-					FRotator SpawnRotation = ActorItr->GetActorRotation();
-					// Spawn the objects
-					ASpawnActor* SpawnActor = World->SpawnActor<ASpawnActor>(ActorToSpawn, SpawnLocation, SpawnRotation,  SpawnParams);
-					//SpawnActor->SetActorEnableCollision(false);
-					//SpawnActor->SetActorHiddenInGame(false);
-					//SpawnActor->GetStaticMeshComponent()->SetHiddenInGame(false);
-					//SpawnActor->SetMobility(EComponentMobility::Movable);
-					//SpawnActor->GetStaticMeshComponent()->SetStaticMesh(ActorItr->GetStaticMeshComponent()->GetStaticMesh());
-					//UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"),*SpawnActor->GetStaticMeshComponent()->GetName());
-					UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"), *SpawnActor->GetName());
-					UE_LOG(LogTemp, Warning, TEXT("SpawnActor location= %s"), *SpawnActor->GetActorLocation().ToString());
+				// If objects are inside the viewport
 
+			// for each, generate a fake mesh without collision and physics at a random error position
+				if (*ActorItr != NULL)
+				{
+					UWorld* const World = GetWorld();
+					if (World)
+					{
+						// Set the spawn parameters
+						FActorSpawnParameters SpawnParams;
+						//SpawnParams.Template = Mesh;
+						SpawnParams.Owner = this;
+						SpawnParams.Instigator = Instigator;
+						SpawnParams.Template = Mesh;
+						// The random error location to spawn  + FMath::VRand() * 5
+						FVector SpawnLocation = ActorItr->GetActorLocation() + FMath::VRand() * 5;
+						// The rotation to spawn
+						FRotator SpawnRotation = ActorItr->GetActorRotation();
+						// Spawn the objects
+						ASpawnActor* SpawnActor = World->SpawnActorAbsolute<ASpawnActor>(SpawnLocation, SpawnRotation,SpawnParams);
+						//SpawnActor->SetActorEnableCollision(false);
+						//SpawnActor->SetActorHiddenInGame(false);
+						//SpawnActor->GetStaticMeshComponent()->SetHiddenInGame(false);
+						//SpawnActor->SetMobility(EComponentMobility::Movable);
+						//SpawnActor->GetStaticMeshComponent()->SetStaticMesh(ActorItr->GetStaticMeshComponent()->GetStaticMesh());
+						//UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"),*SpawnActor->GetStaticMeshComponent()->GetName());
+						if (SpawnActor)
+						{
+							UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"), *SpawnActor->GetName());
+							UE_LOG(LogTemp, Warning, TEXT("SpawnActor location= %s"), *SpawnActor->GetActorLocation().ToString());
+						}
+
+
+					}
 				}
 			}
 		}
+		
+		
 		
 	}
 	
