@@ -116,7 +116,7 @@ void ARobotView::BeginPlay()
 		if (ActorItr->IsRootComponentMovable())
 		{
 			ActorItr->SetActorHiddenInGame(false);
-			ActorItr->GetStaticMeshComponent()->SetHiddenInGame(true);
+			ActorItr->GetStaticMeshComponent()->SetHiddenInGame(false);
 			
 		}
 			
