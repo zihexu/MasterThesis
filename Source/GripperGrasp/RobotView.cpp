@@ -47,6 +47,8 @@ ARobotView::ARobotView()
 	Frustum = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Frustum"));
 	Frustum->SetupAttachment(VRCamera);
 	Frustum->SetCollisionProfileName(TEXT("No Collision"));
+	Frustum->GetGenerateOverlapEvents();
+	Frustum->SetGenerateOverlapEvents(true);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>FrustumAsset(TEXT("/Game/Models/Frustum/SM_Frustum.SM_Frustum"));
 	if (FrustumAsset.Succeeded())
 	{
@@ -112,11 +114,13 @@ void ARobotView::BeginPlay()
 	//Iterate all actors and disable the visability of the moving objects
 	for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
-		//AStaticMeshActor *Mesh = *ActorItr;
-		if (ActorItr->IsRootComponentMovable())
+		AStaticMeshActor *Mesh = *ActorItr;
+		if (Mesh->IsRootComponentMovable())
 		{
-			ActorItr->SetActorHiddenInGame(false);
-			ActorItr->GetStaticMeshComponent()->SetHiddenInGame(false);
+			
+			Mesh->SetActorHiddenInGame(true);
+			UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
+			//ActorItr->GetStaticMeshComponent()->SetHiddenInGame(true);
 			
 		}
 			
@@ -183,7 +187,7 @@ void ARobotView::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * Oth
 	if (OtherComp->GetName().Contains(FString("GripperBase")))
 	{
 		bControllerVibrate = true;
-		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left= %s"), *OtherComp->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left= %s"), *OtherComp->GetName());
 	}
 }
 
@@ -194,63 +198,95 @@ void ARobotView::PlayHapticFeedback()
 
 void ARobotView::MotionControlLeftTriggerPressed()
 {
-	
-	// Find all movable objects
-	for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	// Destroy cloned objects
+	for (int32 Index = 0; Index != ClonedObjects.Num(); ++Index)
 	{
-		if (ActorItr)
+		if (ClonedObjects[Index]->WasRecentlyRendered(0.01f))
 		{
-			AActor* Mesh = Cast<AActor>(*ActorItr);
-			if (ActorItr->IsRootComponentMovable())
-			{
-				// If objects are inside the viewport
-
-			// for each, generate a fake mesh without collision and physics at a random error position
-				if (*ActorItr != NULL)
-				{
-					UWorld* const World = GetWorld();
-					if (World)
-					{
-						// Set the spawn parameters
-						FActorSpawnParameters SpawnParams;
-						//SpawnParams.Template = Mesh;
-						SpawnParams.Owner = this;
-						SpawnParams.Instigator = Instigator;
-						SpawnParams.Template = Mesh;
-						// The random error location to spawn  + FMath::VRand() * 5
-						FVector SpawnLocation = ActorItr->GetActorLocation() + FMath::VRand() * 5;
-						// The rotation to spawn
-						FRotator SpawnRotation = ActorItr->GetActorRotation();
-						// Spawn the objects
-						ASpawnActor* SpawnActor = World->SpawnActorAbsolute<ASpawnActor>(SpawnLocation, SpawnRotation,SpawnParams);
-						//SpawnActor->SetActorEnableCollision(false);
-						//SpawnActor->SetActorHiddenInGame(false);
-						//SpawnActor->GetStaticMeshComponent()->SetHiddenInGame(false);
-						//SpawnActor->SetMobility(EComponentMobility::Movable);
-						//SpawnActor->GetStaticMeshComponent()->SetStaticMesh(ActorItr->GetStaticMeshComponent()->GetStaticMesh());
-						//UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"),*SpawnActor->GetStaticMeshComponent()->GetName());
-						if (SpawnActor)
-						{
-							UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"), *SpawnActor->GetName());
-							UE_LOG(LogTemp, Warning, TEXT("SpawnActor location= %s"), *SpawnActor->GetActorLocation().ToString());
-						}
-
-
-					}
-				}
-			}
+			ClonedObjects[Index]->Destroy();
+			UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
 		}
 		
 		
+	}
+	ClonedObjects.Empty();
+	// Find all movable objects
+	
+	UWorld* const World = GetWorld();
+	for (TActorIterator<AStaticMeshActor> ActorItr(World); ActorItr; ++ActorItr)
+	{
+
+
+		if (ActorItr->IsRootComponentMovable())
+		{
+				AStaticMeshActor* Mesh = *ActorItr;
+				UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
+				UpdateMeshes.Add(Mesh);
+		}
+	}
+	for (int32 Index = 0; Index != UpdateMeshes.Num(); ++Index)
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = Instigator;
+		AStaticMeshActor* DuplicateMesh = UpdateMeshes[Index];
+		
+		SpawnParams.Template = DuplicateMesh;
+
+		// The random error location to spawn  + FMath::VRand() * 5
+		//FVector SpawnLocation = DuplicateMesh->GetActorLocation() + FMath::VRand() * 1;
+		FVector SpawnLocation = FMath::VRand() * 1;
+		UE_LOG(LogTemp, Warning, TEXT("position %s"), *SpawnLocation.ToString());
+		// The rotation to spawn
+		FRotator SpawnRotation = DuplicateMesh->GetActorRotation();
+		
+		// Spawn the objects
+		AStaticMeshActor* SpawnActor = World->SpawnActor<AStaticMeshActor>(DuplicateMesh->GetClass(),SpawnLocation, SpawnRotation, SpawnParams);
+		SpawnActor->SetActorHiddenInGame(false);
+		SpawnActor->DisableComponentsSimulatePhysics();
+		SpawnActor->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
+		ClonedObjects.Add(SpawnActor);
 		
 	}
-	
+	// Empty all elements in array
+	UpdateMeshes.Empty();
 
-	
-	
-	
 
+
+			// If objects are inside the viewport
+/*
+		// for each, generate a fake mesh without collision and physics at a random error position
+					// Set the spawn parameters
+			FActorSpawnParameters SpawnParams;
+			//SpawnParams.Template = Mesh;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = Instigator;
+			// The random error location to spawn  + FMath::VRand() * 5
+			FVector SpawnLocation = Mesh->GetActorLocation() + FMath::VRand() * 5;
+			// The rotation to spawn
+			FRotator SpawnRotation = Mesh->GetActorRotation();
+			// Spawn the objects
+			AStaticMeshActor* SpawnActor = World->SpawnActor<AStaticMeshActor>(Mesh->GetClass(),SpawnLocation, SpawnRotation, SpawnParams);
+			//SpawnActor->SetActorEnableCollision(false);
+			//SpawnActor->SetActorHiddenInGame(false);
+			//SpawnActor->GetStaticMeshComponent()->SetHiddenInGame(false);
+			SpawnActor->SetMobility(EComponentMobility::Movable);
+			SpawnActor->GetStaticMeshComponent()->SetStaticMesh(Mesh->GetStaticMeshComponent()->GetStaticMesh());
+			//UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"),*SpawnActor->GetStaticMeshComponent()->GetName());
+			*/
+		
+	
+	
+	
+	
 }
+	
+
+	
+	
+	
+
+
 
 
 

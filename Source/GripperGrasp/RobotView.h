@@ -96,6 +96,12 @@ public:
 	UPROPERTY(EditAnywhere)
 		UForceFeedbackEffect* ForceFeedbackEffect;
 
+	UPROPERTY(EditAnywhere)
+		TArray<AStaticMeshActor*> UpdateMeshes;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AStaticMeshActor*> ClonedObjects;
+
 
 private:
 	
