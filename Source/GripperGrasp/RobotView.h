@@ -8,7 +8,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMeshActor.h"
 #include "HeadMountedDisplay/Public/MotionControllerComponent.h"
-#include "Components/BoxComponent.h"
+#include "Components/SphereComponent.h"
 #include "SpawnActor.h"
 #include "RobotView.generated.h"
 
@@ -55,9 +55,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "MC")
 	UCameraComponent* VRCamera;
 
-	// Trigger Box 
-	UPROPERTY(EditAnywhere, Category = "TriggerBox")
-		UBoxComponent* TriggerBox;
+	// Trigger sphere 
+	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+		USphereComponent* LeftSphere;
+
+	// Visual cues for Left Sphere
+	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+		UStaticMeshComponent* LeftSphereVC;
 
 	// Frustum Component
 	UPROPERTY(EditAnywhere, Category = "Frustum")

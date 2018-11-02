@@ -68,14 +68,26 @@ ARobotView::ARobotView()
 	MCRight->MotionSource = FXRMotionControllerBase::RightHandSourceId;
 	MCRight->SetupAttachment(MCRoot);
 
-	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
-	TriggerBox->SetupAttachment(VRCamera);
-	TriggerBox->SetCollisionProfileName(TEXT("Trigger"));
-	//TriggerBox->bGenerateOverlapEvents = true;
+	//LeftSphere for left controller overlap tracking
+	LeftSphere = CreateDefaultSubobject<USphereComponent>(TEXT("LeftSphere"));
+	LeftSphere->SetupAttachment(VRCamera);
+	LeftSphere->SetCollisionProfileName(TEXT("OverlapAll"));
+	//LeftSphere->bGenerateOverlapEvents = true;
 	//Register Events
-	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnOverlapBegin);
-	TriggerBox->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnOverlapEnd);
+	LeftSphere->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnOverlapBegin);
+	LeftSphere->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnOverlapEnd);
 
+	
+	// LeftSphereVisualCuesComponent
+	LeftSphereVC = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LeftSphereVC"));
+	LeftSphereVC->SetupAttachment(VRCamera);
+	LeftSphereVC->SetCollisionProfileName(TEXT("OverlapAll"));
+	static ConstructorHelpers::FObjectFinder<UMaterial>LeftSphereVCMaterial(TEXT("Game/PostFX/LocationBasedOpacity/LocationBasedOpacity.LocationBasedOpacity"));
+	LeftSphereVC->SetMaterial(0,(UMaterial*)LeftSphereVCMaterial.Object);
+	
+	
+
+	
 	//Create Left GripperBase Component
 	GBLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GripperBaseLeft"));
 	GBLeft->SetupAttachment(MCLeft);
@@ -119,7 +131,7 @@ void ARobotView::BeginPlay()
 		{
 			
 			Mesh->SetActorHiddenInGame(true);
-			UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
+		
 			//ActorItr->GetStaticMeshComponent()->SetHiddenInGame(true);
 			
 		}
@@ -150,7 +162,7 @@ void ARobotView::Tick(float DeltaTime)
 		//UE_LOG(LogTemp, Warning, TEXT("start vibrate"));
 		
 	}
-	TriggerBox->SetRenderCustomDepth(true);
+	
 	APlayerController * MyPc = Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (MyPc)
 	{
@@ -187,7 +199,7 @@ void ARobotView::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * Oth
 	if (OtherComp->GetName().Contains(FString("GripperBase")))
 	{
 		bControllerVibrate = true;
-		//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left= %s"), *OtherComp->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left= %s"), *OtherComp->GetName());
 	}
 }
 
@@ -201,12 +213,13 @@ void ARobotView::MotionControlLeftTriggerPressed()
 	// Destroy cloned objects
 	for (int32 Index = 0; Index != ClonedObjects.Num(); ++Index)
 	{
-		if (ClonedObjects[Index]->WasRecentlyRendered(0.01f))
+		/*if (ClonedObjects[Index]->WasRecentlyRendered(0.01f))
 		{
-			ClonedObjects[Index]->Destroy();
-			UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
+			
 		}
-		
+		*/
+		ClonedObjects[Index]->Destroy();
+		UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
 		
 	}
 	ClonedObjects.Empty();
@@ -219,9 +232,9 @@ void ARobotView::MotionControlLeftTriggerPressed()
 
 		if (ActorItr->IsRootComponentMovable())
 		{
-				AStaticMeshActor* Mesh = *ActorItr;
-				UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
-				UpdateMeshes.Add(Mesh);
+			AStaticMeshActor* Mesh = *ActorItr;
+			UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
+			UpdateMeshes.Add(Mesh);		
 		}
 	}
 	for (int32 Index = 0; Index != UpdateMeshes.Num(); ++Index)
@@ -234,19 +247,20 @@ void ARobotView::MotionControlLeftTriggerPressed()
 		SpawnParams.Template = DuplicateMesh;
 
 		// The random error location to spawn  + FMath::VRand() * 5
-		//FVector SpawnLocation = DuplicateMesh->GetActorLocation() + FMath::VRand() * 1;
 		FVector SpawnLocation = FMath::VRand() * 1;
-		UE_LOG(LogTemp, Warning, TEXT("position %s"), *SpawnLocation.ToString());
-		// The rotation to spawn
-		FRotator SpawnRotation = DuplicateMesh->GetActorRotation();
+		//FVector SpawnLocation = FMath::VRand() * 1;
 		
-		// Spawn the objects
-		AStaticMeshActor* SpawnActor = World->SpawnActor<AStaticMeshActor>(DuplicateMesh->GetClass(),SpawnLocation, SpawnRotation, SpawnParams);
+		// The rotation to spawn
+		FRotator SpawnRotation = FRotator(0.0f,0.0f,0.0f);
+		
+		// Spawn the objects 
+		AStaticMeshActor* SpawnActor = World->SpawnActor<AStaticMeshActor>(DuplicateMesh->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
 		SpawnActor->SetActorHiddenInGame(false);
 		SpawnActor->DisableComponentsSimulatePhysics();
 		SpawnActor->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
 		ClonedObjects.Add(SpawnActor);
-		
+		UE_LOG(LogTemp, Warning, TEXT("location %s"), *DuplicateMesh->GetActorLocation().ToString());
+		UE_LOG(LogTemp, Warning, TEXT("spawn location %s"), *SpawnActor->GetActorLocation().ToString());
 	}
 	// Empty all elements in array
 	UpdateMeshes.Empty();
