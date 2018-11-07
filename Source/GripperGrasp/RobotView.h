@@ -9,6 +9,7 @@
 #include "Engine/StaticMeshActor.h"
 #include "HeadMountedDisplay/Public/MotionControllerComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "SpawnActor.h"
 #include "RobotView.generated.h"
 
@@ -67,6 +68,26 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Frustum")
 		UStaticMeshComponent* Frustum;
 
+	// Capsule Component for body collision detection
+	UPROPERTY(EditAnywhere, Category = "Capsule")
+		UCapsuleComponent* CapsuleTrigger;
+
+	// Count the number when a static actor is overlapping with capsule collider
+	UPROPERTY(EditAnywhere, Category = "Capsule")
+		int OverlapNum;
+
+	// The bool desides whether the camera is outside of range or not 
+	UPROPERTY(EditAnywhere, Category = "Capsule")
+		bool bCameraOutside;
+
+	// Declare overlap begin function for capsule trigger
+	UFUNCTION()
+		void OnCapsuleOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// Declare overlap end function for capsule trigger
+	UFUNCTION()
+		void OnCapsuleOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 	// Left GripperBase
 	UPROPERTY(EditAnywhere, Category = "Gripper")
 		UStaticMeshComponent* GBLeft;
@@ -116,7 +137,7 @@ private:
 	float FarClippingPlane;
 
 	UPROPERTY(EditAnywhere, Category = "HMD")
-		float bControllerVibrate;
+	float bControllerVibrate;
 
 
 

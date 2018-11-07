@@ -58,6 +58,18 @@ ARobotView::ARobotView()
 		Frustum->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
 	}
 
+	// Create the capsule component for body collision
+	CapsuleTrigger= CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
+	CapsuleTrigger->SetupAttachment(VRCamera);
+	CapsuleTrigger->SetCollisionProfileName(TEXT("OverlapAll"));
+	CapsuleTrigger->SetGenerateOverlapEvents(true);
+	CapsuleTrigger->SetRelativeLocation(FVector(0.0f, 0.0f, -60.0f));
+	CapsuleTrigger->SetCapsuleRadius(42.0f);
+	CapsuleTrigger->SetCapsuleHalfHeight(90.f);
+	//Register Events
+	CapsuleTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapBegin);
+	CapsuleTrigger->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapEnd);
+
 	// Create the left motion controller
 	MCLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MCLeft"));
 	MCLeft->MotionSource = FXRMotionControllerBase::LeftHandSourceId;
@@ -138,17 +150,8 @@ void ARobotView::BeginPlay()
 			
 	}
 
-
-/*
-	IHeadMountedDisplay* HMD = GEngine->XRSystem.IsValid() ? GEngine->XRSystem->GetHMDDevice() : nullptr;
-	if (HMD)
-	{
-		HMD->EnableHMD(true);
-		//UE_LOG(LogTemp, Warning, TEXT("found HMD here"));
-		HMD->SetClippingPlanes(NearClippingPlane, FarClippingPlane);
-	}
-*/
-
+	//Set up the default value
+	OverlapNum = 0;
 
 	
 }
@@ -157,6 +160,7 @@ void ARobotView::BeginPlay()
 void ARobotView::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	// Check if motion controller is outside of range
 	if (bControllerVibrate)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("start vibrate"));
@@ -168,6 +172,14 @@ void ARobotView::Tick(float DeltaTime)
 	{
 		//MyPc->ClientPlayForceFeedback(ForceFeedbackEffect, false, false, NAME_None);
 		PlayHapticFeedback();
+	}
+
+	// Check if the camera is outside of range
+	
+
+	if (bCameraOutside)
+	{
+		
 	}
 
 	
@@ -182,6 +194,36 @@ void ARobotView::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
+void ARobotView::OnCapsuleOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (OtherActor != nullptr)
+	{
+		if (OtherActor->IsRootComponentStatic())
+		{
+			bCameraOutside = true;
+			OverlapNum = OverlapNum + 1;
+			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
+			UE_LOG(LogTemp, Warning, TEXT("overlapping Actor number %d"), OverlapNum);
+		}
+	}
+}
+
+void ARobotView::OnCapsuleOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor != nullptr)
+	{
+		if (OtherActor->IsRootComponentStatic())
+		{
+			OverlapNum = OverlapNum - 1;
+			if (OverlapNum == 0)
+			{
+				bCameraOutside = false;
+				UE_LOG(LogTemp, Warning, TEXT("Nothing is overlapping"));
+			}
+		}
+	}
+}
+
 void ARobotView::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (OtherActor != nullptr)
@@ -189,7 +231,7 @@ void ARobotView::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 		if (OtherComp->GetName().Contains(FString("GripperBase")))
 		{
 			bControllerVibrate = false;
-		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherComp->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherComp->GetName());
 		}
 	}
 }
@@ -199,7 +241,7 @@ void ARobotView::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * Oth
 	if (OtherComp->GetName().Contains(FString("GripperBase")))
 	{
 		bControllerVibrate = true;
-		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left= %s"), *OtherComp->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor Left= %s"), *OtherComp->GetName());
 	}
 }
 
@@ -208,23 +250,20 @@ void ARobotView::PlayHapticFeedback()
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayHapticEffect(mHapticFeedback, EControllerHand::Left);
 }
 
+// Render the fake meshes with offset after left trigger pressed
 void ARobotView::MotionControlLeftTriggerPressed()
 {
 	// Destroy cloned objects
 	for (int32 Index = 0; Index != ClonedObjects.Num(); ++Index)
 	{
-		/*if (ClonedObjects[Index]->WasRecentlyRendered(0.01f))
-		{
-			
-		}
-		*/
+	
 		ClonedObjects[Index]->Destroy();
-		UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
 		
 	}
 	ClonedObjects.Empty();
+
 	// Find all movable objects
-	
 	UWorld* const World = GetWorld();
 	for (TActorIterator<AStaticMeshActor> ActorItr(World); ActorItr; ++ActorItr)
 	{
@@ -233,22 +272,21 @@ void ARobotView::MotionControlLeftTriggerPressed()
 		if (ActorItr->IsRootComponentMovable())
 		{
 			AStaticMeshActor* Mesh = *ActorItr;
-			UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
+			//UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
 			UpdateMeshes.Add(Mesh);		
 		}
 	}
+	// Spawn the template actors
 	for (int32 Index = 0; Index != UpdateMeshes.Num(); ++Index)
 	{
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
 		SpawnParams.Instigator = Instigator;
 		AStaticMeshActor* DuplicateMesh = UpdateMeshes[Index];
-		
 		SpawnParams.Template = DuplicateMesh;
 
 		// The random error location to spawn  + FMath::VRand() * 5
 		FVector SpawnLocation = FMath::VRand() * 1;
-		//FVector SpawnLocation = FMath::VRand() * 1;
 		
 		// The rotation to spawn
 		FRotator SpawnRotation = FRotator(0.0f,0.0f,0.0f);
@@ -259,40 +297,12 @@ void ARobotView::MotionControlLeftTriggerPressed()
 		SpawnActor->DisableComponentsSimulatePhysics();
 		SpawnActor->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
 		ClonedObjects.Add(SpawnActor);
-		UE_LOG(LogTemp, Warning, TEXT("location %s"), *DuplicateMesh->GetActorLocation().ToString());
-		UE_LOG(LogTemp, Warning, TEXT("spawn location %s"), *SpawnActor->GetActorLocation().ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("location %s"), *DuplicateMesh->GetActorLocation().ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("spawn location %s"), *SpawnActor->GetActorLocation().ToString());
 	}
 	// Empty all elements in array
 	UpdateMeshes.Empty();
 
-
-
-			// If objects are inside the viewport
-/*
-		// for each, generate a fake mesh without collision and physics at a random error position
-					// Set the spawn parameters
-			FActorSpawnParameters SpawnParams;
-			//SpawnParams.Template = Mesh;
-			SpawnParams.Owner = this;
-			SpawnParams.Instigator = Instigator;
-			// The random error location to spawn  + FMath::VRand() * 5
-			FVector SpawnLocation = Mesh->GetActorLocation() + FMath::VRand() * 5;
-			// The rotation to spawn
-			FRotator SpawnRotation = Mesh->GetActorRotation();
-			// Spawn the objects
-			AStaticMeshActor* SpawnActor = World->SpawnActor<AStaticMeshActor>(Mesh->GetClass(),SpawnLocation, SpawnRotation, SpawnParams);
-			//SpawnActor->SetActorEnableCollision(false);
-			//SpawnActor->SetActorHiddenInGame(false);
-			//SpawnActor->GetStaticMeshComponent()->SetHiddenInGame(false);
-			SpawnActor->SetMobility(EComponentMobility::Movable);
-			SpawnActor->GetStaticMeshComponent()->SetStaticMesh(Mesh->GetStaticMeshComponent()->GetStaticMesh());
-			//UE_LOG(LogTemp, Warning, TEXT("SpawnActor name= %s"),*SpawnActor->GetStaticMeshComponent()->GetName());
-			*/
-		
-	
-	
-	
-	
 }
 	
 
