@@ -10,6 +10,9 @@
 #include "HeadMountedDisplay/Public/MotionControllerComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Public/TimerManager.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "SpawnActor.h"
 #include "RobotView.generated.h"
 
@@ -68,9 +71,17 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Frustum")
 		UStaticMeshComponent* Frustum;
 
+	// Spring Arm component for the capsule trigger to attach to
+	UPROPERTY(EditAnywhere, Category = "Capsule")
+		USpringArmComponent* SpringArmComponent;
+
 	// Capsule Component for body collision detection
 	UPROPERTY(EditAnywhere, Category = "Capsule")
 		UCapsuleComponent* CapsuleTrigger;
+
+	// Visual Cue for capsule triiger component
+	UPROPERTY(EditAnywhere, Category = "Capsule")
+		UStaticMeshComponent* CapsuleTriggerVC;
 
 	// Count the number when a static actor is overlapping with capsule collider
 	UPROPERTY(EditAnywhere, Category = "Capsule")
@@ -79,6 +90,7 @@ public:
 	// The bool desides whether the camera is outside of range or not 
 	UPROPERTY(EditAnywhere, Category = "Capsule")
 		bool bCameraOutside;
+
 
 	// Declare overlap begin function for capsule trigger
 	UFUNCTION()
@@ -127,6 +139,10 @@ public:
 	UPROPERTY(EditAnywhere)
 		TArray<AStaticMeshActor*> ClonedObjects;
 
+	// Function for camera behavior when the camera is outside the range
+	UFUNCTION()
+		void CameraRangeDetection();
+
 
 private:
 	
@@ -139,6 +155,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = "HMD")
 	float bControllerVibrate;
 
+	FTimerHandle TimerHandle;
+
+	// Material for capsule trigger
+	UPROPERTY(EditAnywhere, Category = "Capsule")
+	UMaterial* CapsuleMaterial;
 
 
 	

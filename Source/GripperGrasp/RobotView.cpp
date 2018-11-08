@@ -49,7 +49,7 @@ ARobotView::ARobotView()
 	Frustum->SetCollisionProfileName(TEXT("No Collision"));
 	Frustum->GetGenerateOverlapEvents();
 	Frustum->SetGenerateOverlapEvents(true);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>FrustumAsset(TEXT("/Game/Models/Frustum/SM_Frustum.SM_Frustum"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>FrustumAsset(TEXT("/Game/Models/Frustum/SM_Frustum.SM_Frustum")); 
 	if (FrustumAsset.Succeeded())
 	{
 		Frustum->SetStaticMesh(FrustumAsset.Object);
@@ -58,17 +58,33 @@ ARobotView::ARobotView()
 		Frustum->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
 	}
 
+	//Create SpringArm Component
+	SpringArmComponent= CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArmComponent->SetupAttachment(VRCamera);
+
 	// Create the capsule component for body collision
 	CapsuleTrigger= CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	CapsuleTrigger->SetupAttachment(VRCamera);
+	CapsuleTrigger->SetupAttachment(SpringArmComponent);
 	CapsuleTrigger->SetCollisionProfileName(TEXT("OverlapAll"));
 	CapsuleTrigger->SetGenerateOverlapEvents(true);
 	CapsuleTrigger->SetRelativeLocation(FVector(0.0f, 0.0f, -60.0f));
 	CapsuleTrigger->SetCapsuleRadius(42.0f);
 	CapsuleTrigger->SetCapsuleHalfHeight(90.f);
+	/*static ConstructorHelpers::FObjectFinder<UMaterial>BoundaryMaterial(TEXT("/Game/PostFX/LocationBasedOpacity/M_Boundary.M_Boundary"));
+	auto* MaterialInstance = UMaterialInstanceDynamic::Create(BoundaryMaterial.Object, BoundaryMaterial.Object);
+	CapsuleMaterial = CreateDefaultSubobject<UMaterial>(TEXT("CapsuleMaterial"));
+	CapsuleTrigger->SetMaterial(0, MaterialInstance);
+	*/
 	//Register Events
 	CapsuleTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapBegin);
 	CapsuleTrigger->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapEnd);
+	//Set up the default value
+	OverlapNum = 0;
+
+	CapsuleTriggerVC= CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CapsuleTriggerVC"));
+	CapsuleTriggerVC->SetupAttachment(SpringArmComponent);
+	CapsuleTriggerVC->SetHiddenInGame(true);
+	
 
 	// Create the left motion controller
 	MCLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MCLeft"));
@@ -94,7 +110,7 @@ ARobotView::ARobotView()
 	LeftSphereVC = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LeftSphereVC"));
 	LeftSphereVC->SetupAttachment(VRCamera);
 	LeftSphereVC->SetCollisionProfileName(TEXT("OverlapAll"));
-	static ConstructorHelpers::FObjectFinder<UMaterial>LeftSphereVCMaterial(TEXT("Game/PostFX/LocationBasedOpacity/LocationBasedOpacity.LocationBasedOpacity"));
+	static ConstructorHelpers::FObjectFinder<UMaterial>LeftSphereVCMaterial(TEXT("/Game/PostFX/LocationBasedOpacity/M_LeftVisualMaterial.M_LeftVisualMaterial"));
 	LeftSphereVC->SetMaterial(0,(UMaterial*)LeftSphereVCMaterial.Object);
 	
 	
@@ -135,6 +151,9 @@ void ARobotView::BeginPlay()
 {
 	Super::BeginPlay();
 
+
+
+
 	//Iterate all actors and disable the visability of the moving objects
 	for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
@@ -150,8 +169,6 @@ void ARobotView::BeginPlay()
 			
 	}
 
-	//Set up the default value
-	OverlapNum = 0;
 
 	
 }
@@ -173,15 +190,9 @@ void ARobotView::Tick(float DeltaTime)
 		//MyPc->ClientPlayForceFeedback(ForceFeedbackEffect, false, false, NAME_None);
 		PlayHapticFeedback();
 	}
-
-	// Check if the camera is outside of range
 	
-
-	if (bCameraOutside)
-	{
-		
-	}
-
+	
+	//Do the camera range detection every tick
 	
 }
 
@@ -202,6 +213,8 @@ void ARobotView::OnCapsuleOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 		{
 			bCameraOutside = true;
 			OverlapNum = OverlapNum + 1;
+			CapsuleTriggerVC->SetHiddenInGame(false);
+			GetWorldTimerManager().SetTimer(TimerHandle,this,&ARobotView::CameraRangeDetection, 2.0f, false);
 			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
 			UE_LOG(LogTemp, Warning, TEXT("overlapping Actor number %d"), OverlapNum);
 		}
@@ -217,7 +230,10 @@ void ARobotView::OnCapsuleOverlapEnd(UPrimitiveComponent * OverlappedComp, AActo
 			OverlapNum = OverlapNum - 1;
 			if (OverlapNum == 0)
 			{
+				
 				bCameraOutside = false;
+				CameraRangeDetection();
+				CapsuleTriggerVC->SetHiddenInGame(true);
 				UE_LOG(LogTemp, Warning, TEXT("Nothing is overlapping"));
 			}
 		}
@@ -303,6 +319,50 @@ void ARobotView::MotionControlLeftTriggerPressed()
 	// Empty all elements in array
 	UpdateMeshes.Empty();
 
+}
+
+void ARobotView::CameraRangeDetection()
+{
+	// Check if the camera is outside of range, change the post process setting, color gamma	
+	if (bCameraOutside)
+	{
+		FPostProcessSettings PostPro;
+
+		PostPro.bOverride_ColorGain = true;
+		PostPro.ColorGain = FVector4(0.01f, 0.01f, 0.01f, 1.0f);
+
+		VRCamera->PostProcessSettings = PostPro;
+		UE_LOG(LogTemp, Warning, TEXT("Outside"));
+	}
+	else if (!bCameraOutside)
+	{
+		FPostProcessSettings PostPro;
+
+		PostPro.bOverride_ColorGain = true;
+		PostPro.ColorGain = FVector4(1.0f, 1.0f, 1.0f, 1.0f);
+		VRCamera->PostProcessSettings = PostPro;
+	}
+
+	/*
+	// Check if the camera is outside of range, change the post process setting, vigenette
+	if (bCameraOutside)
+	{
+	FPostProcessSettings PostPro;
+
+	PostPro.bOverride_VignetteIntensity= true;
+	PostPro.VignetteIntensity = 5;
+	VRCamera->PostProcessSettings = PostPro;
+	UE_LOG(LogTemp, Warning, TEXT("Outside"));
+	}
+	else if (!bCameraOutside)
+	{
+	FPostProcessSettings PostPro;
+
+	PostPro.bOverride_VignetteIntensity = true;
+	PostPro.VignetteIntensity = 0;
+	VRCamera->PostProcessSettings = PostPro;
+	}
+	*/
 }
 	
 
