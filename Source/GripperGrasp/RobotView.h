@@ -67,6 +67,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
 		UStaticMeshComponent* LeftSphereVC;
 
+	// Visual cues for Right Sphere
+	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+		UStaticMeshComponent* RightSphereVC;
+
 	// Frustum Component
 	UPROPERTY(EditAnywhere, Category = "Frustum")
 		UStaticMeshComponent* Frustum;

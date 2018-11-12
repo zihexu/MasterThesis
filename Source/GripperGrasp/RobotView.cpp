@@ -62,6 +62,7 @@ ARobotView::ARobotView()
 	SpringArmComponent= CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArmComponent->SetupAttachment(VRCamera);
 
+	/*
 	// Create the capsule component for body collision
 	CapsuleTrigger= CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
 	CapsuleTrigger->SetupAttachment(SpringArmComponent);
@@ -70,21 +71,27 @@ ARobotView::ARobotView()
 	CapsuleTrigger->SetRelativeLocation(FVector(0.0f, 0.0f, -60.0f));
 	CapsuleTrigger->SetCapsuleRadius(42.0f);
 	CapsuleTrigger->SetCapsuleHalfHeight(90.f);
-	/*static ConstructorHelpers::FObjectFinder<UMaterial>BoundaryMaterial(TEXT("/Game/PostFX/LocationBasedOpacity/M_Boundary.M_Boundary"));
+	static ConstructorHelpers::FObjectFinder<UMaterial>BoundaryMaterial(TEXT("/Game/PostFX/LocationBasedOpacity/M_Boundary.M_Boundary"));
 	auto* MaterialInstance = UMaterialInstanceDynamic::Create(BoundaryMaterial.Object, BoundaryMaterial.Object);
 	CapsuleMaterial = CreateDefaultSubobject<UMaterial>(TEXT("CapsuleMaterial"));
 	CapsuleTrigger->SetMaterial(0, MaterialInstance);
-	*/
+
 	//Register Events
-	CapsuleTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapBegin);
-	CapsuleTrigger->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapEnd);
+	//CapsuleTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapBegin);
+	//CapsuleTrigger->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapEnd);
+	*/
+	
 	//Set up the default value
 	OverlapNum = 0;
 
 	CapsuleTriggerVC= CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CapsuleTriggerVC"));
 	CapsuleTriggerVC->SetupAttachment(SpringArmComponent);
 	CapsuleTriggerVC->SetHiddenInGame(true);
-	
+	CapsuleTriggerVC->SetCollisionProfileName(TEXT("OverlapAll"));
+	CapsuleTriggerVC->SetGenerateOverlapEvents(true);
+	//Register Events
+	CapsuleTriggerVC->OnComponentBeginOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapBegin);
+	CapsuleTriggerVC->OnComponentEndOverlap.AddDynamic(this, &ARobotView::OnCapsuleOverlapEnd);
 
 	// Create the left motion controller
 	MCLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MCLeft"));
@@ -112,8 +119,15 @@ ARobotView::ARobotView()
 	LeftSphereVC->SetCollisionProfileName(TEXT("OverlapAll"));
 	static ConstructorHelpers::FObjectFinder<UMaterial>LeftSphereVCMaterial(TEXT("/Game/PostFX/LocationBasedOpacity/M_LeftVisualMaterial.M_LeftVisualMaterial"));
 	LeftSphereVC->SetMaterial(0,(UMaterial*)LeftSphereVCMaterial.Object);
+	LeftSphereVC->SetRelativeLocation(FVector(0.0f,-20.0f,-25.0f));
 	
-	
+	// LeftSphereVisualCuesComponent
+	RightSphereVC = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RightSphereVC"));
+	RightSphereVC->SetupAttachment(VRCamera);
+	RightSphereVC->SetCollisionProfileName(TEXT("OverlapAll"));
+	static ConstructorHelpers::FObjectFinder<UMaterial>RightSphereVCMaterial(TEXT("/Game/PostFX/LocationBasedOpacity/M_RightVisualMaterial.M_RightVisualMaterial"));
+	RightSphereVC->SetMaterial(0, (UMaterial*)RightSphereVCMaterial.Object);
+	RightSphereVC->SetRelativeLocation(FVector(0.0f, 20.0f, -25.0f));
 
 	
 	//Create Left GripperBase Component
