@@ -2,3 +2,11 @@
 	path = Plugins/UUtils
 	url = https://github.com/robcog-iai/UUtils
 	branch = master
+[submodule "UPhysicsBasedMC"]
+	path = UPhysicsBasedMC
+	url = https://github.com/robcog-iai/UPhysicsBasedMC.git
+	branch = dev
+[submodule "UPIDController"]
+	path = UPIDController
+	url = https://github.com/robcog-iai/UPIDController.git
+	branch = master
