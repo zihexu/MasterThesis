@@ -59,12 +59,12 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereVC->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(-20.0f,0.0f,0.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(20.0f,0.0f,0.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
 	}
 	if (UStaticMeshComponent* StaticMeshComp = RightSphereVC->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(20.0f, 0.0f, 0.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(-20.0f, 0.0f, 0.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
 	}
 
@@ -74,12 +74,13 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UMyCollisionComponent::OnOverlapBeginLeft(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (OtherActor)
+	if (OtherActor!=NULL)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor"));
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
-			OverlappedComp->SetLinearDamping(0.01f);
+			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor"));
+			OtherComp->SetLinearDamping(0.01f);
+			OtherComp->SetAngularDamping(0.0f);
 		}
 	}
 	
@@ -91,7 +92,8 @@ void UMyCollisionComponent::OnOverlapEndLeft(UPrimitiveComponent * OverlappedCom
 	{
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
-			OverlappedComp->SetLinearDamping(100.0f);
+			OtherComp->SetLinearDamping(50.0f);
+			OtherComp->SetAngularDamping(50.0f);
 			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
 		}
 	}
