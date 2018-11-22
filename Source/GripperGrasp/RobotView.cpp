@@ -226,9 +226,10 @@ void ARobotView::OnCapsuleOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 		if (OtherActor->IsRootComponentStatic())
 		{
 			bCameraOutside = true;
+			OtherComp->SetRenderCustomDepth(true);
 			OverlapNum = OverlapNum + 1;
 			CapsuleTriggerVC->SetHiddenInGame(false);
-			GetWorldTimerManager().SetTimer(TimerHandle,this,&ARobotView::CameraRangeDetection, 2.0f, false);
+			GetWorldTimerManager().SetTimer(TimerHandle,this,&ARobotView::CameraRangeDetection, 0.0f, false);
 			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
 			UE_LOG(LogTemp, Warning, TEXT("overlapping Actor number %d"), OverlapNum);
 		}
@@ -246,6 +247,7 @@ void ARobotView::OnCapsuleOverlapEnd(UPrimitiveComponent * OverlappedComp, AActo
 			{
 				
 				bCameraOutside = false;
+				OtherComp->SetRenderCustomDepth(false);
 				CameraRangeDetection();
 				CapsuleTriggerVC->SetHiddenInGame(true);
 				UE_LOG(LogTemp, Warning, TEXT("Nothing is overlapping"));
@@ -343,7 +345,7 @@ void ARobotView::CameraRangeDetection()
 		FPostProcessSettings PostPro;
 
 		PostPro.bOverride_ColorGain = true;
-		PostPro.ColorGain = FVector4(0.01f, 0.01f, 0.01f, 1.0f);
+		PostPro.ColorGain = FVector4(0.0f, 0.0f, 0.0f, 1.0f);
 
 		VRCamera->PostProcessSettings = PostPro;
 		UE_LOG(LogTemp, Warning, TEXT("Outside"));
