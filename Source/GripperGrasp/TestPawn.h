@@ -3,19 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Camera/CameraComponent.h"
 #include "TestPawn.generated.h"
 
-UCLASS()
-class GRIPPERGRASP_API ATestPawn : public APawn
+UCLASS(ClassGroup = (MC), meta = (DisplayName = "My MC Pawn"))
+class UMCPLAYER_API AMCPawn : public APawn
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	ATestPawn();
+	AMCPawn();
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,14 +26,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	// MC Root
-	UPROPERTY(EditAnywhere, Category = "MC")
-	USceneComponent * MCRoot;
-
-
-
-
-
 	
+
+
+private:
+
+
 };

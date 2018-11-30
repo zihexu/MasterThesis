@@ -2,6 +2,8 @@
 
 #include "MyCollisionComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Classes/Engine/Scene.h"
+#include "TestPawn.h"
 
 
 // Sets default values for this component's properties
@@ -22,7 +24,8 @@ UMyCollisionComponent::UMyCollisionComponent()
 void UMyCollisionComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	// Set default state for LeftConreoller Collision sphere
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereVC->GetStaticMeshComponent())
 	{
 		
@@ -38,6 +41,7 @@ void UMyCollisionComponent::BeginPlay()
 
 
 	}
+	// Set default state for RightConreoller Collision sphere
 	if (UStaticMeshComponent* StaticMeshComp = RightSphereVC->GetStaticMeshComponent())
 	{
 		StaticMeshComp->SetMobility(EComponentMobility::Movable);
@@ -46,6 +50,23 @@ void UMyCollisionComponent::BeginPlay()
 		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
 	}
 
+
+	// Set default state for RobotBody Collision 
+	if (UStaticMeshComponent* StaticMeshComp = BodyCollision->GetStaticMeshComponent())
+	{
+
+		StaticMeshComp->SetMobility(EComponentMobility::Movable);
+		StaticMeshComp->SetSimulatePhysics(false);
+		StaticMeshComp->SetEnableGravity(false);
+		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
+
+		//Register Events for LeftSphereVC
+
+		BodyCollision->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginBody);
+		BodyCollision->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapEndBody);
+
+
+	}
 
 	// ...
 	
@@ -81,6 +102,7 @@ void UMyCollisionComponent::OnOverlapBeginLeft(UPrimitiveComponent * OverlappedC
 			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor"));
 			OtherComp->SetLinearDamping(0.01f);
 			OtherComp->SetAngularDamping(0.0f);
+			OtherComp->SetRenderCustomDepth(true);
 		}
 	}
 	
@@ -94,8 +116,46 @@ void UMyCollisionComponent::OnOverlapEndLeft(UPrimitiveComponent * OverlappedCom
 		{
 			OtherComp->SetLinearDamping(50.0f);
 			OtherComp->SetAngularDamping(50.0f);
+			OtherComp->SetRenderCustomDepth(false);
 			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
 		}
 	}
 }
+
+void UMyCollisionComponent::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (OtherActor != nullptr)
+	{
+		if (OtherActor->IsRootComponentStatic())
+		{
+			bCameraOutside = true;
+			OtherComp->SetRenderCustomDepth(true);
+	
+			OverlapNum = OverlapNum + 1;
+			BodyCollision->GetStaticMeshComponent()->SetHiddenInGame(false);
+			
+		}
+	}
+}
+
+void UMyCollisionComponent::OnOverlapEndBody(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor != nullptr)
+	{
+		if (OtherActor->IsRootComponentStatic())
+		{
+			OverlapNum = OverlapNum - 1;
+			if (OverlapNum == 0)
+			{
+
+				bCameraOutside = false;
+				OtherComp->SetRenderCustomDepth(false);
+				
+				BodyCollision->GetStaticMeshComponent()->SetHiddenInGame(true);
+			}
+		}
+	}
+}
+
+
 

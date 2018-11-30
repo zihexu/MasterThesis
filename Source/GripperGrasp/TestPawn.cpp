@@ -1,20 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TestPawn.h"
-#include "XRMotionControllerBase.h"
+
 
 
 // Sets default values
 ATestPawn::ATestPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-	// Possess player automatically
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = false;
+
+	// Auto possess player
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
-	//Create Root Component
-	MCRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
-	RootComponent = MCRoot;
+	// Create root component
+	MCRoot = CreateDefaultSubobject<USceneComponent>(TEXT("MCRoot"));
+	SetRootComponent(MCRoot);
 
 
 
