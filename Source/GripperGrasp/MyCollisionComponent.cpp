@@ -99,7 +99,7 @@ void UMyCollisionComponent::OnOverlapBeginLeft(UPrimitiveComponent * OverlappedC
 	{
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor"));
+			//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor"));
 			OtherComp->SetLinearDamping(0.01f);
 			OtherComp->SetAngularDamping(0.0f);
 			OtherComp->SetRenderCustomDepth(true);
@@ -117,7 +117,7 @@ void UMyCollisionComponent::OnOverlapEndLeft(UPrimitiveComponent * OverlappedCom
 			OtherComp->SetLinearDamping(50.0f);
 			OtherComp->SetAngularDamping(50.0f);
 			OtherComp->SetRenderCustomDepth(false);
-			UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
+			//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
 		}
 	}
 }

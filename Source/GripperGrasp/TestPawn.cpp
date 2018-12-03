@@ -13,9 +13,7 @@ ATestPawn::ATestPawn()
 	// Auto possess player
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
-	// Create root component
-	MCRoot = CreateDefaultSubobject<USceneComponent>(TEXT("MCRoot"));
-	SetRootComponent(MCRoot);
+
 
 
 

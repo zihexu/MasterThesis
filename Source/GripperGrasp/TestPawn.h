@@ -7,14 +7,14 @@
 #include "Camera/CameraComponent.h"
 #include "TestPawn.generated.h"
 
-UCLASS(ClassGroup = (MC), meta = (DisplayName = "My MC Pawn"))
-class UMCPLAYER_API AMCPawn : public APawn
+UCLASS()
+class ATestPawn : public APawn
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	AMCPawn();
+	ATestPawn();
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,7 +29,7 @@ public:
 	
 
 
-private:
+
 
 
 };
