@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/SceneComponent.h"
+#include "Engine/StaticMeshActor.h"
+#include "Components/StaticMeshComponent.h"
 #include "BodyCollider.generated.h"
 
 
@@ -24,6 +26,24 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+private:
+	// Body Collider Actor
+	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+		AStaticMeshActor* BodyCollider;
+
+	// Indicater Arrow Actor
+	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+		AStaticMeshActor* ArrowIndicator;
 		
-	
+	// Declare overlap begin function
+	UFUNCTION()
+		void OnOverlapBeginBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// Declare overlap end function
+	UFUNCTION()
+		void OnOverlapEndBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	// Spawn ArrowIndicator class
+	UPROPERTY(EditAnywhere, Category = ArrowIndicator)
+		TSubclassOf<class ASpawnActor> SpawnArrowIndicator;
 };

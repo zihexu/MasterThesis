@@ -3,7 +3,7 @@
 #include "MyCollisionComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Classes/Engine/Scene.h"
-#include "TestPawn.h"
+
 
 
 // Sets default values for this component's properties
@@ -51,8 +51,10 @@ void UMyCollisionComponent::BeginPlay()
 	}
 
 
-	// Set default state for RobotBody Collision 
-	if (UStaticMeshComponent* StaticMeshComp = BodyCollision->GetStaticMeshComponent())
+
+
+	// Set default state for LeftSphereSmall
+	if (UStaticMeshComponent* StaticMeshComp = LeftSphereSmall->GetStaticMeshComponent())
 	{
 
 		StaticMeshComp->SetMobility(EComponentMobility::Movable);
@@ -62,8 +64,8 @@ void UMyCollisionComponent::BeginPlay()
 
 		//Register Events for LeftSphereVC
 
-		BodyCollision->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginBody);
-		BodyCollision->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapEndBody);
+		LeftSphereSmall->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginLeftSmall);
+		LeftSphereSmall->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapEndLeftSmall);
 
 
 	}
@@ -77,18 +79,34 @@ void UMyCollisionComponent::BeginPlay()
 void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	// Teleport LeftSphereVC
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereVC->GetStaticMeshComponent())
 	{
 		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(20.0f,0.0f,0.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
+		if (bLeftSphereVC)
+		{
+			LeftSphereVC->SetActorHiddenInGame(false);
+			
+		}
+		else if (!bLeftSphereVC)
+		{
+			LeftSphereVC->SetActorHiddenInGame(true);
+		}
 	}
+	// Teleport RightSphereVC
 	if (UStaticMeshComponent* StaticMeshComp = RightSphereVC->GetStaticMeshComponent())
 	{
 		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(-20.0f, 0.0f, 0.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
 	}
-
+	
+	// Teleport RightSphereSmall
+	if (UStaticMeshComponent* StaticMeshComp = LeftSphereSmall->GetStaticMeshComponent())
+	{
+		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(20.0f, 0.0f, 0.0f),
+			false, (FHitResult*)nullptr, ETeleportType::None);
+	}
 	
 	// ...
 }
@@ -102,7 +120,7 @@ void UMyCollisionComponent::OnOverlapBeginLeft(UPrimitiveComponent * OverlappedC
 			//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor"));
 			OtherComp->SetLinearDamping(0.01f);
 			OtherComp->SetAngularDamping(0.0f);
-			OtherComp->SetRenderCustomDepth(true);
+			OtherComp->SetRenderCustomDepth(false);
 		}
 	}
 	
@@ -116,43 +134,34 @@ void UMyCollisionComponent::OnOverlapEndLeft(UPrimitiveComponent * OverlappedCom
 		{
 			OtherComp->SetLinearDamping(50.0f);
 			OtherComp->SetAngularDamping(50.0f);
-			OtherComp->SetRenderCustomDepth(false);
+			OtherComp->SetRenderCustomDepth(true);
 			//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
 		}
 	}
 }
 
-void UMyCollisionComponent::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+
+
+void UMyCollisionComponent::OnOverlapBeginLeftSmall(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (OtherActor != nullptr)
+	if (OtherActor != NULL)
 	{
-		if (OtherActor->IsRootComponentStatic())
+		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
-			bCameraOutside = true;
-			OtherComp->SetRenderCustomDepth(true);
-	
-			OverlapNum = OverlapNum + 1;
-			BodyCollision->GetStaticMeshComponent()->SetHiddenInGame(false);
+			bLeftSphereVC = false;
 			
 		}
 	}
 }
 
-void UMyCollisionComponent::OnOverlapEndBody(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+void UMyCollisionComponent::OnOverlapEndLeftSmall(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	if (OtherActor != nullptr)
+	if (OtherActor != NULL)
 	{
-		if (OtherActor->IsRootComponentStatic())
+		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
-			OverlapNum = OverlapNum - 1;
-			if (OverlapNum == 0)
-			{
-
-				bCameraOutside = false;
-				OtherComp->SetRenderCustomDepth(false);
-				
-				BodyCollision->GetStaticMeshComponent()->SetHiddenInGame(true);
-			}
+			bLeftSphereVC = true;
+			//UE_LOG(LogTemp, Warning, TEXT("shouldshowcollision sphere"));
 		}
 	}
 }
