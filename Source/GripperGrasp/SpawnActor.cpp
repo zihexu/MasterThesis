@@ -15,13 +15,13 @@ ASpawnActor::ASpawnActor()
 
 	SpawnComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpawnComponent"));
 	SpawnComponent->SetupAttachment(Root);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>SpawnComponentAsset(TEXT("/Game/Models/Gripper/GripperBase/SM_GripperBase.SM_GripperBase"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>SpawnComponentAsset(TEXT("/Game/Models/Player/ArrowIndicator/ArrowIndicator.ArrowIndicator"));
 	if (SpawnComponentAsset.Succeeded())
 	{
 		SpawnComponent->SetStaticMesh(SpawnComponentAsset.Object);
 	}
 
-	
+	SpawnComponent->SetRenderCustomDepth(false);
 }
 
 // Called when the game starts or when spawned

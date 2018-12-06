@@ -22,6 +22,7 @@ void UBodyCollider::BeginPlay()
 {
 	Super::BeginPlay();
 
+	bShowIndicator = 0;
 	// Set default state for Body Collider
 	if (UStaticMeshComponent* StaticMeshComp = BodyCollider->GetStaticMeshComponent())
 	{
@@ -50,11 +51,23 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	//Teleport Body Collider, follow camera's location
 	if (UStaticMeshComponent* StaticMeshComp = BodyCollider->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation(), false, (FHitResult*)nullptr, ETeleportType::None);
+		StaticMeshComp->SetWorldLocation((FVector(GetComponentLocation().X, GetComponentLocation().Y, 70.0)), false, (FHitResult*)nullptr, ETeleportType::None);
 
 	}
-
-	
+	//Teleport the arrow indicators at runtime
+	if (bShowIndicator)
+	{
+		for (int32 Index = 0; Index != ArrowIndicators.Num(); ++Index)
+		{
+			if (ArrowIndicators[Index]&& OverlappingActors[Index])
+			{
+				ArrowIndicators[Index]->SetActorLocation((GetComponentLocation() + OverlappingActors[Index]->GetActorLocation())*0.5, false, (FHitResult*)nullptr, ETeleportType::None);
+				FVector LookatDirection = OverlappingActors[Index]->GetActorLocation() - GetComponentLocation();
+				FRotator lookAtRotator = FRotationMatrix::MakeFromX(LookatDirection).Rotator();
+				ArrowIndicators[Index]->SetActorRotation(lookAtRotator);
+			}
+		}
+	}
 	// ...
 }
 
@@ -64,9 +77,14 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 	{
 		if (SpawnArrowIndicator)
 		{
-			if (OtherActor->GetName().Contains(FString("Cube")))
+			if (OtherActor->ActorHasTag("Collider"))
 			{
+				i = i + 1;
+				bShowIndicator = 1;
+				OverlappingActors.Emplace(OtherActor);
+				OtherComp->SetRenderCustomDepth(true);
 				UE_LOG(LogTemp, Warning, TEXT("spawn arrow indicator"));
+				//spawn the arrow indicator
 				UWorld* World = GetWorld();
 				if (World)
 				{
@@ -74,9 +92,10 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 					SpawnParams.Owner = GetOwner();
 
 					FVector SpawnLocation = (GetComponentLocation()+OtherActor->GetActorLocation())*0.5;
-					FRotator SpawnRotation = GetOwner()->GetComponentByClass(UCameraComponent::StaticClass())->;
+					FRotator SpawnRotation = GetComponentRotation();
 					// Spawn the arrow indicator
-					ASpawnActor* ArrowIndicator = World->SpawnActor<ASpawnActor>(SpawnArrowIndicator, SpawnLocation, SpawnRotation, SpawnParams);
+					ArrowIndicators.Emplace(World->SpawnActor<ASpawnActor>(SpawnArrowIndicator, SpawnLocation, SpawnRotation, SpawnParams));
+						
 
 				}
 			}
@@ -87,6 +106,19 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 
 void UBodyCollider::OnOverlapEndBody(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-
+	if (OtherActor != NULL)
+	{
+		for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
+		{
+			if (OtherActor == OverlappingActors[Index])
+			{
+				ArrowIndicators[Index]->Destroy();
+				OverlappingActors[Index] = nullptr;
+				OtherComp->SetRenderCustomDepth(false);
+			}
+				
+		}
+		
+	}
 }
 

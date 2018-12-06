@@ -6,6 +6,7 @@
 #include "Components/SceneComponent.h"
 #include "Engine/StaticMeshActor.h"
 #include "Components/StaticMeshComponent.h"
+#include "Public/Containers/Array.h"
 #include "BodyCollider.generated.h"
 
 
@@ -31,9 +32,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
 		AStaticMeshActor* BodyCollider;
 
-	// Indicater Arrow Actor
-	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
-		AStaticMeshActor* ArrowIndicator;
+	
 		
 	// Declare overlap begin function
 	UFUNCTION()
@@ -46,4 +45,17 @@ private:
 	// Spawn ArrowIndicator class
 	UPROPERTY(EditAnywhere, Category = ArrowIndicator)
 		TSubclassOf<class ASpawnActor> SpawnArrowIndicator;
+
+	// Spawn ArrowIndicator class
+	UPROPERTY(EditAnywhere, Category = ArrowIndicator)
+		bool bShowIndicator;
+
+	UPROPERTY()
+		TArray<AActor*> OverlappingActors;
+
+	UPROPERTY()
+		TArray<ASpawnActor*> ArrowIndicators;
+
+	UPROPERTY()
+		int i = -1;
 };
