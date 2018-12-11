@@ -7,6 +7,7 @@
 #include "Engine/StaticMeshActor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Public/Containers/Array.h"
+#include "MCPawn.h"
 #include "BodyCollider.generated.h"
 
 
@@ -15,7 +16,7 @@ class GRIPPERGRASP_API UBodyCollider : public USceneComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UBodyCollider();
 
@@ -23,7 +24,7 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -32,8 +33,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
 		AStaticMeshActor* BodyCollider;
 
-	
-		
+
+
 	// Declare overlap begin function
 	UFUNCTION()
 		void OnOverlapBeginBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -58,4 +59,14 @@ private:
 
 	UPROPERTY()
 		int i = -1;
+
+	UPROPERTY()
+		bool bDarkView;
+
+	UPROPERTY()
+		int OverlapNum;
+
+	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+		AMCPawn* MyPawn;
+
 };

@@ -12,6 +12,7 @@ ASpawnActor::ASpawnActor()
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = Root;
 	Root->SetMobility(EComponentMobility::Movable);
+	this->SetActorHiddenInGame(true);
 
 	SpawnComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpawnComponent"));
 	SpawnComponent->SetupAttachment(Root);
@@ -21,7 +22,7 @@ ASpawnActor::ASpawnActor()
 		SpawnComponent->SetStaticMesh(SpawnComponentAsset.Object);
 	}
 
-	SpawnComponent->SetRenderCustomDepth(false);
+	
 }
 
 // Called when the game starts or when spawned
