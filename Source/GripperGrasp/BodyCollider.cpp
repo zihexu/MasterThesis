@@ -26,8 +26,16 @@ void UBodyCollider::BeginPlay()
 	Super::BeginPlay();
 
 	// Get the player camera 
+	TArray<UCameraComponent*> Comps;
 
-	if (GEngine) GEngine->GetFirstLocalPlayerController(GetWorld())->PlayerCameraManager->bEnableFading = true;
+	MyPawn->GetComponents(Comps);
+	if (Comps.Num() > 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FIND COMPONENTS %s"),*Comps[0]->GetName());
+		UCameraComponent* MyCamera = Comps[0];
+	}
+	//UCameraComponent* MyCamera = CastChecked<UCameraComponent>(MyPawn->FindComponentByClass(UCameraComponent::StaticClass()));
+	//if (GEngine) GEngine->GetFirstLocalPlayerController(GetWorld())->PlayerCameraManager->bEnableFading = true;
 
 	//set the default value for the indicator
 	bShowIndicator = 0;
@@ -66,7 +74,7 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	
 
-
+	
 	if (bShowIndicator)
 	{
 		//Teleport the arrow indicators at runtime
@@ -84,18 +92,33 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			}
 		}
 
-		/*// Dark the camera view
-		if (GEngine && bDarkView)
-		{
-			bDarkView = 0;
-			UE_LOG(LogTemp, Warning, TEXT("DARK VIEW"));
-			GEngine->GetFirstLocalPlayerController(GetWorld())->PlayerCameraManager->StartCameraFade(0.0f,0.5f,1.0f,FLinearColor(0.0f,0.0f,0.0f,1.0f),false,false);
-		}
-		*/
 	}
-	// Whether to dark the camera
-	//UCameraComponent* MyCamera = MyPawn->FindComponentByClass(UCameraComponent::StaticClass());
 	
+
+	// Dark the camera view
+	if (MyCamera)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FIND THE CAMERA"));
+		if (bDarkView)
+		{
+			FPostProcessSettings PostPro;
+
+			PostPro.bOverride_ColorGain = true;
+			PostPro.ColorGain = FVector4(0.0f, 0.0f, 0.0f, 1.0f);
+
+			MyCamera->PostProcessSettings = PostPro;
+		}
+		else if (!bDarkView)
+		{
+			FPostProcessSettings PostPro;
+
+			PostPro.bOverride_ColorGain = true;
+			PostPro.ColorGain = FVector4(1.0f, 1.0f, 1.0f, 1.0f);
+			MyCamera->PostProcessSettings = PostPro;
+		}
+	}
+	
+
 }
 
 void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -112,7 +135,7 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 				OverlapNum = OverlapNum + 1;
 				OverlappingActors.Emplace(OtherActor);
 				OtherComp->SetRenderCustomDepth(true);
-				UE_LOG(LogTemp, Warning, TEXT("spawn arrow indicator"));
+				//UE_LOG(LogTemp, Warning, TEXT("spawn arrow indicator"));
 				//spawn the arrow indicator
 				UWorld* World = GetWorld();
 				if (World)

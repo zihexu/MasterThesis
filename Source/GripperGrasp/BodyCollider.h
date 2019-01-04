@@ -69,4 +69,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
 		AMCPawn* MyPawn;
 
+	UPROPERTY()
+		UCameraComponent* MyCamera;
+
 };
