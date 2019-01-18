@@ -66,8 +66,8 @@ private:
 	UPROPERTY()
 		int OverlapNum;
 
-	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
-		AMCPawn* MyPawn;
+	//UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+		//AMCPawn* MyPawn;
 
 	UPROPERTY()
 		UCameraComponent* MyCamera;

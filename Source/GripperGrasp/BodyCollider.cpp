@@ -24,8 +24,8 @@ UBodyCollider::UBodyCollider()
 void UBodyCollider::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// Get the player camera 
+/*
+// Get the player camera
 	TArray<UCameraComponent*> Comps;
 
 	MyPawn->GetComponents(Comps);
@@ -34,7 +34,10 @@ void UBodyCollider::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("FIND COMPONENTS %s"),*Comps[0]->GetName());
 		UCameraComponent* MyCamera = Comps[0];
 	}
-	//UCameraComponent* MyCamera = CastChecked<UCameraComponent>(MyPawn->FindComponentByClass(UCameraComponent::StaticClass()));
+*/
+	
+	UCameraComponent* MyCamera = CastChecked<UCameraComponent>(this->GetOwner()->FindComponentByClass(UCameraComponent::StaticClass()));
+	UE_LOG(LogTemp, Warning, TEXT("FIND COMPONENTS %s"), *MyCamera->GetName());
 	//if (GEngine) GEngine->GetFirstLocalPlayerController(GetWorld())->PlayerCameraManager->bEnableFading = true;
 
 	//set the default value for the indicator
@@ -94,8 +97,7 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	}
 	
-
-	// Dark the camera view
+	
 	if (MyCamera)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("FIND THE CAMERA"));
@@ -117,6 +119,9 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			MyCamera->PostProcessSettings = PostPro;
 		}
 	}
+	
+	// Dark the camera view
+	
 	
 
 }
