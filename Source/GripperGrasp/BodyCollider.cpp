@@ -16,6 +16,14 @@ UBodyCollider::UBodyCollider()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
+
+	ViveTracker1 = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ViveTracker1"));
+	ViveTracker1->MotionSource = FName(TEXT("Special_1"));
+	//ViveTracker1->SetupAttachment();
+
+	ViveTracker2 = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ViveTracker2"));
+	ViveTracker2->MotionSource = FName(TEXT("Special_2"));
+	//ViveTracker2->SetupAttachment(RootComponent);
 	// ...
 }
 
@@ -24,20 +32,10 @@ UBodyCollider::UBodyCollider()
 void UBodyCollider::BeginPlay()
 {
 	Super::BeginPlay();
-/*
-// Get the player camera
-	TArray<UCameraComponent*> Comps;
 
-	MyPawn->GetComponents(Comps);
-	if (Comps.Num() > 0)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("FIND COMPONENTS %s"),*Comps[0]->GetName());
-		UCameraComponent* MyCamera = Comps[0];
-	}
-*/
 	
 	UCameraComponent* MyCamera = CastChecked<UCameraComponent>(this->GetOwner()->FindComponentByClass(UCameraComponent::StaticClass()));
-	UE_LOG(LogTemp, Warning, TEXT("FIND COMPONENTS %s"), *MyCamera->GetName());
+
 	//if (GEngine) GEngine->GetFirstLocalPlayerController(GetWorld())->PlayerCameraManager->bEnableFading = true;
 
 	//set the default value for the indicator
@@ -68,10 +66,11 @@ void UBodyCollider::BeginPlay()
 void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	//Teleport Body Collider, follow camera's location
+	//Teleport Body Collider, follow Vive trachers' location, use two trackers to balence the center point
 	if (UStaticMeshComponent* StaticMeshComp = BodyCollider->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation((FVector(GetComponentLocation().X, GetComponentLocation().Y, 70.0)), false, (FHitResult*)nullptr, ETeleportType::None);
+		FVector TeleportLocation = (ViveTracker1->GetComponentLocation()+ ViveTracker2->GetComponentLocation())/2;
+		StaticMeshComp->SetWorldLocation((FVector(TeleportLocation.X, TeleportLocation.Y, 70.0)), false, (FHitResult*)nullptr, ETeleportType::None);
 
 	}
 
@@ -86,7 +85,9 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			if (ArrowIndicators[Index]&& OverlappingActors[Index])
 			{
 				ArrowIndicators[Index]->SetActorHiddenInGame(false);
+				//Teleport the arrow indicator to the forward location of player's camera
 				ArrowIndicators[Index]->SetActorLocation((GetComponentLocation() + GetForwardVector() * 50), false, (FHitResult*)nullptr, ETeleportType::None);
+				//Keep the arrow indicator's rotation to look at the colliding actors
 				FVector LookatDirection = OverlappingActors[Index]->GetActorLocation() - (ArrowIndicators[Index]->GetActorLocation());
 				FRotator lookAtRotator = FRotationMatrix::MakeFromX(LookatDirection).Rotator();
 				ArrowIndicators[Index]->SetActorRotation(lookAtRotator);

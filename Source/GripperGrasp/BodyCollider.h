@@ -8,6 +8,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Public/Containers/Array.h"
 #include "MCPawn.h"
+#include "MotionControllerComponent.h"
 #include "BodyCollider.generated.h"
 
 
@@ -19,6 +20,12 @@ class GRIPPERGRASP_API UBodyCollider : public USceneComponent
 public:
 	// Sets default values for this component's properties
 	UBodyCollider();
+
+	UPROPERTY(EditAnywhere, Category = ViveTracker)
+		UMotionControllerComponent* ViveTracker1;
+
+	UPROPERTY(EditAnywhere, Category = ViveTracker)
+		UMotionControllerComponent* ViveTracker2;
 
 protected:
 	// Called when the game starts
@@ -71,5 +78,7 @@ private:
 
 	UPROPERTY()
 		UCameraComponent* MyCamera;
+
+
 
 };
