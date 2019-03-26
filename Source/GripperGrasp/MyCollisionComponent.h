@@ -55,6 +55,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Capsule")
 		bool bLeftSphereVC;
 		
+
+	// The bool desides whether the camera is outside of range or not 
+	UPROPERTY(EditAnywhere, Category = "Capsule")
+		bool bRightSphereVC;
+
+
 	// Declare overlap begin function
 	UFUNCTION()
 		void OnOverlapBeginLeft(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -73,5 +79,23 @@ private:
 	// Declare overlap end function
 	UFUNCTION()
 		void OnOverlapEndLeftSmall(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	// Declare overlap begin function
+	UFUNCTION()
+		void OnOverlapBeginRight(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// Declare overlap end function
+	UFUNCTION()
+		void OnOverlapEndRight(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	// Declare overlap begin function
+	UFUNCTION()
+		void OnOverlapBeginRightSmall(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// Declare overlap end function
+	UFUNCTION()
+		void OnOverlapEndRightSmall(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+
 
 };

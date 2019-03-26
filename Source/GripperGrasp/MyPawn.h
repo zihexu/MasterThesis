@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "Engine/StaticMeshActor.h"
 #include "SpawnActor.h"
+#include "Components/StaticMeshComponent.h"
 #include "MyPawn.generated.h"
 
 UCLASS()

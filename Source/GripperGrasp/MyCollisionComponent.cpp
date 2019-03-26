@@ -24,7 +24,7 @@ UMyCollisionComponent::UMyCollisionComponent()
 void UMyCollisionComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	// Set default state for LeftConreoller Collision sphere
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereVC->GetStaticMeshComponent())
 	{
@@ -48,6 +48,11 @@ void UMyCollisionComponent::BeginPlay()
 		StaticMeshComp->SetSimulatePhysics(false);
 		StaticMeshComp->SetEnableGravity(false);
 		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
+
+		//Register Events for RightSphereVC
+		RightSphereVC->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginRight);
+		RightSphereVC->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapEndRight);
+
 	}
 
 
@@ -63,14 +68,27 @@ void UMyCollisionComponent::BeginPlay()
 		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
 
 		//Register Events for LeftSphereVC
-
 		LeftSphereSmall->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginLeftSmall);
 		LeftSphereSmall->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapEndLeftSmall);
 
 
 	}
 
-	// ...
+	// Set default state for RightSphereSmall
+	if (UStaticMeshComponent* StaticMeshComp = RightSphereSmall->GetStaticMeshComponent())
+	{
+
+		StaticMeshComp->SetMobility(EComponentMobility::Movable);
+		StaticMeshComp->SetSimulatePhysics(false);
+		StaticMeshComp->SetEnableGravity(false);
+		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
+
+		//Register Events for RightSphereSmall
+		RightSphereSmall->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginRightSmall);
+		RightSphereSmall->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapEndRightSmall);
+
+
+	}
 	
 }
 
@@ -82,7 +100,7 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// Teleport LeftSphereVC
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereVC->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(20.0f,0.0f,0.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f,0.0f,-20.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
 		if (bLeftSphereVC)
 		{
@@ -97,18 +115,34 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// Teleport RightSphereVC
 	if (UStaticMeshComponent* StaticMeshComp = RightSphereVC->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(-20.0f, 0.0f, 0.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f, 0.0f, -20.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
+		if (bRightSphereVC)
+		{
+			RightSphereVC->SetActorHiddenInGame(false);
+
+		}
+		else if (!bRightSphereVC)
+		{
+			RightSphereVC->SetActorHiddenInGame(true);
+		}
+	}
+	
+	// Teleport LeftSphereSmall
+	if (UStaticMeshComponent* StaticMeshComp = LeftSphereSmall->GetStaticMeshComponent())
+	{
+		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, 0.0f, -20.0f),
+			false, (FHitResult*)nullptr, ETeleportType::None);
+		
 	}
 	
 	// Teleport RightSphereSmall
-	if (UStaticMeshComponent* StaticMeshComp = LeftSphereSmall->GetStaticMeshComponent())
+	if (UStaticMeshComponent* StaticMeshComp = RightSphereSmall->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(20.0f, 0.0f, 0.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, 0.0f, -20.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
+
 	}
-	
-	// ...
 }
 
 void UMyCollisionComponent::OnOverlapBeginLeft(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -117,10 +151,9 @@ void UMyCollisionComponent::OnOverlapBeginLeft(UPrimitiveComponent * OverlappedC
 	{
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor"));
 			OtherComp->SetLinearDamping(0.01f);
 			OtherComp->SetAngularDamping(0.0f);
-			OtherComp->SetRenderCustomDepth(false);
+			//OtherComp->SetRenderCustomDepth(false);
 		}
 	}
 	
@@ -132,10 +165,11 @@ void UMyCollisionComponent::OnOverlapEndLeft(UPrimitiveComponent * OverlappedCom
 	{
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
+			UE_LOG(LogTemp, Warning, TEXT("increase damping"));
+
 			OtherComp->SetLinearDamping(50.0f);
 			OtherComp->SetAngularDamping(50.0f);
-			OtherComp->SetRenderCustomDepth(true);
-			//UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor = %s"), *OtherActor->GetName());
+			//OtherComp->SetRenderCustomDepth(true);
 		}
 	}
 }
@@ -149,7 +183,6 @@ void UMyCollisionComponent::OnOverlapBeginLeftSmall(UPrimitiveComponent * Overla
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
 			bLeftSphereVC = false;
-			
 		}
 	}
 }
@@ -161,7 +194,56 @@ void UMyCollisionComponent::OnOverlapEndLeftSmall(UPrimitiveComponent * Overlapp
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
 			bLeftSphereVC = true;
-			//UE_LOG(LogTemp, Warning, TEXT("shouldshowcollision sphere"));
+		}
+	}
+}
+
+void UMyCollisionComponent::OnOverlapBeginRight(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (OtherActor != NULL)
+	{
+		if (OtherActor->GetName().Contains(FString("WSGBaseRight")))
+		{
+			OtherComp->SetLinearDamping(0.01f);
+			OtherComp->SetAngularDamping(0.0f);
+			//OtherComp->SetRenderCustomDepth(false);
+		}
+	}
+}
+
+void UMyCollisionComponent::OnOverlapEndRight(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor)
+	{
+		if (OtherActor->GetName().Contains(FString("WSGBaseRight")))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("increase right damping"));
+
+			OtherComp->SetLinearDamping(50.0f);
+			OtherComp->SetAngularDamping(50.0f);
+			//OtherComp->SetRenderCustomDepth(true);
+		}
+	}
+}
+
+void UMyCollisionComponent::OnOverlapBeginRightSmall(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (OtherActor != NULL)
+	{
+		if (OtherActor->GetName().Contains(FString("WSGBaseRight")))
+		{
+			bRightSphereVC = false;
+		}
+	}
+}
+
+void UMyCollisionComponent::OnOverlapEndRightSmall(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor != NULL)
+	{
+		if (OtherActor->GetName().Contains(FString("WSGBaseRight")))
+		{
+			bRightSphereVC = true;
 		}
 	}
 }

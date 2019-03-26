@@ -71,7 +71,7 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	{
 		FVector TeleportLocation = (ViveTracker1->GetComponentLocation()+ ViveTracker2->GetComponentLocation())/2;
 		StaticMeshComp->SetWorldLocation((FVector(TeleportLocation.X, TeleportLocation.Y, 70.0)), false, (FHitResult*)nullptr, ETeleportType::None);
-
+		StaticMeshComp->SetWorldRotation(FRotator(0, ViveTracker1->GetComponentRotation().Yaw, 0)), false, (FHitResult*)nullptr, ETeleportType::None;
 	}
 
 	
