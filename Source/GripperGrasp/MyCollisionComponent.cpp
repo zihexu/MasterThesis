@@ -100,7 +100,7 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// Teleport LeftSphereVC
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereVC->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f,0.0f,-20.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f,20.0f,-20.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
 		if (bLeftSphereVC)
 		{
@@ -115,7 +115,7 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// Teleport RightSphereVC
 	if (UStaticMeshComponent* StaticMeshComp = RightSphereVC->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f, 0.0f, -20.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f, -20.0f, -20.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
 		if (bRightSphereVC)
 		{
@@ -131,7 +131,7 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// Teleport LeftSphereSmall
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereSmall->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, 0.0f, -20.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, 20.0f, -20.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
 		
 	}
@@ -139,7 +139,7 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// Teleport RightSphereSmall
 	if (UStaticMeshComponent* StaticMeshComp = RightSphereSmall->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, 0.0f, -20.0f),
+		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, -20.0f, -20.0f),
 			false, (FHitResult*)nullptr, ETeleportType::None);
 
 	}

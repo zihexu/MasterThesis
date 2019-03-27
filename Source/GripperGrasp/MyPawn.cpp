@@ -109,7 +109,7 @@ void AMyPawn::UpdateView()
 	for (int32 Index = 0; Index != ClonedObjects.Num(); ++Index)
 	{
 		AStaticMeshActor* Reference = UpdateMeshes[Index];
-		FVector NewLocation = Reference->GetActorLocation();
+		FVector NewLocation = Reference->GetActorLocation()+ FMath::VRand() * 1;
 		//Teleport the cloned objects
 		ClonedObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
 		//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
