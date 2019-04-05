@@ -12,5 +12,12 @@
 				"Engine"
 			]
 		}
+	],
+	"Plugins": [
+		{
+			"Name": "USemLog",
+			"Enabled": true,
+			"MarketplaceURL": "http://robcog.org/"
+		}
 	]
 }

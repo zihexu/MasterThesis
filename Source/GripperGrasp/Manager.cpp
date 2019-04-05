@@ -26,19 +26,19 @@ void UManager::BeginPlay()
 	Super::BeginPlay();
 
 	//Iterate all actors and disable the visability of the moving objects
-	for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		AStaticMeshActor *Mesh = *ActorItr;
-		if (Mesh->IsRootComponentMovable())
-		{
-			if(Mesh->ActorHasTag(TEXT("MovableObjects")))
-			Mesh->SetActorHiddenInGame(true);
+	//for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	//{
+	//	AStaticMeshActor *Mesh = *ActorItr;
+	//	if (Mesh->IsRootComponentMovable())
+	//	{
+	//		if(Mesh->ActorHasTag(TEXT("MovableObjects")))
+	//		Mesh->SetActorHiddenInGame(true);
 
-			//ActorItr->GetStaticMeshComponent()->SetHiddenInGame(true);
+	//		//ActorItr->GetStaticMeshComponent()->SetHiddenInGame(true);
 
-		}
+	//	}
 
-	}
+	//}
 	// ...
 	
 }

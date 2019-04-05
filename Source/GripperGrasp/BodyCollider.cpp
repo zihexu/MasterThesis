@@ -17,8 +17,8 @@ UBodyCollider::UBodyCollider()
 	PrimaryComponentTick.bCanEverTick = true;
 
 
-	ViveTracker1 = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ViveTracker1"));
-	ViveTracker1->MotionSource = FName(TEXT("Special_1"));
+	/*ViveTracker1 = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ViveTracker1"));
+	ViveTracker1->MotionSource = FName(TEXT("Special_1"));*/
 	//ViveTracker1->SetupAttachment();
 
 	ViveTracker2 = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ViveTracker2"));
@@ -69,9 +69,9 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	//Teleport Body Collider, follow Vive trachers' location, use two trackers to balence the center point
 	if (UStaticMeshComponent* StaticMeshComp = BodyCollider->GetStaticMeshComponent())
 	{
-		FVector TeleportLocation = (ViveTracker1->GetComponentLocation()+ ViveTracker2->GetComponentLocation())/2;
-		StaticMeshComp->SetWorldLocation((FVector(TeleportLocation.X, TeleportLocation.Y, 70.0)), false, (FHitResult*)nullptr, ETeleportType::None);
-		StaticMeshComp->SetWorldRotation(FRotator(0, ViveTracker1->GetComponentRotation().Yaw, 0)), false, (FHitResult*)nullptr, ETeleportType::None;
+		FVector TeleportLocation = ViveTracker2->GetComponentLocation() + FVector(OffsetValue,0.0f,0.0f);
+		StaticMeshComp->SetWorldLocation((FVector(TeleportLocation.X, TeleportLocation.Y, 0.0f)), false, (FHitResult*)nullptr, ETeleportType::None);
+		StaticMeshComp->SetWorldRotation(FRotator(0, ViveTracker2->GetComponentRotation().Yaw, 0)), false, (FHitResult*)nullptr, ETeleportType::None;
 	}
 
 	
@@ -99,7 +99,7 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	}
 	
 	
-	if (MyCamera)
+	/*if (MyCamera)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("FIND THE CAMERA"));
 		if (bDarkView)
@@ -119,7 +119,7 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			PostPro.ColorGain = FVector4(1.0f, 1.0f, 1.0f, 1.0f);
 			MyCamera->PostProcessSettings = PostPro;
 		}
-	}
+	}*/
 	
 	// Dark the camera view
 	
@@ -184,4 +184,5 @@ void UBodyCollider::OnOverlapEndBody(UPrimitiveComponent * OverlappedComp, AActo
 		
 	}
 }
+
 

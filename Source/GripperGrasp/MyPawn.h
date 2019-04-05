@@ -33,9 +33,12 @@ public:
 	UPROPERTY(EditAnywhere)
 		AStaticMeshActor* RootActor;
 
+	
+
 private:
 
 	// VR Camera
+	UPROPERTY(EditAnywhere)
 	UCameraComponent* VRCamera;
 
 	// Motion controller root component (camera and motion controllers will be relative to this)
@@ -43,10 +46,25 @@ private:
 		USceneComponent* MCRoot;
 
 	UPROPERTY(EditAnywhere)
+		AActor* Frustum;
+
+	UPROPERTY(EditAnywhere)
 		TArray<AStaticMeshActor*> UpdateMeshes;
 
 	UPROPERTY(EditAnywhere)
-		TArray<AStaticMeshActor*> ClonedObjects;
+		TArray<AActor*> ClonedObjects;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AActor*> DynamicObjects;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AActor*> ClonedDynamicObjects;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AActor*> ArticulatedObjects;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AActor*> ClonedArticulatedObjects;
 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<ASpawnActor> ActorToSpawn;
@@ -55,6 +73,11 @@ private:
 	UFUNCTION()
 		void UpdateView();
 
+	UFUNCTION()
+		void SpawnDynamicObjects();
+
+	UFUNCTION()
+		void SpawnArticulatedObjects();
 	
 	
 };

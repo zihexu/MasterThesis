@@ -4,6 +4,7 @@
 #include "Engine/World.h"
 #include "Public/EngineUtils.h"
 #include "GameFramework/PlayerController.h"
+#include "Tags.h"
 
 
 // Sets default values
@@ -28,62 +29,13 @@ AMyPawn::AMyPawn()
 void AMyPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	// Spawn all the dynamic objects, but hide them
+	SpawnDynamicObjects();
 
-	// Find all movable objects
-	UWorld* const World = GetWorld();
-	for (TActorIterator<AStaticMeshActor> ActorItr(World); ActorItr; ++ActorItr)
-	{
-		if (ActorItr->IsRootComponentMovable())
-			if (ActorItr->ActorHasTag("MovableObjects"))
-			{
-				AStaticMeshActor* Mesh = *ActorItr;
-				UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
-				UpdateMeshes.Add(Mesh);
-			
-			}
-	}
+	// Spawn all the Articulated Objects
+	SpawnArticulatedObjects();
 
-	// Spawn the template actors
-	for (int32 Index = 0; Index != UpdateMeshes.Num(); ++Index)
-	{
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.Owner = this;
-		SpawnParams.Instigator = Instigator;
-		AStaticMeshActor* DuplicateMesh = UpdateMeshes[Index];
-		SpawnParams.Template = DuplicateMesh;
 
-		// The random error location to spawn  + FMath::VRand() * 5
-		FVector WorldLocation = DuplicateMesh->GetActorLocation();
-
-		FVector SpawnLocation = FMath::VRand() * 1;
-
-		// The rotation to spawn
-		FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
-
-		// The name of the spawned actor
-		FName DuplicatedName = DuplicateMesh->GetFName();
-
-		// Spawn the objects 
-		AStaticMeshActor* SpawnActor = World->SpawnActor<AStaticMeshActor>(DuplicateMesh->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
-		SpawnActor->SetActorLocation(WorldLocation+ FMath::VRand() * 1);
-		SpawnActor->SetActorRotation(DuplicateMesh->GetActorRotation());
-		SpawnActor->SetActorHiddenInGame(false);
-		SpawnActor->DisableComponentsSimulatePhysics();
-		SpawnActor->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
-		SpawnActor->SetActorLabel(UpdateMeshes[Index]->GetName()+"copy");
-		ClonedObjects.Add(SpawnActor);
-
-		//Attach the newly spawned handle, Todo: should attach to the newly spawned parent objects
-		if (DuplicateMesh->GetAttachParentActor() != NULL)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("DuplicateMesh %s"), *DuplicateMesh->GetName());
-			SpawnActor->AttachToActor(RootActor, FAttachmentTransformRules::KeepWorldTransform);
-		}
-		//UE_LOG(LogTemp, Warning, TEXT("location %s"), *SpawnActor->GetName());
-		//UE_LOG(LogTemp, Warning, TEXT("spawn location %s"), *SpawnActor->GetActorLocation().ToString());
-		
-		
-	}
 	
 }
 
@@ -91,7 +43,10 @@ void AMyPawn::BeginPlay()
 void AMyPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
+	//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
+	Frustum->SetActorLocation(VRCamera->GetComponentLocation()+FVector(178.936,0,0), false, (FHitResult*)nullptr, ETeleportType::None);
+	Frustum->SetActorRotation(VRCamera->GetComponentRotation()+FRotator(0,90,0), ETeleportType::None);
 }
 
 // Called to bind functionality to input
@@ -104,72 +59,121 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyPawn::UpdateView()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Update button pressed"));
-	//Once UpdateView Button clicked, update the location of all cloned objects
-	for (int32 Index = 0; Index != ClonedObjects.Num(); ++Index)
-	{
-		AStaticMeshActor* Reference = UpdateMeshes[Index];
-		FVector NewLocation = Reference->GetActorLocation()+ FMath::VRand() * 1;
-		//Teleport the cloned objects
-		ClonedObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
-		//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
-		ClonedObjects[Index]->SetActorRotation(Reference->GetActorRotation());
-		//
-	}
 
-
-	/*
 	
-	// Destroy cloned objects
-	for (int32 Index = 0; Index != ClonedObjects.Num(); ++Index)
+	// Update the location of all cloned Articulated objects
+	for (int32 Index = 0; Index != ClonedArticulatedObjects.Num(); ++Index)
 	{
-
-		ClonedObjects[Index]->Destroy();
+		AActor* Reference = ArticulatedObjects[Index];
+		FVector NewLocation = Reference->GetActorLocation();
+		//Teleport the cloned objects
+		ClonedArticulatedObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
 		//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
+		ClonedArticulatedObjects[Index]->SetActorRotation(Reference->GetActorRotation());
+		
+	}
+
+	// Update the location of all cloned Dynamic objects
+	for (int32 Index = 0; Index != ClonedDynamicObjects.Num(); ++Index)
+	{
+		ClonedDynamicObjects[Index]->SetActorHiddenInGame(false);
+		AActor* Reference = DynamicObjects[Index];
+		FVector NewLocation = Reference->GetActorLocation() + FMath::VRand() * 1;
+		//Teleport the cloned objects
+		ClonedDynamicObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
+		//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
+		ClonedDynamicObjects[Index]->SetActorRotation(Reference->GetActorRotation());
 
 	}
-	ClonedObjects.Empty();
 
-	// Find all movable objects
+
+	
+}
+
+// Spawn Dynamic Objects at the begin play but set them to be invisible at the beginning
+void AMyPawn::SpawnDynamicObjects()
+{
 	UWorld* const World = GetWorld();
-	for (TActorIterator<AStaticMeshActor> ActorItr(World); ActorItr; ++ActorItr)
+	DynamicObjects = FTags::GetActorsWithKeyValuePair(GetWorld(), "RoboWorld", "ObjectType", "Dynamic");
+	for (int32 Index = 0; Index != DynamicObjects.Num(); ++Index)
 	{
-		if (ActorItr->IsRootComponentMovable())
-			if(ActorItr->ActorHasTag("MovableObjects"))
-			{
-			AStaticMeshActor* Mesh = *ActorItr;
-			//UE_LOG(LogTemp, Warning, TEXT("find a actor %s"), *Mesh->GetName());
-			UpdateMeshes.Add(Mesh);
-			}
-	}
-	// Spawn the template actors
-	for (int32 Index = 0; Index != UpdateMeshes.Num(); ++Index)
-	{
+		DynamicObjects[Index]->SetActorHiddenInGame(true);
+		//UE_LOG(LogTemp, Warning, TEXT("DynamicObjects contains %s"), *ClonedObjects[Index]->GetName());
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
 		SpawnParams.Instigator = Instigator;
-		AStaticMeshActor* DuplicateMesh = UpdateMeshes[Index];
-		SpawnParams.Template = DuplicateMesh;
+		SpawnParams.Template = DynamicObjects[Index];
 
 		// The random error location to spawn  + FMath::VRand() * 5
-		FVector SpawnLocation = FMath::VRand() * 1;
+		FVector WorldLocation = DynamicObjects[Index]->GetActorLocation();
+
+		FVector SpawnLocation = FVector(0,0,0);
 
 		// The rotation to spawn
 		FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
 
+		// The name of the spawned actor
+		FName DuplicatedName = DynamicObjects[Index]->GetFName();
+
 		// Spawn the objects 
-		AStaticMeshActor* SpawnActor = World->SpawnActor<AStaticMeshActor>(DuplicateMesh->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
+		AActor* SpawnActor = World->SpawnActor<AActor>(DynamicObjects[Index]->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
+		SpawnActor->SetActorLocation(WorldLocation);
+		SpawnActor->SetActorRotation(DynamicObjects[Index]->GetActorRotation());
+		SpawnActor->SetActorHiddenInGame(true);
+		SpawnActor->DisableComponentsSimulatePhysics();
+		Cast<UStaticMeshComponent>(SpawnActor->GetComponentByClass(UStaticMeshComponent::StaticClass()))->SetCollisionProfileName(TEXT("OverlapAll"));
+		SpawnActor->SetActorLabel(DuplicatedName.ToString() + "copy");
+		ClonedDynamicObjects.Add(SpawnActor);
+		UE_LOG(LogTemp, Warning, TEXT("DuplicateDynamicMesh %s"), *ClonedDynamicObjects[Index]->GetName());
+	
+	}
+	
+}
+
+void AMyPawn::SpawnArticulatedObjects()
+{
+	UWorld* const World = GetWorld();
+	ArticulatedObjects = FTags::GetActorsWithKeyValuePair(GetWorld(), "RoboWorld", "ObjectType", "Articulated");
+	for (int32 Index = 0; Index != ArticulatedObjects.Num(); ++Index)
+	{
+		ArticulatedObjects[Index]->SetActorHiddenInGame(true);
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = Instigator;
+		SpawnParams.Template = ArticulatedObjects[Index];
+
+		// The random error location to spawn  + FMath::VRand() * 5
+		FVector WorldLocation = ArticulatedObjects[Index]->GetActorLocation();
+
+		FVector SpawnLocation = FVector(0, 0, 0);
+
+		// The rotation to spawn
+		FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
+
+		// The name of the spawned actor
+		FName DuplicatedName = ArticulatedObjects[Index]->GetFName();
+
+		// Spawn the objects 
+		AActor* SpawnActor = World->SpawnActor<AActor>(ArticulatedObjects[Index]->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
+		SpawnActor->SetActorLocation(WorldLocation);
+		SpawnActor->SetActorRotation(ArticulatedObjects[Index]->GetActorRotation());
 		SpawnActor->SetActorHiddenInGame(false);
 		SpawnActor->DisableComponentsSimulatePhysics();
-		SpawnActor->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
-		ClonedObjects.Add(SpawnActor);
-		//UE_LOG(LogTemp, Warning, TEXT("location %s"), *DuplicateMesh->GetActorLocation().ToString());
-		//UE_LOG(LogTemp, Warning, TEXT("spawn location %s"), *SpawnActor->GetActorLocation().ToString());
+		Cast<UStaticMeshComponent>(SpawnActor->GetComponentByClass(UStaticMeshComponent::StaticClass()))->SetCollisionProfileName(TEXT("OverlapAll"));
+		SpawnActor->SetActorLabel(DuplicatedName.ToString() + "copy");
+		ClonedArticulatedObjects.Add(SpawnActor);
+		//UE_LOG(LogTemp, Warning, TEXT("DuplicateArticulatedMesh %s"), *ClonedArticulatedObjects[Index]->GetName());
+
+		// Do this for the Handler attach to the drawer,change the attach to location
+		if (ArticulatedObjects[Index]->GetAttachParentActor() != NULL)
+		{
+			
+			SpawnActor->AttachToActor(RootActor, FAttachmentTransformRules::KeepWorldTransform);
+		}
 	}
-	// Empty all elements in array
-	UpdateMeshes.Empty();
-	*/
+
 }
+
 
 
 

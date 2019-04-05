@@ -21,11 +21,14 @@ public:
 	// Sets default values for this component's properties
 	UBodyCollider();
 
-	UPROPERTY(EditAnywhere, Category = ViveTracker)
-		UMotionControllerComponent* ViveTracker1;
+	/*UPROPERTY(EditAnywhere, Category = ViveTracker)
+		UMotionControllerComponent* ViveTracker1;*/
 
 	UPROPERTY(EditAnywhere, Category = ViveTracker)
 		UMotionControllerComponent* ViveTracker2;
+
+	UPROPERTY(EditAnywhere, Category = ViveTracker)
+		float OffsetValue;
 
 protected:
 	// Called when the game starts
@@ -79,6 +82,6 @@ private:
 	UPROPERTY()
 		UCameraComponent* MyCamera;
 
-
+	
 
 };
