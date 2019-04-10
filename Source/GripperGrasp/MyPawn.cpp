@@ -45,8 +45,8 @@ void AMyPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
-	Frustum->SetActorLocation(VRCamera->GetComponentLocation()+FVector(178.936,0,0), false, (FHitResult*)nullptr, ETeleportType::None);
-	Frustum->SetActorRotation(VRCamera->GetComponentRotation()+FRotator(0,90,0), ETeleportType::None);
+	Frustum->SetActorLocation(VRCamera->GetComponentLocation(), false, (FHitResult*)nullptr, ETeleportType::None);
+	Frustum->SetActorRotation(VRCamera->GetComponentRotation(), ETeleportType::None);
 }
 
 // Called to bind functionality to input
@@ -59,32 +59,43 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyPawn::UpdateView()
 {
-
+	// Return the objects that are inside the frustum
+	TArray<AActor*> OverlappingActors;
+	Frustum->GetOverlappingActors(OverlappingActors,TSubclassOf<AStaticMeshActor>());
+	for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Overlapping actosr:  %s"), *OverlappingActors[Index]->GetName());
+	}
 	
 	// Update the location of all cloned Articulated objects
 	for (int32 Index = 0; Index != ClonedArticulatedObjects.Num(); ++Index)
 	{
-		AActor* Reference = ArticulatedObjects[Index];
-		FVector NewLocation = Reference->GetActorLocation();
-		//Teleport the cloned objects
-		ClonedArticulatedObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
-		//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
-		ClonedArticulatedObjects[Index]->SetActorRotation(Reference->GetActorRotation());
-		
+		if (OverlappingActors.Contains(ClonedArticulatedObjects[Index]))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Overlapping Articulated actors:  %s"), *ClonedArticulatedObjects[Index]->GetName());
+			AActor* Reference = ArticulatedObjects[Index];
+			FVector NewLocation = Reference->GetActorLocation();
+			//Teleport the cloned objects
+			ClonedArticulatedObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
+			//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
+			ClonedArticulatedObjects[Index]->SetActorRotation(Reference->GetActorRotation());
+		}
 	}
 
 	// Update the location of all cloned Dynamic objects
 	for (int32 Index = 0; Index != ClonedDynamicObjects.Num(); ++Index)
-	{
-		ClonedDynamicObjects[Index]->SetActorHiddenInGame(false);
-		AActor* Reference = DynamicObjects[Index];
-		FVector NewLocation = Reference->GetActorLocation() + FMath::VRand() * 1;
-		//Teleport the cloned objects
-		ClonedDynamicObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
-		//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
-		ClonedDynamicObjects[Index]->SetActorRotation(Reference->GetActorRotation());
-
-	}
+		if (OverlappingActors.Contains(ClonedDynamicObjects[Index]))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Overlapping Dynamic actors:  %s"), *ClonedDynamicObjects[Index]->GetName());
+			ClonedDynamicObjects[Index]->SetActorHiddenInGame(false);
+			AActor* Reference = DynamicObjects[Index];
+			FVector NewLocation = Reference->GetActorLocation() + FMath::VRand() * 1;
+			//Teleport the cloned objects
+			ClonedDynamicObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
+			//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
+			ClonedDynamicObjects[Index]->SetActorRotation(Reference->GetActorRotation());
+		}
+	
 
 
 	
