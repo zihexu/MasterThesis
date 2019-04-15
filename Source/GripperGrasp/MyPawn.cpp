@@ -35,6 +35,11 @@ void AMyPawn::BeginPlay()
 	// Spawn all the Articulated Objects
 	SpawnArticulatedObjects();
 
+	////Bind overlapping events
+	//Frustum->OnActorBeginOverlap.AddDynamic(this, &AMyPawn::OnActorBeginOverlap);
+	//Frustum->OnActorBeginOverlap.AddDynamic(this, &AMyPawn::OnActorEndOverlap);
+	SMFrustum->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyPawn::OnOverlapBeginBody);
+	SMFrustum->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &AMyPawn::OnOverlapEndBody);
 
 	
 }
@@ -54,6 +59,7 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	InputComponent->BindAction("UpdateViewTouchpad", EInputEvent::IE_Pressed, this, &AMyPawn::UpdateView);
+
 
 }
 
@@ -183,6 +189,31 @@ void AMyPawn::SpawnArticulatedObjects()
 		}
 	}
 
+}
+
+// check overlapping begin for controller enters in the frustum
+void AMyPawn::OnOverlapBeginBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor != nullptr)
+	{
+		if (OtherActor->GetName().Contains("WSGBase"))
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("controller enter %s"), *OtherActor->GetName());
+			OtherComp->SetRenderCustomDepth(false);
+		}
+	}
+}
+
+// check overlapping end for controller enters in the frustum
+void AMyPawn::OnOverlapEndBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor != nullptr)
+	{
+		if (OtherActor->GetName().Contains("WSGBase"))
+		{
+			OtherComp->SetRenderCustomDepth(true);
+		}
+	}
 }
 
 

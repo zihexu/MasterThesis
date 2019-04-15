@@ -34,7 +34,8 @@ void UBodyCollider::BeginPlay()
 	Super::BeginPlay();
 
 	
-	UCameraComponent* MyCamera = CastChecked<UCameraComponent>(this->GetOwner()->FindComponentByClass(UCameraComponent::StaticClass()));
+	//UCameraComponent* MyCamera = CastChecked<UCameraComponent>(this->GetOwner()->FindComponentByClass(UCameraComponent::StaticClass()));
+	//UE_LOG(LogTemp, Warning, TEXT("FIND THE CAMERA %s"),*MyCamera->GetName());
 
 	//if (GEngine) GEngine->GetFirstLocalPlayerController(GetWorld())->PlayerCameraManager->bEnableFading = true;
 
@@ -133,8 +134,11 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 	{
 		if (SpawnArrowIndicator)
 		{
-			if (OtherActor->ActorHasTag("Collider"))
+			if (OtherActor->ActorHasTag("RoboWorld;ObjectType,Articulated;") || OtherActor->ActorHasTag("RoboWorld;ObjectType,Static;"))
 			{
+				// play the colliding sound
+				UGameplayStatics::PlaySoundAtLocation(this, CollideSound, OtherActor->GetActorLocation());
+
 				i = i + 1;
 				bShowIndicator = 1;
 				bDarkView = 1;
@@ -150,6 +154,7 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 					SpawnParams.Owner = GetOwner();
 
 					FVector SpawnLocation = (GetComponentLocation()+OtherActor->GetActorLocation())*0.5;
+					
 					FRotator SpawnRotation = GetComponentRotation();
 					// Spawn the arrow indicator
 					ArrowIndicators.Emplace(World->SpawnActor<ASpawnActor>(SpawnArrowIndicator, SpawnLocation, SpawnRotation, SpawnParams));

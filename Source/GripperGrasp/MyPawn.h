@@ -8,6 +8,7 @@
 #include "Engine/StaticMeshActor.h"
 #include "SpawnActor.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/PrimitiveComponent.h"
 #include "MyPawn.generated.h"
 
 UCLASS()
@@ -49,6 +50,9 @@ private:
 		AActor* Frustum;
 
 	UPROPERTY(EditAnywhere)
+		AStaticMeshActor* SMFrustum;
+
+	UPROPERTY(EditAnywhere)
 		TArray<AStaticMeshActor*> UpdateMeshes;
 
 	UPROPERTY(EditAnywhere)
@@ -67,7 +71,7 @@ private:
 		TArray<AActor*> ClonedArticulatedObjects;
 
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<ASpawnActor> ActorToSpawn;
+		FVector ContactPointLoc;
 
 	//Update View Function
 	UFUNCTION()
@@ -78,6 +82,20 @@ private:
 
 	UFUNCTION()
 		void SpawnArticulatedObjects();
-	
+
+	/*UFUNCTION()
+		void OnActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+
+	UFUNCTION()
+		void OnActorEndOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	*/
+
+	// Declare overlap begin function
+	UFUNCTION()
+		void OnOverlapBeginBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// Declare overlap end function
+	UFUNCTION()
+		void OnOverlapEndBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
 };

@@ -8,7 +8,7 @@ public class GripperGrasp : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" , "UTags"});
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" , "UTags", "USemLog"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "HeadMountedDisplay", "UMCPlayer" });
 

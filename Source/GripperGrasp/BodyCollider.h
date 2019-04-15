@@ -9,6 +9,7 @@
 #include "Public/Containers/Array.h"
 #include "MCPawn.h"
 #include "MotionControllerComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "BodyCollider.generated.h"
 
 
@@ -82,6 +83,9 @@ private:
 	UPROPERTY()
 		UCameraComponent* MyCamera;
 
+	/** Sound to play each time collide event happens */
+	UPROPERTY(EditAnywhere)
+		class USoundBase* CollideSound;
 	
 
 };
