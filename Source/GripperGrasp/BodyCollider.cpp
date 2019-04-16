@@ -89,7 +89,9 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 				//Teleport the arrow indicator to the forward location of player's camera
 				ArrowIndicators[Index]->SetActorLocation((GetComponentLocation() + GetForwardVector() * 50), false, (FHitResult*)nullptr, ETeleportType::None);
 				//Keep the arrow indicator's rotation to look at the colliding actors
-				FVector LookatDirection = OverlappingActors[Index]->GetActorLocation() - (ArrowIndicators[Index]->GetActorLocation());
+				//FVector LookatDirection = OverlappingActors[Index]->GetActorLocation() - (ArrowIndicators[Index]->GetActorLocation());
+				FVector LookatDirection = HitPosition[Index] - (ArrowIndicators[Index]->GetActorLocation());
+
 				FRotator lookAtRotator = FRotationMatrix::MakeFromX(LookatDirection).Rotator();
 				ArrowIndicators[Index]->SetActorRotation(lookAtRotator);
 		
@@ -138,6 +140,10 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 			{
 				// play the colliding sound
 				UGameplayStatics::PlaySoundAtLocation(this, CollideSound, OtherActor->GetActorLocation());
+
+				// save the overlapping event hit position to be used for the arrow to point
+				HitPosition.Emplace(SweepResult.Location);
+
 
 				i = i + 1;
 				bShowIndicator = 1;

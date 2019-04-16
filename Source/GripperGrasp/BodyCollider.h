@@ -69,6 +69,9 @@ private:
 		TArray<ASpawnActor*> ArrowIndicators;
 
 	UPROPERTY()
+		TArray<FVector> HitPosition;
+
+	UPROPERTY()
 		int i = -1;
 
 	UPROPERTY()
