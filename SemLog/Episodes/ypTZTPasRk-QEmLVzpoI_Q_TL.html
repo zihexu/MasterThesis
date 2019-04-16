@@ -1,0 +1,56 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	 google.charts.load("current", {packages:["timeline"]});
+	 google.charts.setOnLoadCallback(drawChart);
+	 function drawChart() {
+		 var container = document.getElementById('event_tl');
+		 var chart = new google.visualization.Timeline(container);
+		 var dataTable = new google.visualization.DataTable();
+
+ 		 dataTable.addColumn({ type: 'string', id: 'context' });
+		 dataTable.addColumn({ type: 'string', id: 'event_id' });
+		 dataTable.addColumn({ type: 'string', role: 'tooltip', 'p': {'html': true} });
+		 dataTable.addColumn({ type: 'number', id: 'start' });
+		 dataTable.addColumn({ type: 'number', id: 'end' });
+
+		 dataTable.addRows([
+
+		 [ 'SupportedBy - 4942367105' , 'jsbIH8RQ20Kv8Weu_8ym4Q' , createTooltipHTMLContent(4.131519, 4.532827, 'SupportingItem','PKDrawerCab','Id','mNu6ODmNDE-7bVrdWdvhsg','SupportedItem','Cube','Id','ZAvyhyeuI0OI8MKuLDDRUw','Id','jsbIH8RQ20Kv8Weu_8ym4Q'), 4131.519531 , 4532.827148 ],
+		 [ 'Contact - 4942367105' , 'lUBLq8Ybz0mqQqBrHKsVgw' , createTooltipHTMLContent(4.123186, 4.532827, 'O1','Cube','Id','ZAvyhyeuI0OI8MKuLDDRUw','O2','PKDrawerCab','Id','mNu6ODmNDE-7bVrdWdvhsg','Id','lUBLq8Ybz0mqQqBrHKsVgw'), 4123.185547 , 4532.827148 ],
+		 [ 'Contact - 4940180052' , 'R6UEAAyc8E2MfbEwelHSNQ' , createTooltipHTMLContent(4.22319, 4.549495, 'O1','Cube','Id','ZAvyhyeuI0OI8MKuLDDRUw','O2','PKHandleL66','Id','NVE4AnWGcEu43YCSuiDV_Q','Id','R6UEAAyc8E2MfbEwelHSNQ'), 4223.19043 , 4549.494629 ],
+		 [ 'Contact - 4939583667' , 'MwnSbriQP02PFa6B9QY7ug' , createTooltipHTMLContent(4.22319, 4.549495, 'O1','Cube','Id','ZAvyhyeuI0OI8MKuLDDRUw','O2','PKHandleL66','Id','1CCH62LD60KIwYxDDUwngw','Id','MwnSbriQP02PFa6B9QY7ug'), 4223.19043 , 4549.494629 ],
+		 [ 'SupportedBy - 4941074697' , '-wDJEF5sb0SPVW1YeSRRyA' , createTooltipHTMLContent(4.131519, 4.58283, 'SupportingItem','PKDrawer_56_75_39','Id','qdsw13mIek6iu2UE1cgNuA','SupportedItem','Cube','Id','ZAvyhyeuI0OI8MKuLDDRUw','Id','-wDJEF5sb0SPVW1YeSRRyA'), 4131.519531 , 4582.830078 ],
+		 [ 'Contact - 4941074697' , '_7kHAOAUQ0q8Sqi4GK7RYg' , createTooltipHTMLContent(4.123186, 4.58283, 'O1','Cube','Id','ZAvyhyeuI0OI8MKuLDDRUw','O2','PKDrawer_56_75_39','Id','qdsw13mIek6iu2UE1cgNuA','Id','_7kHAOAUQ0q8Sqi4GK7RYg'), 4123.185547 , 4582.830078 ],
+		 [ 'SupportedBy - 4940875880' , 'vQKcV7b_KE6nxQ2KGRlqTA' , createTooltipHTMLContent(4.131519, 4.58283, 'SupportingItem','PKDrawer_56_75_39','Id','HUVfMmA9k0mOJZqfiyCNdg','SupportedItem','Cube','Id','ZAvyhyeuI0OI8MKuLDDRUw','Id','vQKcV7b_KE6nxQ2KGRlqTA'), 4131.519531 , 4582.830078 ],
+		 [ 'Contact - 4940875880' , '_h9c7agUckCqo5HbhEh50w' , createTooltipHTMLContent(4.123186, 4.58283, 'O1','Cube','Id','ZAvyhyeuI0OI8MKuLDDRUw','O2','PKDrawer_56_75_39','Id','HUVfMmA9k0mOJZqfiyCNdg','Id','_h9c7agUckCqo5HbhEh50w'), 4123.185547 , 4582.830078 ],
+
+		]);
+
+		 var options = {
+			 timeline: {showRowLabels: true, colorByRowLabel: true},
+			 avoidOverlappingGridLines: false,
+			 tooltip: {isHtml: true}
+		 };
+		 chart.draw(dataTable, options);
+	 }
+	 function createTooltipHTMLContent(Start, End, Key1, Val1, Key2, Val2, Key3, Val3, Key4, Val4, Key5, Val5){
+		 return '<center>' +
+			 '<font size="3">' +
+			 '<p><strong>Duration:</strong> ' + (End - Start).toFixed(3) + 's</p>' +
+			 '<p>' + Start + 's - ' + End + 's</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="2">' +
+			 '<p><strong>' + Key1 + ':</strong> ' + Val1 + '</p>' +
+			 '<p><strong>' + Key2 + ':</strong> ' + Val2 + '</p>' +
+			 '<hr/>' +
+			 '<p><strong>' + Key3 + ':</strong> ' + Val3 + '</p>' +
+			 '<p><strong>' + Key4 + ':</strong> ' + Val4 + '</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="1">' +
+			 '<p><strong>' + Key5 + ':</strong> ' + Val5 + '</p>' +
+			 '</font>' +
+			 '</center>'	 }</script>
+<div id="event_tl" style="height:900px;"></div>
