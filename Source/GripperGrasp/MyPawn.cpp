@@ -7,7 +7,7 @@
 #include "Tags.h"
 
 
-// Sets default values
+// Sets default values, create MCRoot and VRCamera to MyPawn.
 AMyPawn::AMyPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -94,7 +94,7 @@ void AMyPawn::UpdateView()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Overlapping Dynamic actors:  %s"), *ClonedDynamicObjects[Index]->GetName());
 			ClonedDynamicObjects[Index]->SetActorHiddenInGame(false);
-			AActor* Reference = DynamicObjects[Index];
+			AActor* Reference = DynamicActors[Index];
 			FVector NewLocation = Reference->GetActorLocation() + FMath::VRand() * 1;
 			//Teleport the cloned objects
 			ClonedDynamicObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
@@ -111,18 +111,26 @@ void AMyPawn::UpdateView()
 void AMyPawn::SpawnDynamicObjects()
 {
 	UWorld* const World = GetWorld();
-	DynamicObjects = FTags::GetActorsWithKeyValuePair(GetWorld(), "RoboWorld", "ObjectType", "Dynamic");
-	for (int32 Index = 0; Index != DynamicObjects.Num(); ++Index)
+	DynamicActors = FTags::GetActorsWithKeyValuePair(GetWorld(), "RoboWorld", "ObjectType", "Dynamic");
+	for (int32 Index = 0; Index != DynamicActors.Num(); ++Index)
 	{
-		DynamicObjects[Index]->SetActorHiddenInGame(true);
+		DynamicStaticMeshActors.Add(Cast<AStaticMeshActor>(DynamicActors[Index]));
+
+	}
+
+
+
+	for (int32 Index = 0; Index != DynamicActors.Num(); ++Index)
+	{
+		DynamicActors[Index]->SetActorHiddenInGame(true);
 		//UE_LOG(LogTemp, Warning, TEXT("DynamicObjects contains %s"), *ClonedObjects[Index]->GetName());
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
 		SpawnParams.Instigator = Instigator;
-		SpawnParams.Template = DynamicObjects[Index];
+		SpawnParams.Template = DynamicActors[Index];
 
 		// The random error location to spawn  + FMath::VRand() * 5
-		FVector WorldLocation = DynamicObjects[Index]->GetActorLocation();
+		FVector WorldLocation = DynamicActors[Index]->GetActorLocation();
 
 		FVector SpawnLocation = FVector(0,0,0);
 
@@ -130,12 +138,12 @@ void AMyPawn::SpawnDynamicObjects()
 		FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
 
 		// The name of the spawned actor
-		FName DuplicatedName = DynamicObjects[Index]->GetFName();
+		FName DuplicatedName = DynamicActors[Index]->GetFName();
 
 		// Spawn the objects 
-		AActor* SpawnActor = World->SpawnActor<AActor>(DynamicObjects[Index]->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
+		AActor* SpawnActor = World->SpawnActor<AActor>(DynamicActors[Index]->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
 		SpawnActor->SetActorLocation(WorldLocation);
-		SpawnActor->SetActorRotation(DynamicObjects[Index]->GetActorRotation());
+		SpawnActor->SetActorRotation(DynamicActors[Index]->GetActorRotation());
 		SpawnActor->SetActorHiddenInGame(true);
 		SpawnActor->DisableComponentsSimulatePhysics();
 		Cast<UStaticMeshComponent>(SpawnActor->GetComponentByClass(UStaticMeshComponent::StaticClass()))->SetCollisionProfileName(TEXT("OverlapAll"));

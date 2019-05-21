@@ -59,7 +59,10 @@ private:
 		TArray<AActor*> ClonedObjects;
 
 	UPROPERTY(EditAnywhere)
-		TArray<AActor*> DynamicObjects;
+		TArray<AActor*> DynamicActors;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AStaticMeshActor*> DynamicStaticMeshActors;
 
 	UPROPERTY(EditAnywhere)
 		TArray<AActor*> ClonedDynamicObjects;
@@ -72,6 +75,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		FVector ContactPointLoc;
+
+	UPROPERTY(EditAnywhere)
+		TMap < AStaticMeshActor*,AStaticMeshActor* > RealToVisual;
 
 	//Update View Function
 	UFUNCTION()
