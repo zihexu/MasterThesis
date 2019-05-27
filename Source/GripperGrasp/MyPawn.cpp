@@ -5,6 +5,7 @@
 #include "Public/EngineUtils.h"
 #include "GameFramework/PlayerController.h"
 #include "Tags.h"
+#include "GameFramework/Actor.h"
 
 
 // Sets default values, create MCRoot and VRCamera to MyPawn.
@@ -40,7 +41,8 @@ void AMyPawn::BeginPlay()
 	//Frustum->OnActorBeginOverlap.AddDynamic(this, &AMyPawn::OnActorEndOverlap);
 	SMFrustum->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyPawn::OnOverlapBeginBody);
 	SMFrustum->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &AMyPawn::OnOverlapEndBody);
-
+	
+	
 	
 }
 
@@ -65,42 +67,100 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyPawn::UpdateView()
 {
+	// Clean up the CurrentVisibleMeshes Array every time update view.
+	CurrentVisibleMeshes.Empty();
 	// Return the objects that are inside the frustum
 	TArray<AActor*> OverlappingActors;
 	Frustum->GetOverlappingActors(OverlappingActors,TSubclassOf<AStaticMeshActor>());
+	// Check overlapping objects are actually perceived by the user, specially for invisible real meshes.
 	for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Overlapping actosr:  %s"), *OverlappingActors[Index]->GetName());
-	}
-	
-	// Update the location of all cloned Articulated objects
-	for (int32 Index = 0; Index != ClonedArticulatedObjects.Num(); ++Index)
-	{
-		if (OverlappingActors.Contains(ClonedArticulatedObjects[Index]))
+		// Do LineTraceSinglebyChannel, get perceived objects without occluded by other actors.
+		FVector StartLocation = VRCamera->GetComponentLocation();
+		FVector EndLocation = OverlappingActors[Index]->GetActorLocation();
+		FHitResult OutHit;
+		ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
+		FCollisionQueryParams CollisionParams;
+		// Todo: add ignored actor of the TMap corresponding visual or real actor.
+		// Get the corrresponding visual meshes by Find Reference on TMap.
+		if (RealToVisual.Contains(Cast<AStaticMeshActor>(OverlappingActors[Index])))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Overlapping Articulated actors:  %s"), *ClonedArticulatedObjects[Index]->GetName());
-			AActor* Reference = ArticulatedObjects[Index];
-			FVector NewLocation = Reference->GetActorLocation();
-			//Teleport the cloned objects
-			ClonedArticulatedObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
-			//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
-			ClonedArticulatedObjects[Index]->SetActorRotation(Reference->GetActorRotation());
+			AStaticMeshActor* OverlappingActorPtr = Cast<AStaticMeshActor>(OverlappingActors[Index]);
+			AStaticMeshActor* VisualCorrespondingMesh = RealToVisual.FindRef(OverlappingActorPtr);
+			//CollisionParams.AddIgnoredActor(Cast<AActor>(VisualCorrespondingMesh));
+			CollisionParams.AddIgnoredActor(OverlappingActors[Index]);
+			// ignore all visual meshes in world
+			for (int32 i = 0; i != AllVisualObjects.Num(); ++i)
+			{
+				CollisionParams.AddIgnoredActor(Cast<AActor>(AllVisualObjects[i]));
+			}
+			
+
+			bool bHit = GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocation, TraceChannel, CollisionParams);
+			if (!bHit)
+			{
+				// Save perceived real meshes in to CurrentVisibleMeshes Array
+				CurrentVisibleMeshes.Emplace(Cast<AStaticMeshActor>(OverlappingActors[Index]));
+				// Update the position and location of the visual meshes.
+				FVector Location = OverlappingActors[Index]->GetActorLocation() + FMath::VRand() * 0.5;
+				FRotator Rotation = OverlappingActors[Index]->GetActorRotation();
+				VisualCorrespondingMesh->SetActorLocation(Location, false, (FHitResult*)nullptr, ETeleportType::None);
+				VisualCorrespondingMesh->SetActorRotation(Rotation);
+				VisualCorrespondingMesh->SetActorHiddenInGame(false);
+				UE_LOG(LogTemp, Warning, TEXT("Perceived Overlapping actors:  %s"), *OverlappingActors[Index]->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("Perceived Overlapping actors:  %s"), *VisualCorrespondingMesh->GetName());
+			}
+
+			/*if (bHit)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("NonPerceived Overlapping actors:  %s"), *OverlappingActors[Index]->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("Collision actors:  %s"), *OutHit.Actor->GetName());
+			}*/
 		}
 	}
 
-	// Update the location of all cloned Dynamic objects
-	for (int32 Index = 0; Index != ClonedDynamicObjects.Num(); ++Index)
-		if (OverlappingActors.Contains(ClonedDynamicObjects[Index]))
+
+		// Find visual meshes are perceived by the user, but real mesh are ouside the view, set visual mesh to be invisible.
+	for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
+	{
+		if (VisualToReal.Contains(Cast<AStaticMeshActor>(OverlappingActors[Index])))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Overlapping Dynamic actors:  %s"), *ClonedDynamicObjects[Index]->GetName());
-			ClonedDynamicObjects[Index]->SetActorHiddenInGame(false);
-			AActor* Reference = DynamicActors[Index];
-			FVector NewLocation = Reference->GetActorLocation() + FMath::VRand() * 1;
-			//Teleport the cloned objects
-			ClonedDynamicObjects[Index]->SetActorLocation(NewLocation, false, (FHitResult*)nullptr, ETeleportType::None);
-			//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
-			ClonedDynamicObjects[Index]->SetActorRotation(Reference->GetActorRotation());
+			// Do LineTraceSinglebyChannel, get perceived objects without occluded by other actors.
+			FVector StartLocation = VRCamera->GetComponentLocation();
+			FVector EndLocation = OverlappingActors[Index]->GetActorLocation();
+			FHitResult OutHit;
+			ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
+			FCollisionQueryParams CollisionParams;
+		
+		
+			AStaticMeshActor* RealMeshPtr = Cast<AStaticMeshActor>(OverlappingActors[Index]);
+			AStaticMeshActor* RealCorrespondingActor= VisualToReal.FindRef(RealMeshPtr);
+			CollisionParams.AddIgnoredActor(Cast<AActor>(RealCorrespondingActor));
+			CollisionParams.AddIgnoredActor(OverlappingActors[Index]);
+			bool bHit = GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocation, TraceChannel, CollisionParams);
+			if (!bHit)
+			{
+				if (CurrentVisibleMeshes.Contains(RealCorrespondingActor))
+				{
+					UE_LOG(LogTemp, Warning, TEXT("real objects perceived:  %s"), *RealCorrespondingActor->GetName());
+
+				}
+				else
+				{
+					// Find the visual meshes lost connect to the real mesh, set it to be invisible.
+					OverlappingActors[Index]->SetActorHiddenInGame(true);
+					UE_LOG(LogTemp, Warning, TEXT("visual mesh lost connection:  %s"), *OverlappingActors[Index]->GetName());
+				}
+			}
+			
 		}
+		
+
+	}
+	
+	
+
+	
 	
 
 
@@ -114,87 +174,87 @@ void AMyPawn::SpawnDynamicObjects()
 	DynamicActors = FTags::GetActorsWithKeyValuePair(GetWorld(), "RoboWorld", "ObjectType", "Dynamic");
 	for (int32 Index = 0; Index != DynamicActors.Num(); ++Index)
 	{
-		DynamicStaticMeshActors.Add(Cast<AStaticMeshActor>(DynamicActors[Index]));
-
-	}
-
-
-
-	for (int32 Index = 0; Index != DynamicActors.Num(); ++Index)
-	{
+		// Set real objects to invisible
 		DynamicActors[Index]->SetActorHiddenInGame(true);
-		//UE_LOG(LogTemp, Warning, TEXT("DynamicObjects contains %s"), *ClonedObjects[Index]->GetName());
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.Owner = this;
-		SpawnParams.Instigator = Instigator;
-		SpawnParams.Template = DynamicActors[Index];
-
-		// The random error location to spawn  + FMath::VRand() * 5
-		FVector WorldLocation = DynamicActors[Index]->GetActorLocation();
-
-		FVector SpawnLocation = FVector(0,0,0);
-
-		// The rotation to spawn
-		FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
-
-		// The name of the spawned actor
-		FName DuplicatedName = DynamicActors[Index]->GetFName();
-
-		// Spawn the objects 
-		AActor* SpawnActor = World->SpawnActor<AActor>(DynamicActors[Index]->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
-		SpawnActor->SetActorLocation(WorldLocation);
-		SpawnActor->SetActorRotation(DynamicActors[Index]->GetActorRotation());
-		SpawnActor->SetActorHiddenInGame(true);
-		SpawnActor->DisableComponentsSimulatePhysics();
-		Cast<UStaticMeshComponent>(SpawnActor->GetComponentByClass(UStaticMeshComponent::StaticClass()))->SetCollisionProfileName(TEXT("OverlapAll"));
-		SpawnActor->SetActorLabel(DuplicatedName.ToString() + "copy");
-		ClonedDynamicObjects.Add(SpawnActor);
-		UE_LOG(LogTemp, Warning, TEXT("DuplicateDynamicMesh %s"), *ClonedDynamicObjects[Index]->GetName());
-	
+		// Cast AActor to AStaticMeshActor
+		DynamicStaticMeshActors.Add(Cast<AStaticMeshActor>(DynamicActors[Index]));
+		// Make a copy of the static mesh actor
+		FVector location = DynamicStaticMeshActors[Index]->GetActorLocation();
+		FRotator rotation = DynamicStaticMeshActors[Index]->GetActorRotation();		
+		AStaticMeshActor* SpawnedActor1 = (AStaticMeshActor*)World->SpawnActor(DynamicStaticMeshActors[Index]->StaticClass(), &location, &rotation);
+		SpawnedActor1->SetActorLabel("Visual" + DynamicStaticMeshActors[Index]->GetFName().ToString());
+		SpawnedActor1->GetStaticMeshComponent()->SetStaticMesh(DynamicStaticMeshActors[Index]->GetStaticMeshComponent()->GetStaticMesh());
+		SpawnedActor1->SetActorHiddenInGame(true);
+		SpawnedActor1->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
+		SpawnedActor1->GetStaticMeshComponent()->SetGenerateOverlapEvents(true);
+		SpawnedActor1->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
+		AllVisualObjects.Emplace(SpawnedActor1);
+		// Fill in TMap
+		RealToVisual.Emplace(DynamicStaticMeshActors[Index], SpawnedActor1);
+		VisualToReal.Emplace(SpawnedActor1, DynamicStaticMeshActors[Index]);
 	}
+
+
+
+	//for (int32 Index = 0; Index != DynamicActors.Num(); ++Index)
+	//{
+	//	DynamicActors[Index]->SetActorHiddenInGame(true);
+	//	//UE_LOG(LogTemp, Warning, TEXT("DynamicObjects contains %s"), *ClonedObjects[Index]->GetName());
+	//	FActorSpawnParameters SpawnParams;
+	//	SpawnParams.Owner = this;
+	//	SpawnParams.Instigator = Instigator;
+	//	SpawnParams.Template = DynamicActors[Index];
+
+	//	// The random error location to spawn  + FMath::VRand() * 5
+	//	FVector WorldLocation = DynamicActors[Index]->GetActorLocation();
+
+	//	FVector SpawnLocation = FVector(0,0,0);
+
+	//	// The rotation to spawn
+	//	FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
+
+	//	// The name of the spawned actor
+	//	FName DuplicatedName = DynamicActors[Index]->GetFName();
+
+	//	// Spawn the objects 
+	//	AActor* SpawnActor = World->SpawnActor<AActor>(DynamicActors[Index]->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
+	//	SpawnActor->SetActorLocation(WorldLocation);
+	//	SpawnActor->SetActorRotation(DynamicActors[Index]->GetActorRotation());
+	//	SpawnActor->SetActorHiddenInGame(true);
+	//	SpawnActor->DisableComponentsSimulatePhysics();
+	//	Cast<UStaticMeshComponent>(SpawnActor->GetComponentByClass(UStaticMeshComponent::StaticClass()))->SetCollisionProfileName(TEXT("OverlapAll"));
+	//	SpawnActor->SetActorLabel(DuplicatedName.ToString() + "copy");
+	//	ClonedDynamicObjects.Add(SpawnActor);
+	//	UE_LOG(LogTemp, Warning, TEXT("DuplicateDynamicMesh %s"), *ClonedDynamicObjects[Index]->GetName());
+	//
+	//}
 	
 }
 
 void AMyPawn::SpawnArticulatedObjects()
 {
 	UWorld* const World = GetWorld();
-	ArticulatedObjects = FTags::GetActorsWithKeyValuePair(GetWorld(), "RoboWorld", "ObjectType", "Articulated");
-	for (int32 Index = 0; Index != ArticulatedObjects.Num(); ++Index)
+	ArticulatedActors = FTags::GetActorsWithKeyValuePair(GetWorld(), "RoboWorld", "ObjectType", "Articulated");
+	for (int32 Index = 0; Index != ArticulatedActors.Num(); ++Index)
 	{
-		ArticulatedObjects[Index]->SetActorHiddenInGame(true);
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.Owner = this;
-		SpawnParams.Instigator = Instigator;
-		SpawnParams.Template = ArticulatedObjects[Index];
+		// Set real objects to invisible
+		ArticulatedActors[Index]->SetActorHiddenInGame(true);
+		// Cast AActor to AStaticMeshActor
+		ArticulatedStaticMeshActors.Add(Cast<AStaticMeshActor>(ArticulatedActors[Index]));
+		// Make a copy of the static mesh actor
+		FVector location = ArticulatedStaticMeshActors[Index]->GetActorLocation();
+		FRotator rotation = ArticulatedStaticMeshActors[Index]->GetActorRotation();
+		AStaticMeshActor* SpawnedActor2 = (AStaticMeshActor*)World->SpawnActor(ArticulatedStaticMeshActors[Index]->StaticClass(), &location, &rotation);
+		SpawnedActor2->SetActorLabel("Visual" + ArticulatedStaticMeshActors[Index]->GetFName().ToString());
+		SpawnedActor2->GetStaticMeshComponent()->SetStaticMesh(ArticulatedStaticMeshActors[Index]->GetStaticMeshComponent()->GetStaticMesh());
+		SpawnedActor2->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
+		SpawnedActor2->GetStaticMeshComponent()->SetGenerateOverlapEvents(true);
+		SpawnedActor2->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
+		AllVisualObjects.Emplace(SpawnedActor2);
+		// Fill in TMap
+		RealToVisual.Emplace(ArticulatedStaticMeshActors[Index], SpawnedActor2);
+		VisualToReal.Emplace(SpawnedActor2, ArticulatedStaticMeshActors[Index]);
 
-		// The random error location to spawn  + FMath::VRand() * 5
-		FVector WorldLocation = ArticulatedObjects[Index]->GetActorLocation();
-
-		FVector SpawnLocation = FVector(0, 0, 0);
-
-		// The rotation to spawn
-		FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
-
-		// The name of the spawned actor
-		FName DuplicatedName = ArticulatedObjects[Index]->GetFName();
-
-		// Spawn the objects 
-		AActor* SpawnActor = World->SpawnActor<AActor>(ArticulatedObjects[Index]->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
-		SpawnActor->SetActorLocation(WorldLocation);
-		SpawnActor->SetActorRotation(ArticulatedObjects[Index]->GetActorRotation());
-		SpawnActor->SetActorHiddenInGame(false);
-		SpawnActor->DisableComponentsSimulatePhysics();
-		Cast<UStaticMeshComponent>(SpawnActor->GetComponentByClass(UStaticMeshComponent::StaticClass()))->SetCollisionProfileName(TEXT("OverlapAll"));
-		SpawnActor->SetActorLabel(DuplicatedName.ToString() + "copy");
-		ClonedArticulatedObjects.Add(SpawnActor);
-		//UE_LOG(LogTemp, Warning, TEXT("DuplicateArticulatedMesh %s"), *ClonedArticulatedObjects[Index]->GetName());
-
-		// Do this for the Handler attach to the drawer,change the attach to location
-		if (ArticulatedObjects[Index]->GetAttachParentActor() != NULL)
-		{
-			
-			SpawnActor->AttachToActor(RootActor, FAttachmentTransformRules::KeepWorldTransform);
-		}
 	}
 
 }

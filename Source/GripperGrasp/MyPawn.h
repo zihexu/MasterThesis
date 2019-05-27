@@ -56,7 +56,7 @@ private:
 		TArray<AStaticMeshActor*> UpdateMeshes;
 
 	UPROPERTY(EditAnywhere)
-		TArray<AActor*> ClonedObjects;
+		TArray<AStaticMeshActor*> AllVisualObjects;
 
 	UPROPERTY(EditAnywhere)
 		TArray<AActor*> DynamicActors;
@@ -68,16 +68,26 @@ private:
 		TArray<AActor*> ClonedDynamicObjects;
 
 	UPROPERTY(EditAnywhere)
-		TArray<AActor*> ArticulatedObjects;
+		TArray<AActor*> ArticulatedActors;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AStaticMeshActor*> ArticulatedStaticMeshActors;
 
 	UPROPERTY(EditAnywhere)
 		TArray<AActor*> ClonedArticulatedObjects;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AStaticMeshActor*> CurrentVisibleMeshes;
 
 	UPROPERTY(EditAnywhere)
 		FVector ContactPointLoc;
 
 	UPROPERTY(EditAnywhere)
 		TMap < AStaticMeshActor*,AStaticMeshActor* > RealToVisual;
+
+	UPROPERTY(EditAnywhere)
+		TMap < AStaticMeshActor*, AStaticMeshActor* > VisualToReal;
+
 
 	//Update View Function
 	UFUNCTION()
@@ -88,6 +98,8 @@ private:
 
 	UFUNCTION()
 		void SpawnArticulatedObjects();
+
+
 
 	/*UFUNCTION()
 		void OnActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
