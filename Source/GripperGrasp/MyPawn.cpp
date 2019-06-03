@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Tags.h"
 #include "GameFramework/Actor.h"
+#include "Classes/Kismet/KismetMathLibrary.h"
 
 
 // Sets default values, create MCRoot and VRCamera to MyPawn.
@@ -75,29 +76,40 @@ void AMyPawn::UpdateView()
 	// Check overlapping objects are actually perceived by the user, specially for invisible real meshes.
 	for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
 	{
-		// Do LineTraceSinglebyChannel, get perceived objects without occluded by other actors.
-		FVector StartLocation = VRCamera->GetComponentLocation();
-		FVector EndLocation = OverlappingActors[Index]->GetActorLocation();
-		FHitResult OutHit;
-		ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
-		FCollisionQueryParams CollisionParams;
-		// Todo: add ignored actor of the TMap corresponding visual or real actor.
+	
 		// Get the corrresponding visual meshes by Find Reference on TMap.
 		if (RealToVisual.Contains(Cast<AStaticMeshActor>(OverlappingActors[Index])))
 		{
+			// Do LineTraceSinglebyChannel, get perceived objects without occluded by other actors.
+			FVector StartLocation = VRCamera->GetComponentLocation();
+			FVector EndLocation = OverlappingActors[Index]->GetActorLocation();
+			
+			FHitResult OutHit;
+			FHitResult OutHitMin;
+			FHitResult OutHitMax;
+			ECollisionChannel TraceChannel = ECollisionChannel::ECC_GameTraceChannel3;
+			FCollisionQueryParams CollisionParams;
+
 			AStaticMeshActor* OverlappingActorPtr = Cast<AStaticMeshActor>(OverlappingActors[Index]);
 			AStaticMeshActor* VisualCorrespondingMesh = RealToVisual.FindRef(OverlappingActorPtr);
-			//CollisionParams.AddIgnoredActor(Cast<AActor>(VisualCorrespondingMesh));
+			FVector Min;
+			FVector Max;
+			(Cast<AStaticMeshActor>(OverlappingActors[Index]))->GetStaticMeshComponent()->GetLocalBounds(Min, Max);
+			FVector EndLocationMin = UKismetMathLibrary::TransformLocation((Cast<AStaticMeshActor>(OverlappingActors[Index]))->GetStaticMeshComponent()->GetComponentTransform(), Min);
+			FVector EndLocationMax = UKismetMathLibrary::TransformLocation((Cast<AStaticMeshActor>(OverlappingActors[Index]))->GetStaticMeshComponent()->GetComponentTransform(), Max);
+			
 			CollisionParams.AddIgnoredActor(OverlappingActors[Index]);
 			// ignore all visual meshes in world
-			for (int32 i = 0; i != AllVisualObjects.Num(); ++i)
+			/*for (int32 i = 0; i != AllVisualObjects.Num(); ++i)
 			{
 				CollisionParams.AddIgnoredActor(Cast<AActor>(AllVisualObjects[i]));
-			}
+			}*/
 			
 
 			bool bHit = GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocation, TraceChannel, CollisionParams);
-			if (!bHit)
+			bool bHitMin = GetWorld()->LineTraceSingleByChannel(OutHitMin, StartLocation, EndLocationMin, TraceChannel, CollisionParams);
+			bool bHitMax = GetWorld()->LineTraceSingleByChannel(OutHitMax, StartLocation, EndLocationMax, TraceChannel, CollisionParams);
+			if (!bHit || !bHitMin || !bHitMax)
 			{
 				// Save perceived real meshes in to CurrentVisibleMeshes Array
 				CurrentVisibleMeshes.Emplace(Cast<AStaticMeshActor>(OverlappingActors[Index]));
@@ -107,8 +119,8 @@ void AMyPawn::UpdateView()
 				VisualCorrespondingMesh->SetActorLocation(Location, false, (FHitResult*)nullptr, ETeleportType::None);
 				VisualCorrespondingMesh->SetActorRotation(Rotation);
 				VisualCorrespondingMesh->SetActorHiddenInGame(false);
-				UE_LOG(LogTemp, Warning, TEXT("Perceived Overlapping actors:  %s"), *OverlappingActors[Index]->GetName());
-				UE_LOG(LogTemp, Warning, TEXT("Perceived Overlapping actors:  %s"), *VisualCorrespondingMesh->GetName());
+				//UE_LOG(LogTemp, Warning, TEXT("Perceived Overlapping actors:  %s"), *OverlappingActors[Index]->GetName());
+				//UE_LOG(LogTemp, Warning, TEXT("Perceived Overlapping actors:  %s"), *VisualCorrespondingMesh->GetName());
 			}
 
 			/*if (bHit)
@@ -129,16 +141,24 @@ void AMyPawn::UpdateView()
 			FVector StartLocation = VRCamera->GetComponentLocation();
 			FVector EndLocation = OverlappingActors[Index]->GetActorLocation();
 			FHitResult OutHit;
-			ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
+			FHitResult OutHitMin;
+			FHitResult OutHitMax;
+			ECollisionChannel TraceChannel = ECollisionChannel::ECC_GameTraceChannel4;
 			FCollisionQueryParams CollisionParams;
-		
+			FVector Min;
+			FVector Max;
+			(Cast<AStaticMeshActor>(OverlappingActors[Index]))->GetStaticMeshComponent()->GetLocalBounds(Min, Max);
+			FVector EndLocationMin = UKismetMathLibrary::TransformLocation((Cast<AStaticMeshActor>(OverlappingActors[Index]))->GetStaticMeshComponent()->GetComponentTransform(), Min);
+			FVector EndLocationMax = UKismetMathLibrary::TransformLocation((Cast<AStaticMeshActor>(OverlappingActors[Index]))->GetStaticMeshComponent()->GetComponentTransform(), Max);
 		
 			AStaticMeshActor* RealMeshPtr = Cast<AStaticMeshActor>(OverlappingActors[Index]);
 			AStaticMeshActor* RealCorrespondingActor= VisualToReal.FindRef(RealMeshPtr);
-			CollisionParams.AddIgnoredActor(Cast<AActor>(RealCorrespondingActor));
+			//CollisionParams.AddIgnoredActor(Cast<AActor>(RealCorrespondingActor));
 			CollisionParams.AddIgnoredActor(OverlappingActors[Index]);
 			bool bHit = GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocation, TraceChannel, CollisionParams);
-			if (!bHit)
+			bool bHitMin = GetWorld()->LineTraceSingleByChannel(OutHitMin, StartLocation, EndLocationMin, TraceChannel, CollisionParams);
+			bool bHitMax = GetWorld()->LineTraceSingleByChannel(OutHitMax, StartLocation, EndLocationMax, TraceChannel, CollisionParams);
+			if (!bHit || !bHitMin || !bHitMax)
 			{
 				if (CurrentVisibleMeshes.Contains(RealCorrespondingActor))
 				{
@@ -185,7 +205,7 @@ void AMyPawn::SpawnDynamicObjects()
 		SpawnedActor1->SetActorLabel("Visual" + DynamicStaticMeshActors[Index]->GetFName().ToString());
 		SpawnedActor1->GetStaticMeshComponent()->SetStaticMesh(DynamicStaticMeshActors[Index]->GetStaticMeshComponent()->GetStaticMesh());
 		SpawnedActor1->SetActorHiddenInGame(true);
-		SpawnedActor1->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
+		SpawnedActor1->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("PerceivedItems"));
 		SpawnedActor1->GetStaticMeshComponent()->SetGenerateOverlapEvents(true);
 		SpawnedActor1->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
 		AllVisualObjects.Emplace(SpawnedActor1);
@@ -247,7 +267,7 @@ void AMyPawn::SpawnArticulatedObjects()
 		AStaticMeshActor* SpawnedActor2 = (AStaticMeshActor*)World->SpawnActor(ArticulatedStaticMeshActors[Index]->StaticClass(), &location, &rotation);
 		SpawnedActor2->SetActorLabel("Visual" + ArticulatedStaticMeshActors[Index]->GetFName().ToString());
 		SpawnedActor2->GetStaticMeshComponent()->SetStaticMesh(ArticulatedStaticMeshActors[Index]->GetStaticMeshComponent()->GetStaticMesh());
-		SpawnedActor2->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("OverlapAll"));
+		SpawnedActor2->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("PerceivedItems"));
 		SpawnedActor2->GetStaticMeshComponent()->SetGenerateOverlapEvents(true);
 		SpawnedActor2->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
 		AllVisualObjects.Emplace(SpawnedActor2);

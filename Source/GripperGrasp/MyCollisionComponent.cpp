@@ -32,7 +32,7 @@ void UMyCollisionComponent::BeginPlay()
 		StaticMeshComp->SetMobility(EComponentMobility::Movable);
 		StaticMeshComp->SetSimulatePhysics(false);
 		StaticMeshComp->SetEnableGravity(false);
-		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
+		//StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
 
 		//Register Events for LeftSphereVC
 
@@ -47,7 +47,7 @@ void UMyCollisionComponent::BeginPlay()
 		StaticMeshComp->SetMobility(EComponentMobility::Movable);
 		StaticMeshComp->SetSimulatePhysics(false);
 		StaticMeshComp->SetEnableGravity(false);
-		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
+		//StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
 
 		//Register Events for RightSphereVC
 		RightSphereVC->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginRight);
@@ -65,7 +65,7 @@ void UMyCollisionComponent::BeginPlay()
 		StaticMeshComp->SetMobility(EComponentMobility::Movable);
 		StaticMeshComp->SetSimulatePhysics(false);
 		StaticMeshComp->SetEnableGravity(false);
-		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
+		//StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
 
 		//Register Events for LeftSphereVC
 		LeftSphereSmall->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginLeftSmall);
@@ -81,7 +81,7 @@ void UMyCollisionComponent::BeginPlay()
 		StaticMeshComp->SetMobility(EComponentMobility::Movable);
 		StaticMeshComp->SetSimulatePhysics(false);
 		StaticMeshComp->SetEnableGravity(false);
-		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
+		//StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
 
 		//Register Events for RightSphereSmall
 		RightSphereSmall->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UMyCollisionComponent::OnOverlapBeginRightSmall);

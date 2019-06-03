@@ -49,7 +49,7 @@ void UBodyCollider::BeginPlay()
 		StaticMeshComp->SetMobility(EComponentMobility::Movable);
 		StaticMeshComp->SetSimulatePhysics(false);
 		StaticMeshComp->SetEnableGravity(false);
-		StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
+		//StaticMeshComp->SetCollisionProfileName(TEXT("Trigger"));
 
 		//Register Events for LeftSphereVC
 
