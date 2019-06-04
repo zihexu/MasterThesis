@@ -1,0 +1,1944 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE rdf:RDF[
+	<!ENTITY owl "http://www.w3.org/2002/07/owl#">
+	<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+	<!ENTITY knowrob "http://knowrob.org/kb/knowrob.owl#">
+	<!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
+	<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<!ENTITY log "http://knowrob.org/kb/Experiment.owl#">
+]>
+
+<rdf:RDF xmlns="http://knowrob.org/kb/Experiment.owl#"
+	 xml:base="http://knowrob.org/kb/Experiment.owl#"
+	 xmlns:owl="http://www.w3.org/2002/07/owl#"
+	 xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	 xmlns:knowrob="http://knowrob.org/kb/knowrob.owl#"
+	 xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	 xmlns:log="http://knowrob.org/kb/Experiment.owl#">
+
+	<!-- Ontologies -->
+	<owl:Ontology rdf:about="http://knowrob.org/kb/Experiment.owl">
+		<owl:imports rdf:resource="package://knowrob_common/owl/knowrob.owl"/>
+	</owl:Ontology>
+
+	<!-- Property Definitions -->
+	<owl:ObjectProperty rdf:about="&knowrob;taskContext"/>
+	<owl:ObjectProperty rdf:about="&knowrob;taskSuccess"/>
+	<owl:ObjectProperty rdf:about="&knowrob;startTime"/>
+	<owl:ObjectProperty rdf:about="&knowrob;endTime"/>
+	<owl:ObjectProperty rdf:about="&knowrob;experiment"/>
+	<owl:ObjectProperty rdf:about="&knowrob;inContact"/>
+	<owl:ObjectProperty rdf:about="&knowrob;performedBy"/>
+	<owl:ObjectProperty rdf:about="&knowrob;objectActedOn"/>
+	<owl:ObjectProperty rdf:about="&knowrob;deviceUsed"/>
+	<owl:ObjectProperty rdf:about="&knowrob;outputsCreated"/>
+
+	<!-- Property Definitions -->
+	<owl:DatatypeProperty rdf:about="&knowrob;quaternion"/>
+	<owl:DatatypeProperty rdf:about="&knowrob;translation"/>
+
+	<!-- Class Definitions -->
+	<owl:Class rdf:about="&knowrob;UnrealExperiment"/>
+	<owl:Class rdf:about="&knowrob;GraspingSomething"/>
+	<owl:Class rdf:about="&knowrob;SlicingSomething"/>
+	<owl:Class rdf:about="&knowrob;TouchingSituation"/>
+	<owl:Class rdf:about="&knowrob;Pose"/>
+	<owl:Class rdf:about="&knowrob;Knife"/>
+
+	<!-- Event Individuals -->
+	<owl:NamedIndividual rdf:about="&log;5pThh1OERUu_uUkQAlg87Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;H6CnRalzM0KKLOCab3r7Tw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;gCvqWtqIu0yOhlPQWi2b-A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;eeR9i4FtQUqOzWaFNKt5hg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;6cMOxL7jSEmRuk2gfZN7Bw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;3aLz7mKkMkaHvKUb0ALApw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;xlKKqUMcTkOMKK9RXaUkwA"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;oi5fsQFgwEmUrOT_Y8d36A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;DVJs2gPFl0WIMEgFsZFaYg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;xlKKqUMcTkOMKK9RXaUkwA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;wsZ4frPw_ka_JtNxrZdU8Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;K0YanuX2okq06xPDaIo6UA"/>
+		<knowrob:inContact rdf:resource="&log;u0wQAQm7WUCjgQBehI78Mw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;1P9GM_Q-q0-JXF1tu1b4cQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;u0wQAQm7WUCjgQBehI78Mw"/>
+		<knowrob:inContact rdf:resource="&log;K0YanuX2okq06xPDaIo6UA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;p8NZw3RJUEWnPfYkGvPq2g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;INjWySNBvEqKNAy7hSRZIw"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;C-O7P9ZLHEG_VJsmi1AKUg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;1sX5-rGkpUqDlV79JrdUNw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;kkulY3h_pUmdIQj2dNxzKA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+		<knowrob:inContact rdf:resource="&log;INjWySNBvEqKNAy7hSRZIw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Avo9vb4hQkyjCSMXResb-Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;R63GNKcN4ke_DTujCtUaog"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;OaLjFlBzKkqAexZ1HTkFBg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;R63GNKcN4ke_DTujCtUaog"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;qvdcn3h9iUGhgj5luXJcWA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;R63GNKcN4ke_DTujCtUaog"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;3G8UUBN8E0u0LAjl38jhdA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;R63GNKcN4ke_DTujCtUaog"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;T9rgQUsL_0qwyfKGxC3ZeA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;chZa21UL-kCRFZl1n_tNAQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vg7o5fmEaU6Wq66qxEYemg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.294225"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;1G-6uCJnoEmCHvqRIkm-hg"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;buxs_QxsrE6tTHLrIpvLcQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.310402"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;1G-6uCJnoEmCHvqRIkm-hg"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;uZRqEWzmN0mIS06Dzgfr3g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.322839"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;1G-6uCJnoEmCHvqRIkm-hg"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;DL7uSHkkqkivNKpROL3GfQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.008334"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;dEz5pBdsUUqolOFHtsmj0g"/>
+		<knowrob:inContact rdf:resource="&log;tSWiwdvvJU6PldRHp0xRfw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;3LqIdue110OKvBB06EgdCQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.24253"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;dEz5pBdsUUqolOFHtsmj0g"/>
+		<knowrob:inContact rdf:resource="&log;Zw72-YqKakupXIQojOB6jQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;unjfrgPHAEen6NAjJ2GT5w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.261333"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;dEz5pBdsUUqolOFHtsmj0g"/>
+		<knowrob:inContact rdf:resource="&log;uyGPFlBOiEmuOUfHPUQM8Q"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;v9ON1PeYZUe15fR811o5Fg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;uUxwEgHu3kCGc1F317zXYg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;4fD5aEPpQUK9C8awDbXJxA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;fF7kAw0G50O3xjPF7iBIDQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;sgqzn8RvAkqZ-D7daJHN7g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;i5TDIH2fEUynY3p7MR8DfQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;6iQ7XDeX0kSHlAyF516ehQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;GUO-GKw-xEaXLuL3TgxneA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;-a3-xRME4E6K8rMHqY_dQg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;XXS66Pq6CEqzMfUNyJaNwA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;rsllAvlnI0yjfFjDB42Hew">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;INjWySNBvEqKNAy7hSRZIw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;9FRMMxrxbE2dOnTJITqWpg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;APwvvNGgd0yzjTys8PMp0w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;upe5zsCe2kGUdEpew5Kvow">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;dCGxBMOdk0i6Lc-nJ2eMWA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;LkUXmFVpRkK9YJe93CI81Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;rnKiI3eWpk2IXnkJCAC_TA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;qJBOVY3QEUutQ0gGMaVsjw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;w_wdz_EZgEqXf-2RuMMeKg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;R63GNKcN4ke_DTujCtUaog"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Z-MkcCMD3kqMQmlwlROFBQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;lfvOv-j6FEuEQJDi6vXLuw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;YOgeU_wxd0Oy6z19m0jWJQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;oM6NNe8iakia9r0kq2g7GQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;INjWySNBvEqKNAy7hSRZIw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;P0b_kVxnAkWNTTRKSijR7g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;vZvd7h1f6EiZZ3yPfocmAg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;1uR410TdlkS_UxgyORsS8g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;Gz1o2SkclE-BKmTEgKGvNQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;GTHXFAh5_0ax_U7NzWza0Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;NtR4WCbrqUysxkG9X1OhrQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Mb43FD51OUGhYiDiWAjfIg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;lNSIivJ0lEmygO407YrWHA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;DhzKkkx-R0udPhg_5NnNog">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;5qqk_iUzRkeNev8spPfEag"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;EsqpvKaOLUWEZkyzCNg_tA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;sYQ5pAeZTkSLutxQSg86-g"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;aj6Ildg-ZUWWrFLz-o5SQg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;vvo-O4mogUyRLhCyA0_GtA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;rpuNR6BMZ0WhK3A_xQWoZg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;qCicMuHQU0G_VCsJTOfVpA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;YN1AYM-m4UOfA5MvQsD3yw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;vW48PMdu70KqLhN1IauUVQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;YJ5vvAIF3EeGUu1Bgvk8qg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;GvbM2ZQHJEGAa7fckeRFZQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;dbfzOknh70-3PZtwCaDkVw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;LDnroGsWAUe2e_tHaF1agA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;_n_BqEAx4U2l_c3xK3f11Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;ee-yG1yNbEKptlS_WHLD3w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;8FqEtakEXUyJc9RENt4TEQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;QnxKLBuR6UuqpHTsj8i-hw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;FuBfclYgK02SHGiCzTXjuA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;SME5XPz1Y0qMHUj-WPpgsw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;mvIITnQbIU-0Hdr5O_O7FA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+		<knowrob:inContact rdf:resource="&log;veH4AYt5_0Cbw8DcKB4i7Q"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;nQQHmp2QkkOupn-as9oZNA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;8nC3GwrbPEWKJEOqPR7lgg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ZAepzt84A0eDL4aycSPysA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;aG4USpLwXEiCpw15L821iQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;-nyxgG6zoUK90q8ZDVfhXg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;lEz87Hh0I0m434IbUDJwyw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;hpLU0VDO_U-tRHHknpL2Xg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;K0YanuX2okq06xPDaIo6UA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;wxCSkxJqvUSAVgEzdk82Ow">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;K0YanuX2okq06xPDaIo6UA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;g9xUIsHco062OXO_ec81EQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;AsZ-lmZ5tEmpy5YihevY6g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;hK5_Cb8t5EWUl_YA2FmUuw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;lEz87Hh0I0m434IbUDJwyw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;H0dI-ibtpkG7IYoNXHDVQw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;ce6aiLO7mU2efCY3TWm2SQ"/>
+		<knowrob:inContact rdf:resource="&log;cq8cdTBqKUqiB0meZyPKtg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;s605Lp99j0GE6_of87ie_A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;eaPacA8z0kCQ32fyYqJkfQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;3G8mG2vci06pNJ4_MCPlkw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;EKchjsDVl064H-CgTeTfgQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;z91K6uWWIkqKi-6HWs3k5A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;jMhL3Opz0keyuQvky0ijWQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;LN5Xu88ZAEaOMqPkAnqC4Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;DlX_OkjjFketJBxSAGQyQQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ScK-VhIseUig02tiopeNlw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;rz4CRboBjkGYr7J06s03hw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;z7srY_xhfUmQfvf1uuxhWA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;dW0XvKKi_kSYrm60E4Z_Bw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;IfTqYvj3rUOGqVYbWgUPXA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;AUHfQ6c3bkG9YGxP96sm1g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+		<knowrob:inContact rdf:resource="&log;1dIxkwbQTU2F81vMBLOVVA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;kmNC1o1bxE2F1CE7_tBjcg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+		<knowrob:inContact rdf:resource="&log;XjnblgtXfkGcUCGtSVHXRw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;RL0Z4rw3TEyrJ6tSbFWzXA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;dqePlvOpDEmOodTwzbDnRg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;D0gCvp5rw06wacx589_qMw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;2T_tYIs-00W1X-5PwSlbPw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vOxgxhrg2EOt5rNAidGphQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;GbrGUb_MR0-Atkj0m0_8ZQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;_KcLnq632kKI-jrmT6tyGw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;HfWzKpMc-kKXc6UEOn7cbA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;5l1lDIsk7Um6djerraS6ag">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+		<knowrob:inContact rdf:resource="&log;R63GNKcN4ke_DTujCtUaog"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Dof5K60qDUyN_XLQ5R7XiQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;TjbYR81580SGdVQ7dhd2VA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+		<knowrob:inContact rdf:resource="&log;MT16oAFxSkKshShr_1wZfA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;6MXH1H9jIEiDbJzFy8algA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+		<knowrob:inContact rdf:resource="&log;3LPZBVPLWUi0mmb6BkCQyQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;M8lh1SdEDUGI6o8ThgBnJA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+		<knowrob:inContact rdf:resource="&log;DXr0tRuIkkKsXtA1Su1OWw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;fWC2laM3EkqoPwKXzFRrkQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;aMACUKZPKk6BI9zmxoq5og">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;R63GNKcN4ke_DTujCtUaog"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;U-6wOy_x0kC1-U4yZvxO4w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;sX0WA-LITECRaQSUsFG-wA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;sYQ5pAeZTkSLutxQSg86-g"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Pvl7y2xVgUWQf678RrLNZg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;vvo-O4mogUyRLhCyA0_GtA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;zQ7qXbDm40i6Y2-gzyliiQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;qCicMuHQU0G_VCsJTOfVpA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;GwqU0C8nr0WtI1xNLVXLog">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;vW48PMdu70KqLhN1IauUVQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;qJc5t9o0vES5Svlm0XJ4NA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;GvbM2ZQHJEGAa7fckeRFZQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;sdc2yt9HsUStJo05Y3uAOw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;LDnroGsWAUe2e_tHaF1agA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ulbdVFWhp0qTRO1EKj9PuQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;ee-yG1yNbEKptlS_WHLD3w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ymdlREqKgUG_rgbpE_e6xQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;QnxKLBuR6UuqpHTsj8i-hw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vHMtmZ7qq0yiIeGtRGqHkg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;SME5XPz1Y0qMHUj-WPpgsw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;bv84h9D64UaSHRTX8EDtdw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;0SluVobbA0SKfXZsPeJ1PQ"/>
+		<knowrob:inContact rdf:resource="&log;veH4AYt5_0Cbw8DcKB4i7Q"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;X6LyuEZwLEmTYb9r4SlHjA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;R63GNKcN4ke_DTujCtUaog"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;4gwdlaGfKUK9kGnGWXA_Wg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;wG2h4JXeXUKuhuca3_W97g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;zvxQ-ZkgJEyOyUw52My6fg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Q7BUomcgr0KXyjh9Neurwg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;INjWySNBvEqKNAy7hSRZIw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;B8iwpkREEky3KRDOnUxc9A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;6a4A5dcd8kiNCfhjvjgReQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;DPF0RNCLpUK-2kFU7AMIzg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;gICXREjb30WkUvxrcP67XQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;sYQ5pAeZTkSLutxQSg86-g"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;KHdehjK8nES4Fkh4CWMJGg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;vvo-O4mogUyRLhCyA0_GtA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;SEG-V9y0sEi421B_la4M9w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;qCicMuHQU0G_VCsJTOfVpA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;jkYR_NiEWk2i7XOLgaUHCA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;vW48PMdu70KqLhN1IauUVQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;kduA98RVK06G8Ej8J9jW8w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;GvbM2ZQHJEGAa7fckeRFZQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;GgAPYnXg5UmqLbX5azxCgQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;LDnroGsWAUe2e_tHaF1agA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;k46AeiLNl0eyTiR01gm99A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;ee-yG1yNbEKptlS_WHLD3w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;xbeQ-9gyZkqbwnDzjgWJtw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;QnxKLBuR6UuqpHTsj8i-hw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;BJXPQI5iS0W6iy7wzCj3Yw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;SME5XPz1Y0qMHUj-WPpgsw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;IxQr10wP_kuJPM1pSHLZ7A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+		<knowrob:inContact rdf:resource="&log;veH4AYt5_0Cbw8DcKB4i7Q"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;e7jKLOdue0Clvr57sVPM3Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Ot8UqpDH9E-DKAPQE38IyQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+		<knowrob:inContact rdf:resource="&log;INjWySNBvEqKNAy7hSRZIw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;u3LBd_YRAEuFCCbvqvoyhw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+		<knowrob:inContact rdf:resource="&log;vZvd7h1f6EiZZ3yPfocmAg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Vru1hXOlBkW0fE0-Wotw3Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+		<knowrob:inContact rdf:resource="&log;Gz1o2SkclE-BKmTEgKGvNQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;1wSHtyf-L0Of-RNlubwKPQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+		<knowrob:inContact rdf:resource="&log;NtR4WCbrqUysxkG9X1OhrQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;6r4osVfzlkWHvk0YF9CfFQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+		<knowrob:inContact rdf:resource="&log;lNSIivJ0lEmygO407YrWHA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ko1XlHZZ0UO0eMIjJbUk4Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;S0wgaIN9AEiugAhfqmD9EA"/>
+		<knowrob:inContact rdf:resource="&log;5qqk_iUzRkeNev8spPfEag"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;8f9RX2XiB0eG1nslLiYAnw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;INjWySNBvEqKNAy7hSRZIw"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;BSRSwz3sm0mMUDhT9Ia55Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;INjWySNBvEqKNAy7hSRZIw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;OGFqdIYps0CoMRQn6taKlA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;QbcYjwmZE0inbn03Ra3V7A"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;h5kWtIqXDkCVvRtXtEedhg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;v_FGCRgqK0CMKQAz-9QcCA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Uplbo9vWd0618oUEgchX4Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;vZvd7h1f6EiZZ3yPfocmAg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;dfQCWyXD0EmVXxz7x_bT2A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;Gz1o2SkclE-BKmTEgKGvNQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;LlpWXyk7ykunQaReEG5LHA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;NtR4WCbrqUysxkG9X1OhrQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;omJKitE67E2XL5O2PHC4tA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;lNSIivJ0lEmygO407YrWHA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Q0bGJak68kWiWgW5J8430w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;5TEiOQE6D0SlofLvsBqz8w"/>
+		<knowrob:inContact rdf:resource="&log;5qqk_iUzRkeNev8spPfEag"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;_c2ds6itNU--xPjoziomuw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;K0YanuX2okq06xPDaIo6UA"/>
+		<knowrob:inContact rdf:resource="&log;u0wQAQm7WUCjgQBehI78Mw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;byp5_oheDkO42lNEQKAsKA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;K0YanuX2okq06xPDaIo6UA"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;eoUH5r4EU06ueXjnCQqfwA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;K0YanuX2okq06xPDaIo6UA"/>
+		<knowrob:inContact rdf:resource="&log;u6LqzkuD_Ui9U14AAxk7Nw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;uY7TCPOICkm_VTEE9Hop4w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;K0YanuX2okq06xPDaIo6UA"/>
+		<knowrob:inContact rdf:resource="&log;cq8cdTBqKUqiB0meZyPKtg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;_9zb21QrLU6xk2N8rfIOHA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;u0wQAQm7WUCjgQBehI78Mw"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;9Fz-Uu4vfUyhmykGwHmTTQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;u0wQAQm7WUCjgQBehI78Mw"/>
+		<knowrob:inContact rdf:resource="&log;u6LqzkuD_Ui9U14AAxk7Nw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;TwiO5E8x3kqHGIaBJiN8Dg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;u0wQAQm7WUCjgQBehI78Mw"/>
+		<knowrob:inContact rdf:resource="&log;cq8cdTBqKUqiB0meZyPKtg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;9Smw99RjdkCkQJMv34n8JA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+		<knowrob:inContact rdf:resource="&log;u6LqzkuD_Ui9U14AAxk7Nw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;tOw40Nkji0asiFaI3TSgvA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+		<knowrob:inContact rdf:resource="&log;u6LqzkuD_Ui9U14AAxk7Nw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;PqNPTLIZnkOGeITEA0Di0A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;b_uyl1MAl0-4XtXmG4Z9AA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;u6LqzkuD_Ui9U14AAxk7Nw"/>
+		<knowrob:inContact rdf:resource="&log;lEz87Hh0I0m434IbUDJwyw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;v6TYM6PG-kOeMXY4sc0MkQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;u6LqzkuD_Ui9U14AAxk7Nw"/>
+		<knowrob:inContact rdf:resource="&log;lEz87Hh0I0m434IbUDJwyw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Mtwm413M7UmAPEEmVEq57Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;u6LqzkuD_Ui9U14AAxk7Nw"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;yMZfe57B6UKwSrFm1xHfhw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;u6LqzkuD_Ui9U14AAxk7Nw"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;TKlrTw2J60-cLvvzmpTgRA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;xlKKqUMcTkOMKK9RXaUkwA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;WHt9UEl3BE6MRmZPxeH6gA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;3gO5kldVfkyccSkx-edfWQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;elIt_ZEQC06p2evCNiKFUQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;qtFAqlzdakW8QFqR5nNUZg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;lLYYct9HB0SVvJG_1e_20g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;Mh8Fe3MZZkmx66TWM8O7zg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Nlr1iAZ4YEKv6r2VvXh6zg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;cfQ50Ce0H0m9s_Ys-D3cqQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;WDnK1DjStEGvbr9YZVBMEQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;AajWv9NatE-efnpTJSVsUA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ruNXShcv4ke4u_V-sDR1rw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;phhj-pf5mUGl3YM90pp3Jg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;LmRLj0ewm0WYgXOJcmz4bA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;N8G8Z0OqS0eBQunQp_9UCw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;2d7L0p7b10Shc5l_f2YBVg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;BDlmobMp6UGBGmx6EtVJiA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;nDsEW2GUlEmEi4bcsgWGhA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;IlQcFHPXukG6qAxjgmNZHA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;eq1u-UIhO0u5fb-RkQMUOQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;I6aOF-lx4kG53amQlgQSWw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;n2-A8EYmiU6kgiAPPYwV_Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;v9O7vXhp7EeoGDHpecSdcw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vZEZ2PLM1kKb-cbvuZ6VrQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;WBmBnGxE5UivRtXWKnZalA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;YBXQiHgPa0GY5cWo1Z916Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;nlv0-rhDCUyKvffCUzGWFw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;h63k__X3uUSkL3dfZ1adFw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;iJ0SvP5LF0KNcQ1TmfLuEA"/>
+		<knowrob:inContact rdf:resource="&log;bDI1Lk-hsk6vKidMWrVW_Q"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;SfK9TZJyTUCnWUf5ujK8zQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;xlKKqUMcTkOMKK9RXaUkwA"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;UheuKTc3X0WVnfBrW_d0VA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;xlKKqUMcTkOMKK9RXaUkwA"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;UHrEr2XGh0uwdQjoPBq9ug">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;xlKKqUMcTkOMKK9RXaUkwA"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;1SmJdqp8uEeXgwZmX1CVyA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;xlKKqUMcTkOMKK9RXaUkwA"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;6ajJqQoZekyxX-YlU_ISaw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vSoMRNanz0GKpuhXkLXzUg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;cx9jtYokCUeFh2zwdCpJ1A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;xlKKqUMcTkOMKK9RXaUkwA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;uHa6MrjGrkCNo7qYraML_w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;vhw_jJUUPkqAYerfUk24dA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;kW13mjSPtEGBP4FRtaLADQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;Mh8Fe3MZZkmx66TWM8O7zg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;NyIrWUXaJk2RNcHDI3t7yA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;cfQ50Ce0H0m9s_Ys-D3cqQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;J5VtrdH-Eky4eFKucHrX5g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;AajWv9NatE-efnpTJSVsUA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;2__xFdN8xEyftXwIeAhOOw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;phhj-pf5mUGl3YM90pp3Jg"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;r29IoQZ0Bk-QJ6BSR-vQ4Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;N8G8Z0OqS0eBQunQp_9UCw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;kTjxmk5wEUCnNul2s44aaA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;BDlmobMp6UGBGmx6EtVJiA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Snqvxvj3vkWpwqKt5ZzH1w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;IlQcFHPXukG6qAxjgmNZHA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;51DkeSpNa0uhvTSvn3kiUA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;I6aOF-lx4kG53amQlgQSWw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;IpNfclIv3EW2m33t4s3LXg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;v9O7vXhp7EeoGDHpecSdcw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;epZWQqhinUukHfeid6utUg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;WBmBnGxE5UivRtXWKnZalA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;8RQnuQ99bEqpxYeZ8bejGQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;nlv0-rhDCUyKvffCUzGWFw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;amEIItj6g0CTydIwtcUxmQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+		<knowrob:inContact rdf:resource="&log;bDI1Lk-hsk6vKidMWrVW_Q"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;IHY3FqzgQ0GcCutETzvyMg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;bmV3OuJQHU2BFRXKrbXjKA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;shU1DO6coEmGg9N1Nl4jDQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;fLyC0CDW6UGcYTwj2cuDPA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;zxTOIhktb0aMbgmolnUtbg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;MsEHg8zga0CdWjLpmP7Jwg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;CW8mXNOZV0ukw_VLLo60Jw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;NO2cPXdxNkq_vVJSA5CqnQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;Fsmf-X-SvUGMmkNzB01Qzw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;nM9YBwbeAUi8tPGTQ48ufQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;nJ2OQylS5kW0q1WTyL0Gew"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;JXaVz2kM1kqg1flZnsWJFQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;jGbvKDN6LkOWLlDvm9nzmw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;g_FzkUykAkqG7RiSb5nvsA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;FPnLj11s70GJeSEac9qd7w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;iEw8GZ-zDkqacmo6GnzURA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;bvqyxCBFW0-qc_1haQq-qA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;K4upqOMHpk2ud5No5fiJ_g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;MIE5EzZg70a_HZSLfrpgsw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;RuMaYoQN6kiyUIaUj-mkjQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;pjX21cFEsUSkCnOexalOnA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;F5udz2-KDEi-CSx5UA0KTQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;gEHK66ripESCUwOPF-mehw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;BNYRYAKitEum2ZfQ2rssDw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;9ztrV88csE6YjhF3r8wOlA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;E2Np1X_dZUiJAqRGduVU-Q">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;JJjOR9Ejj0acMclZA-rEEQ"/>
+		<knowrob:inContact rdf:resource="&log;g6vs_xD1vEi4DYjEoprVHw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;OHTE7XaSF06TUsDa98WaLw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;zIztgTPp8kaHgnlH3DO5CA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+		<knowrob:inContact rdf:resource="&log;bmV3OuJQHU2BFRXKrbXjKA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;i82GpAkWAU-2_1viXrj8qQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;rHa1TuTkPEKjeYvYCoBL1A">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;pnHVCjJgJkqNX4QNz4w4Xg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;AwHjT5cZG0yry2bq_RUe7g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;rY2OqU29CkKOdTjDruKZsw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;U7J4aIK9kUqmaSnUd1aTEA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;3BVMSvy-_k2V8EoQ2MIS7g">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;CW8mXNOZV0ukw_VLLo60Jw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;RYhwjGffEkmz1WzgCc9vPg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;Fsmf-X-SvUGMmkNzB01Qzw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;xmibNTLFvkeGYjsFlZdHZg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;nJ2OQylS5kW0q1WTyL0Gew"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;K_pD6IROTEWmd_aLOFaB6w">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;jGbvKDN6LkOWLlDvm9nzmw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;LndmbKzg90yoZvKwUos9eQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;FPnLj11s70GJeSEac9qd7w"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;sHxlpfWAZ0WquimF2_aPZA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;bvqyxCBFW0-qc_1haQq-qA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;mMV15jWumEuMm6FGmE5qEw">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;MIE5EzZg70a_HZSLfrpgsw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;FcCaTHG880KjnP8iRpgrYg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;pjX21cFEsUSkCnOexalOnA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;QbwaDJAAqE-hHWl61E0dvQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;gEHK66ripESCUwOPF-mehw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;NYwW_P2ZK0utKeNB08X8eg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;9ztrV88csE6YjhF3r8wOlA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;dcG_F8PxxUycLgh112JRXQ">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;o00x4ymLnEK_Y9wi0AiRMQ"/>
+		<knowrob:inContact rdf:resource="&log;g6vs_xD1vEi4DYjEoprVHw"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;i_Ti7wCwbkur0jKpY9bEDA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;bmV3OuJQHU2BFRXKrbXjKA"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;hvoiFrOLV0eontcfLjYBig">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;bmV3OuJQHU2BFRXKrbXjKA"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;3LlzIkv500aHRoy1UcIbSA">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+		<knowrob:inContact rdf:resource="&log;bmV3OuJQHU2BFRXKrbXjKA"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ld17IRxpNkSoNvG7wbMnzg">
+		<rdf:type rdf:resource="&knowrob;TouchingSituation"/>
+		<knowrob:startTime rdf:resource="&log;timepoint_0.0"/>
+		<knowrob:endTime rdf:resource="&log;timepoint_2.94012"/>
+		<knowrob:inContact rdf:resource="&log;cu4Gy0FUiEy_HSNIHsMLPA"/>
+		<knowrob:inContact rdf:resource="&log;236SnU-eEEGe-hbvR8pe-w"/>
+	</owl:NamedIndividual>
+
+	<!-- Timepoint Individuals -->
+	<owl:NamedIndividual rdf:about="&log;timepoint_0.0">
+		<rdf:type rdf:resource="&knowrob;Timepoint"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;timepoint_0.008334">
+		<rdf:type rdf:resource="&knowrob;Timepoint"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;timepoint_0.294225">
+		<rdf:type rdf:resource="&knowrob;Timepoint"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;timepoint_2.94012">
+		<rdf:type rdf:resource="&knowrob;Timepoint"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;timepoint_0.310402">
+		<rdf:type rdf:resource="&knowrob;Timepoint"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;timepoint_0.322839">
+		<rdf:type rdf:resource="&knowrob;Timepoint"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;timepoint_0.24253">
+		<rdf:type rdf:resource="&knowrob;Timepoint"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;timepoint_0.261333">
+		<rdf:type rdf:resource="&knowrob;Timepoint"/>
+	</owl:NamedIndividual>
+
+	<!-- Object Individuals -->
+	<owl:NamedIndividual rdf:about="&log;236SnU-eEEGe-hbvR8pe-w">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;JJjOR9Ejj0acMclZA-rEEQ">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;cu4Gy0FUiEy_HSNIHsMLPA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;o00x4ymLnEK_Y9wi0AiRMQ">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;xlKKqUMcTkOMKK9RXaUkwA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;iJ0SvP5LF0KNcQ1TmfLuEA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;U7J4aIK9kUqmaSnUd1aTEA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;K0YanuX2okq06xPDaIo6UA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;u0wQAQm7WUCjgQBehI78Mw">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;INjWySNBvEqKNAy7hSRZIw">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;S0wgaIN9AEiugAhfqmD9EA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;5TEiOQE6D0SlofLvsBqz8w">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;v_FGCRgqK0CMKQAz-9QcCA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;QbcYjwmZE0inbn03Ra3V7A">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;R63GNKcN4ke_DTujCtUaog">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;0SluVobbA0SKfXZsPeJ1PQ">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;1G-6uCJnoEmCHvqRIkm-hg">
+		<rdf:type rdf:resource="&knowrob;PKKitchenIsland"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;dEz5pBdsUUqolOFHtsmj0g">
+		<rdf:type rdf:resource="&knowrob;WSGBase"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;tSWiwdvvJU6PldRHp0xRfw">
+		<rdf:type rdf:resource="&knowrob;WSGBase"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Zw72-YqKakupXIQojOB6jQ">
+		<rdf:type rdf:resource="&knowrob;WSGLeftFinger"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;uyGPFlBOiEmuOUfHPUQM8Q">
+		<rdf:type rdf:resource="&knowrob;WSGRightFinger"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;DXr0tRuIkkKsXtA1Su1OWw">
+		<rdf:type rdf:resource="&knowrob;PKDrawerCab"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;6a4A5dcd8kiNCfhjvjgReQ">
+		<rdf:type rdf:resource="&knowrob;PKDrawerCab"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;fF7kAw0G50O3xjPF7iBIDQ">
+		<rdf:type rdf:resource="&knowrob;PKStool"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;1dIxkwbQTU2F81vMBLOVVA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;XjnblgtXfkGcUCGtSVHXRw">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;MT16oAFxSkKshShr_1wZfA">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;3LPZBVPLWUi0mmb6BkCQyQ">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vZvd7h1f6EiZZ3yPfocmAg">
+		<rdf:type rdf:resource="&knowrob;BrandtVollkornZwieback"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Gz1o2SkclE-BKmTEgKGvNQ">
+		<rdf:type rdf:resource="&knowrob;JaNougatBits"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;NtR4WCbrqUysxkG9X1OhrQ">
+		<rdf:type rdf:resource="&knowrob;KnusperSchokoKeks"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;lNSIivJ0lEmygO407YrWHA">
+		<rdf:type rdf:resource="&knowrob;MyMuesli_Box"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;5qqk_iUzRkeNev8spPfEag">
+		<rdf:type rdf:resource="&knowrob;WasaDelicateCrispRosemary"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;sYQ5pAeZTkSLutxQSg86-g">
+		<rdf:type rdf:resource="&knowrob;MPMilkJug01"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vvo-O4mogUyRLhCyA0_GtA">
+		<rdf:type rdf:resource="&knowrob;MPMilkJug02"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;qCicMuHQU0G_VCsJTOfVpA">
+		<rdf:type rdf:resource="&knowrob;MPSaucer01"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vW48PMdu70KqLhN1IauUVQ">
+		<rdf:type rdf:resource="&knowrob;MPSaucer01"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;GvbM2ZQHJEGAa7fckeRFZQ">
+		<rdf:type rdf:resource="&knowrob;MPSaucer01"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;LDnroGsWAUe2e_tHaF1agA">
+		<rdf:type rdf:resource="&knowrob;MPSaucer01"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ee-yG1yNbEKptlS_WHLD3w">
+		<rdf:type rdf:resource="&knowrob;ClassicPlate18cm"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;QnxKLBuR6UuqpHTsj8i-hw">
+		<rdf:type rdf:resource="&knowrob;ClassicPlate18cm"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;SME5XPz1Y0qMHUj-WPpgsw">
+		<rdf:type rdf:resource="&knowrob;ClassicPlate18cm"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;veH4AYt5_0Cbw8DcKB4i7Q">
+		<rdf:type rdf:resource="&knowrob;ClassicPlate18cm"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;ce6aiLO7mU2efCY3TWm2SQ">
+		<rdf:type rdf:resource="&knowrob;SideBoard"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;8nC3GwrbPEWKJEOqPR7lgg">
+		<rdf:type rdf:resource="&knowrob;SideBoard"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;aG4USpLwXEiCpw15L821iQ">
+		<rdf:type rdf:resource="&knowrob;PKUpperCupboard"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;lEz87Hh0I0m434IbUDJwyw">
+		<rdf:type rdf:resource="&knowrob;SideBoard"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;vhw_jJUUPkqAYerfUk24dA">
+		<rdf:type rdf:resource="&knowrob;PKDrawerFront"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;cq8cdTBqKUqiB0meZyPKtg">
+		<rdf:type rdf:resource="&knowrob;SideBoard"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;u6LqzkuD_Ui9U14AAxk7Nw">
+		<rdf:type rdf:resource="&knowrob;PKDrawer_56_75_39"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Mh8Fe3MZZkmx66TWM8O7zg">
+		<rdf:type rdf:resource="&knowrob;DessertSpoon"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;cfQ50Ce0H0m9s_Ys-D3cqQ">
+		<rdf:type rdf:resource="&knowrob;DessertSpoon"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;AajWv9NatE-efnpTJSVsUA">
+		<rdf:type rdf:resource="&knowrob;DessertSpoon"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;phhj-pf5mUGl3YM90pp3Jg">
+		<rdf:type rdf:resource="&knowrob;DessertSpoon"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;N8G8Z0OqS0eBQunQp_9UCw">
+		<rdf:type rdf:resource="&knowrob;TableKnife"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;BDlmobMp6UGBGmx6EtVJiA">
+		<rdf:type rdf:resource="&knowrob;TableKnife"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;IlQcFHPXukG6qAxjgmNZHA">
+		<rdf:type rdf:resource="&knowrob;TableKnife"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;I6aOF-lx4kG53amQlgQSWw">
+		<rdf:type rdf:resource="&knowrob;TableKnife"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;v9O7vXhp7EeoGDHpecSdcw">
+		<rdf:type rdf:resource="&knowrob;DessertFork"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;WBmBnGxE5UivRtXWKnZalA">
+		<rdf:type rdf:resource="&knowrob;DessertFork"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;nlv0-rhDCUyKvffCUzGWFw">
+		<rdf:type rdf:resource="&knowrob;DessertFork"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;bDI1Lk-hsk6vKidMWrVW_Q">
+		<rdf:type rdf:resource="&knowrob;DessertFork"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;bmV3OuJQHU2BFRXKrbXjKA">
+		<rdf:type rdf:resource="&knowrob;PKDishWasherDoor"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;CW8mXNOZV0ukw_VLLo60Jw">
+		<rdf:type rdf:resource="&knowrob;Cup"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;Fsmf-X-SvUGMmkNzB01Qzw">
+		<rdf:type rdf:resource="&knowrob;Cup"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;nJ2OQylS5kW0q1WTyL0Gew">
+		<rdf:type rdf:resource="&knowrob;Cup"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;jGbvKDN6LkOWLlDvm9nzmw">
+		<rdf:type rdf:resource="&knowrob;ShortGlass"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;FPnLj11s70GJeSEac9qd7w">
+		<rdf:type rdf:resource="&knowrob;ShortGlass"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;bvqyxCBFW0-qc_1haQq-qA">
+		<rdf:type rdf:resource="&knowrob;ShortGlass"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;MIE5EzZg70a_HZSLfrpgsw">
+		<rdf:type rdf:resource="&knowrob;SmallBowl"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;pjX21cFEsUSkCnOexalOnA">
+		<rdf:type rdf:resource="&knowrob;SmallBowl"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;gEHK66ripESCUwOPF-mehw">
+		<rdf:type rdf:resource="&knowrob;SmallBowl"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;9ztrV88csE6YjhF3r8wOlA">
+		<rdf:type rdf:resource="&knowrob;ClassicPlate16cm"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="&log;g6vs_xD1vEi4DYjEoprVHw">
+		<rdf:type rdf:resource="&knowrob;ClassicPlate16cm"/>
+	</owl:NamedIndividual>
+
+	<!-- Experiment Individual a0JqjObWSkCw-7qQDysTCg -->
+	<owl:NamedIndividual rdf:about="&log;a0JqjObWSkCw-7qQDysTCg">
+		<rdf:type rdf:resource="&knowrob;UnrealExperiment"/>
+	</owl:NamedIndividual>
+</rdf:RDF>

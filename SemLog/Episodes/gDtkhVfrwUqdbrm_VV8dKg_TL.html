@@ -1,0 +1,63 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	 google.charts.load("current", {packages:["timeline"]});
+	 google.charts.setOnLoadCallback(drawChart);
+	 function drawChart() {
+		 var container = document.getElementById('event_tl');
+		 var chart = new google.visualization.Timeline(container);
+		 var dataTable = new google.visualization.DataTable();
+
+ 		 dataTable.addColumn({ type: 'string', id: 'context' });
+		 dataTable.addColumn({ type: 'string', id: 'event_id' });
+		 dataTable.addColumn({ type: 'string', role: 'tooltip', 'p': {'html': true} });
+		 dataTable.addColumn({ type: 'number', id: 'start' });
+		 dataTable.addColumn({ type: 'number', id: 'end' });
+
+		 dataTable.addRows([
+
+		 [ 'Contact - 5459707268' , 'm6NMU3wzjUC69208aMXomw' , createTooltipHTMLContent(0.270848, 2.969437, 'O1','MPApple','Id','1G-6uCJnoEmCHvqRIkm-hg','O2','PKKitchenIsland','Id','v_FGCRgqK0CMKQAz-9QcCA','Id','m6NMU3wzjUC69208aMXomw'), 270.848297 , 2969.437012 ],
+		 [ 'Contact - 5563015435' , '16Vkftnv9kWtlUtA0R7_pg' , createTooltipHTMLContent(0.008334, 2.969437, 'O1','Base','Id','dEz5pBdsUUqolOFHtsmj0g','O2','WSGBase','Id','tSWiwdvvJU6PldRHp0xRfw','Id','16Vkftnv9kWtlUtA0R7_pg'), 8.333941 , 2969.437012 ],
+		 [ 'Contact - 5562804476' , 'Pk4u6rQSEE6iYfileBUA7w' , createTooltipHTMLContent(0.215276, 2.969437, 'O1','Base','Id','dEz5pBdsUUqolOFHtsmj0g','O2','WSGLeftFinger','Id','Zw72-YqKakupXIQojOB6jQ','Id','Pk4u6rQSEE6iYfileBUA7w'), 215.275803 , 2969.437012 ],
+		 [ 'Contact - 5561749741' , 'Nj5yeG6mm0avS0JO4-9g7w' , createTooltipHTMLContent(0.232638, 2.969437, 'O1','Base','Id','dEz5pBdsUUqolOFHtsmj0g','O2','WSGRightFinger','Id','uyGPFlBOiEmuOUfHPUQM8Q','Id','Nj5yeG6mm0avS0JO4-9g7w'), 232.638306 , 2969.437012 ],
+		 [ 'Contact - 5556371946' , 'nZQx5hCoi0yM16HQowu8Ig' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDrawer_56_75_39','Id','S0wgaIN9AEiugAhfqmD9EA','O2','PKDrawer_56_75_39','Id','INjWySNBvEqKNAy7hSRZIw','Id','nZQx5hCoi0yM16HQowu8Ig'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5486490421' , '0xA6FeB7s0KP2jKOu6dUbg' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDrawer_56_75_39','Id','S0wgaIN9AEiugAhfqmD9EA','O2','BrandtVollkornZwieback','Id','vZvd7h1f6EiZZ3yPfocmAg','Id','0xA6FeB7s0KP2jKOu6dUbg'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5485023984' , 'f93BB2SWiUyZYyNYpOrPLA' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDrawer_56_75_39','Id','S0wgaIN9AEiugAhfqmD9EA','O2','JaNougatBits','Id','Gz1o2SkclE-BKmTEgKGvNQ','Id','f93BB2SWiUyZYyNYpOrPLA'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5484605038' , 'ciyOhUQCDEaRZUa0VMyQ3A' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDrawer_56_75_39','Id','S0wgaIN9AEiugAhfqmD9EA','O2','KnusperSchokoKeks','Id','NtR4WCbrqUysxkG9X1OhrQ','Id','ciyOhUQCDEaRZUa0VMyQ3A'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5484186108' , 'HIYlKNTmNEqCJnQPAhU0IA' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDrawer_56_75_39','Id','S0wgaIN9AEiugAhfqmD9EA','O2','MyMuesli_Box','Id','lNSIivJ0lEmygO407YrWHA','Id','HIYlKNTmNEqCJnQPAhU0IA'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5483976649' , '4gxHguRubUCtcLTQ3M4ahA' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDrawer_56_75_39','Id','S0wgaIN9AEiugAhfqmD9EA','O2','WasaDelicateCrispRosemary','Id','5qqk_iUzRkeNev8spPfEag','Id','4gxHguRubUCtcLTQ3M4ahA'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5621286482' , 'Ik1qEKFTeUKbqcrXjG_l0g' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDishWasherDoor','Id','bmV3OuJQHU2BFRXKrbXjKA','O2','PKDishWasherInterior','Id','cu4Gy0FUiEy_HSNIHsMLPA','Id','Ik1qEKFTeUKbqcrXjG_l0g'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5621286482' , 'Rrg3eDzSjEewolRW4mryqw' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDishWasherDoor','Id','bmV3OuJQHU2BFRXKrbXjKA','O2','PKDishWasherInterior','Id','cu4Gy0FUiEy_HSNIHsMLPA','Id','Rrg3eDzSjEewolRW4mryqw'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5621286478' , 'EZpp2NOVx06fVhVT1LhEvg' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDishWasherInterior','Id','cu4Gy0FUiEy_HSNIHsMLPA','O2','PKDishWasherDoor','Id','bmV3OuJQHU2BFRXKrbXjKA','Id','EZpp2NOVx06fVhVT1LhEvg'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5617681985' , '1pffjbt9y0KNzCf9hBnlNA' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDishWasherInterior','Id','cu4Gy0FUiEy_HSNIHsMLPA','O2','PKDrawer_56_75_39','Id','236SnU-eEEGe-hbvR8pe-w','Id','1pffjbt9y0KNzCf9hBnlNA'), 0.0 , 2969.437012 ],
+		 [ 'Contact - 5614502510' , 'GvkBqcl-r0Wcw-2u4b3ONQ' , createTooltipHTMLContent(0.0, 2.969437, 'O1','PKDishWasherInterior','Id','cu4Gy0FUiEy_HSNIHsMLPA','O2','PKDrawer_56_75_39','Id','JJjOR9Ejj0acMclZA-rEEQ','Id','GvkBqcl-r0Wcw-2u4b3ONQ'), 0.0 , 2969.437012 ],
+
+		]);
+
+		 var options = {
+			 timeline: {showRowLabels: true, colorByRowLabel: true},
+			 avoidOverlappingGridLines: false,
+			 tooltip: {isHtml: true}
+		 };
+		 chart.draw(dataTable, options);
+	 }
+	 function createTooltipHTMLContent(Start, End, Key1, Val1, Key2, Val2, Key3, Val3, Key4, Val4, Key5, Val5){
+		 return '<center>' +
+			 '<font size="3">' +
+			 '<p><strong>Duration:</strong> ' + (End - Start).toFixed(3) + 's</p>' +
+			 '<p>' + Start + 's - ' + End + 's</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="2">' +
+			 '<p><strong>' + Key1 + ':</strong> ' + Val1 + '</p>' +
+			 '<p><strong>' + Key2 + ':</strong> ' + Val2 + '</p>' +
+			 '<hr/>' +
+			 '<p><strong>' + Key3 + ':</strong> ' + Val3 + '</p>' +
+			 '<p><strong>' + Key4 + ':</strong> ' + Val4 + '</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="1">' +
+			 '<p><strong>' + Key5 + ':</strong> ' + Val5 + '</p>' +
+			 '</font>' +
+			 '</center>'	 }</script>
+<div id="event_tl" style="height:900px;"></div>

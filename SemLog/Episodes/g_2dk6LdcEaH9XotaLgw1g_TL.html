@@ -1,0 +1,52 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	 google.charts.load("current", {packages:["timeline"]});
+	 google.charts.setOnLoadCallback(drawChart);
+	 function drawChart() {
+		 var container = document.getElementById('event_tl');
+		 var chart = new google.visualization.Timeline(container);
+		 var dataTable = new google.visualization.DataTable();
+
+ 		 dataTable.addColumn({ type: 'string', id: 'context' });
+		 dataTable.addColumn({ type: 'string', id: 'event_id' });
+		 dataTable.addColumn({ type: 'string', role: 'tooltip', 'p': {'html': true} });
+		 dataTable.addColumn({ type: 'number', id: 'start' });
+		 dataTable.addColumn({ type: 'number', id: 'end' });
+
+		 dataTable.addRows([
+
+		 [ 'Contact - 5448636319' , 'if0v42CpB0ay0bEJn6f83w' , createTooltipHTMLContent(0.292026, 6.65888, 'O1','MPApple','Id','1G-6uCJnoEmCHvqRIkm-hg','O2','PKKitchenIsland','Id','v_FGCRgqK0CMKQAz-9QcCA','Id','if0v42CpB0ay0bEJn6f83w'), 292.026306 , 6658.880371 ],
+		 [ 'Contact - 5536992306' , '-8NjylUEVkC8d4SIRjfcsg' , createTooltipHTMLContent(0.008334, 6.65888, 'O1','Base','Id','dEz5pBdsUUqolOFHtsmj0g','O2','WSGBase','Id','tSWiwdvvJU6PldRHp0xRfw','Id','-8NjylUEVkC8d4SIRjfcsg'), 8.333937 , 6658.880371 ],
+		 [ 'Contact - 5536571380' , 'sJ0mhCpkI0SzF9pOYiXv1A' , createTooltipHTMLContent(0.234183, 6.65888, 'O1','Base','Id','dEz5pBdsUUqolOFHtsmj0g','O2','WSGLeftFinger','Id','Zw72-YqKakupXIQojOB6jQ','Id','sJ0mhCpkI0SzF9pOYiXv1A'), 234.182541 , 6658.880371 ],
+		 [ 'Contact - 5536150470' , 'VJBWblEB4UmB9mero4HiYA' , createTooltipHTMLContent(0.251368, 6.65888, 'O1','Base','Id','dEz5pBdsUUqolOFHtsmj0g','O2','WSGRightFinger','Id','uyGPFlBOiEmuOUfHPUQM8Q','Id','VJBWblEB4UmB9mero4HiYA'), 251.368103 , 6658.880371 ],
+
+		]);
+
+		 var options = {
+			 timeline: {showRowLabels: true, colorByRowLabel: true},
+			 avoidOverlappingGridLines: false,
+			 tooltip: {isHtml: true}
+		 };
+		 chart.draw(dataTable, options);
+	 }
+	 function createTooltipHTMLContent(Start, End, Key1, Val1, Key2, Val2, Key3, Val3, Key4, Val4, Key5, Val5){
+		 return '<center>' +
+			 '<font size="3">' +
+			 '<p><strong>Duration:</strong> ' + (End - Start).toFixed(3) + 's</p>' +
+			 '<p>' + Start + 's - ' + End + 's</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="2">' +
+			 '<p><strong>' + Key1 + ':</strong> ' + Val1 + '</p>' +
+			 '<p><strong>' + Key2 + ':</strong> ' + Val2 + '</p>' +
+			 '<hr/>' +
+			 '<p><strong>' + Key3 + ':</strong> ' + Val3 + '</p>' +
+			 '<p><strong>' + Key4 + ':</strong> ' + Val4 + '</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="1">' +
+			 '<p><strong>' + Key5 + ':</strong> ' + Val5 + '</p>' +
+			 '</font>' +
+			 '</center>'	 }</script>
+<div id="event_tl" style="height:900px;"></div>

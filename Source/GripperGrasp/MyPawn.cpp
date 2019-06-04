@@ -37,9 +37,7 @@ void AMyPawn::BeginPlay()
 	// Spawn all the Articulated Objects
 	SpawnArticulatedObjects();
 
-	////Bind overlapping events
-	//Frustum->OnActorBeginOverlap.AddDynamic(this, &AMyPawn::OnActorBeginOverlap);
-	//Frustum->OnActorBeginOverlap.AddDynamic(this, &AMyPawn::OnActorEndOverlap);
+	// Bind overlapping events
 	SMFrustum->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyPawn::OnOverlapBeginBody);
 	SMFrustum->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &AMyPawn::OnOverlapEndBody);
 	
@@ -52,7 +50,7 @@ void AMyPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//UE_LOG(LogTemp, Warning, TEXT("destroyed actor %s"), *ClonedObjects[Index]->GetName());
+	// Teleport the frustum every frame
 	Frustum->SetActorLocation(VRCamera->GetComponentLocation(), false, (FHitResult*)nullptr, ETeleportType::None);
 	Frustum->SetActorRotation(VRCamera->GetComponentRotation(), ETeleportType::None);
 }
@@ -66,6 +64,7 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+// Update the perceivedItems' location 
 void AMyPawn::UpdateView()
 {
 	// Clean up the CurrentVisibleMeshes Array every time update view.
@@ -127,6 +126,19 @@ void AMyPawn::UpdateView()
 			{
 				UE_LOG(LogTemp, Warning, TEXT("NonPerceived Overlapping actors:  %s"), *OverlappingActors[Index]->GetName());
 				UE_LOG(LogTemp, Warning, TEXT("Collision actors:  %s"), *OutHit.Actor->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("center world location:  %s"), *EndLocation.ToString());
+			}
+			if (bHitMin)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("NonPerceived Overlapping actors:  %s"), *OverlappingActors[Index]->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("Min Collision actors:  %s"), *OutHitMin.Actor->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("min world location:  %s"), *EndLocationMin.ToString());
+			}
+			if (bHitMax)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("NonPerceived Overlapping actors:  %s"), *OverlappingActors[Index]->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("Max Collision actors:  %s"), *OutHitMax.Actor->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("max world location:  %s"), *EndLocationMax.ToString());
 			}*/
 		}
 	}
@@ -162,7 +174,7 @@ void AMyPawn::UpdateView()
 			{
 				if (CurrentVisibleMeshes.Contains(RealCorrespondingActor))
 				{
-					UE_LOG(LogTemp, Warning, TEXT("real objects perceived:  %s"), *RealCorrespondingActor->GetName());
+					//UE_LOG(LogTemp, Warning, TEXT("real objects perceived:  %s"), *RealCorrespondingActor->GetName());
 
 				}
 				else
@@ -213,41 +225,6 @@ void AMyPawn::SpawnDynamicObjects()
 		RealToVisual.Emplace(DynamicStaticMeshActors[Index], SpawnedActor1);
 		VisualToReal.Emplace(SpawnedActor1, DynamicStaticMeshActors[Index]);
 	}
-
-
-
-	//for (int32 Index = 0; Index != DynamicActors.Num(); ++Index)
-	//{
-	//	DynamicActors[Index]->SetActorHiddenInGame(true);
-	//	//UE_LOG(LogTemp, Warning, TEXT("DynamicObjects contains %s"), *ClonedObjects[Index]->GetName());
-	//	FActorSpawnParameters SpawnParams;
-	//	SpawnParams.Owner = this;
-	//	SpawnParams.Instigator = Instigator;
-	//	SpawnParams.Template = DynamicActors[Index];
-
-	//	// The random error location to spawn  + FMath::VRand() * 5
-	//	FVector WorldLocation = DynamicActors[Index]->GetActorLocation();
-
-	//	FVector SpawnLocation = FVector(0,0,0);
-
-	//	// The rotation to spawn
-	//	FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
-
-	//	// The name of the spawned actor
-	//	FName DuplicatedName = DynamicActors[Index]->GetFName();
-
-	//	// Spawn the objects 
-	//	AActor* SpawnActor = World->SpawnActor<AActor>(DynamicActors[Index]->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
-	//	SpawnActor->SetActorLocation(WorldLocation);
-	//	SpawnActor->SetActorRotation(DynamicActors[Index]->GetActorRotation());
-	//	SpawnActor->SetActorHiddenInGame(true);
-	//	SpawnActor->DisableComponentsSimulatePhysics();
-	//	Cast<UStaticMeshComponent>(SpawnActor->GetComponentByClass(UStaticMeshComponent::StaticClass()))->SetCollisionProfileName(TEXT("OverlapAll"));
-	//	SpawnActor->SetActorLabel(DuplicatedName.ToString() + "copy");
-	//	ClonedDynamicObjects.Add(SpawnActor);
-	//	UE_LOG(LogTemp, Warning, TEXT("DuplicateDynamicMesh %s"), *ClonedDynamicObjects[Index]->GetName());
-	//
-	//}
 	
 }
 

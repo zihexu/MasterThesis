@@ -101,14 +101,8 @@ private:
 
 
 
-	/*UFUNCTION()
-		void OnActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
-	UFUNCTION()
-		void OnActorEndOverlap(AActor* OverlappedActor, AActor* OtherActor);
-	*/
-
-	// Declare overlap begin function
+	// Declare overlap begin function 
 	UFUNCTION()
 		void OnOverlapBeginBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
