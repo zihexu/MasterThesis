@@ -261,7 +261,7 @@ void AMyPawn::OnOverlapBeginBody(class UPrimitiveComponent* OverlappedComp, clas
 {
 	if (OtherActor != nullptr)
 	{
-		if (OtherActor->GetName().Contains("WSGBase"))
+		if (OtherActor->GetName().Contains("WSG"))
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("controller enter %s"), *OtherActor->GetName());
 			OtherComp->SetRenderCustomDepth(false);
@@ -274,8 +274,9 @@ void AMyPawn::OnOverlapEndBody(class UPrimitiveComponent* OverlappedComp, class 
 {
 	if (OtherActor != nullptr)
 	{
-		if (OtherActor->GetName().Contains("WSGBase"))
+		if (OtherActor->GetName().Contains("WSG"))
 		{
+			//UE_LOG(LogTemp, Warning, TEXT("controller highlight %s"), *OtherActor->GetName());
 			OtherComp->SetRenderCustomDepth(true);
 		}
 	}
