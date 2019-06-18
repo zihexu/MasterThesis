@@ -26,6 +26,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
+
+	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+		AActor* RootActorForSphere;
 	// Visual cues for Left Sphere
 	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
 		AStaticMeshActor* LeftSphereVC;
@@ -95,6 +98,7 @@ private:
 	// Declare overlap end function
 	UFUNCTION()
 		void OnOverlapEndRightSmall(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 
 
 

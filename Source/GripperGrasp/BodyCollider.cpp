@@ -33,15 +33,12 @@ void UBodyCollider::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
-	//UCameraComponent* MyCamera = CastChecked<UCameraComponent>(this->GetOwner()->FindComponentByClass(UCameraComponent::StaticClass()));
-	//UE_LOG(LogTemp, Warning, TEXT("FIND THE CAMERA %s"),*MyCamera->GetName());
-
-	//if (GEngine) GEngine->GetFirstLocalPlayerController(GetWorld())->PlayerCameraManager->bEnableFading = true;
+	// Spawn ArrowIndicator
+	SpawnArrowIndicatorFunction();
 
 	//set the default value for the indicator
 	bShowIndicator = 0;
-	bDarkView = 0;
+	
 	// Set default state for Body Collider
 	if (UStaticMeshComponent* StaticMeshComp = BodyCollider->GetStaticMeshComponent())
 	{
@@ -70,31 +67,31 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	//Teleport Body Collider, follow Vive trachers' location, use two trackers to balence the center point
 	if (UStaticMeshComponent* StaticMeshComp = BodyCollider->GetStaticMeshComponent())
 	{
-		FVector TeleportLocation = ViveTracker2->GetComponentLocation() + FVector(OffsetValue,0.0f,0.0f);
-		StaticMeshComp->SetWorldLocation((FVector(TeleportLocation.X, TeleportLocation.Y, 0.0f)), false, (FHitResult*)nullptr, ETeleportType::None);
+		FVector TeleportLocation = ViveTracker2->GetComponentLocation() + FVector(0.0f,OffsetValue,0.0f);
+		StaticMeshComp->SetWorldLocation((FVector(TeleportLocation.X, TeleportLocation.Y, 32.5f)), false, (FHitResult*)nullptr, ETeleportType::None);
 		StaticMeshComp->SetWorldRotation(FRotator(0, ViveTracker2->GetComponentRotation().Yaw, 0), false, (FHitResult*)nullptr, ETeleportType::None);
-		//UE_LOG(LogTemp, Warning, TEXT("rotation yaw: %f"),ViveTracker2->GetComponentRotation().Yaw);
+		//UE_LOG(LogTemp, Warning, TEXT("get tracker location: %s"), *ViveTracker2->GetComponentLocation().ToString());
 	}
 
 	
 
 	
-	if (bShowIndicator)
+	if (OverlapNum!=0)
 	{
 		//Teleport the arrow indicators at runtime
-		for (int32 Index = 0; Index != ArrowIndicators.Num(); ++Index)
+		for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
 		{
-			if (ArrowIndicators[Index]&& OverlappingActors[Index])
+			if (ArrowIndicator&& OverlappingActors[Index])
 			{
-				ArrowIndicators[Index]->SetActorHiddenInGame(false);
+				ArrowIndicator->SetActorHiddenInGame(false);
 				//Teleport the arrow indicator to the forward location of player's camera
-				ArrowIndicators[Index]->SetActorLocation((GetComponentLocation() + GetForwardVector() * 50), false, (FHitResult*)nullptr, ETeleportType::None);
+				ArrowIndicator->SetActorLocation((GetComponentLocation() + GetForwardVector() * 50), false, (FHitResult*)nullptr, ETeleportType::None);
 				//Keep the arrow indicator's rotation to look at the colliding actors
-				//FVector LookatDirection = OverlappingActors[Index]->GetActorLocation() - (ArrowIndicators[Index]->GetActorLocation());
-				FVector LookatDirection = HitPosition[Index] - (ArrowIndicators[Index]->GetActorLocation());
+				FVector LookatDirection = OverlappingActors[Index]->GetActorLocation() - (ArrowIndicator->GetActorLocation());
+				//FVector LookatDirection = HitPosition[Index] - (ArrowIndicator->GetActorLocation());
 
 				FRotator lookAtRotator = FRotationMatrix::MakeFromX(LookatDirection).Rotator();
-				ArrowIndicators[Index]->SetActorRotation(lookAtRotator);
+				ArrowIndicator->SetActorRotation(lookAtRotator);
 		
 				break;
 			}
@@ -102,30 +99,6 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	}
 	
-	
-	/*if (MyCamera)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("FIND THE CAMERA"));
-		if (bDarkView)
-		{
-			FPostProcessSettings PostPro;
-
-			PostPro.bOverride_ColorGain = true;
-			PostPro.ColorGain = FVector4(0.0f, 0.0f, 0.0f, 1.0f);
-
-			MyCamera->PostProcessSettings = PostPro;
-		}
-		else if (!bDarkView)
-		{
-			FPostProcessSettings PostPro;
-
-			PostPro.bOverride_ColorGain = true;
-			PostPro.ColorGain = FVector4(1.0f, 1.0f, 1.0f, 1.0f);
-			MyCamera->PostProcessSettings = PostPro;
-		}
-	}*/
-	
-	// Dark the camera view
 	
 	
 
@@ -137,8 +110,8 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 	{
 		if (SpawnArrowIndicator)
 		{
-			if (OtherActor->ActorHasTag("RoboWorld;ObjectType,Articulated;") || OtherActor->ActorHasTag("RoboWorld;ObjectType,Static;"))
-			{
+			//if (OtherActor->ActorHasTag("RoboWorld;ObjectType,Articulated;") || OtherActor->ActorHasTag("RoboWorld;ObjectType,Static;"))
+			
 				// play the colliding sound
 				UGameplayStatics::PlaySoundAtLocation(this, CollideSound, OtherActor->GetActorLocation());
 
@@ -147,28 +120,13 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 
 
 				i = i + 1;
-				bShowIndicator = 1;
-				bDarkView = 1;
+				//bShowIndicator = 1;
+				//bDarkView = 1;
 				OverlapNum = OverlapNum + 1;
 				OverlappingActors.Emplace(OtherActor);
 				OtherComp->SetRenderCustomDepth(true);
 				//UE_LOG(LogTemp, Warning, TEXT("spawn arrow indicator"));
-				//spawn the arrow indicator
-				UWorld* World = GetWorld();
-				if (World)
-				{
-					FActorSpawnParameters SpawnParams;
-					SpawnParams.Owner = GetOwner();
-
-					FVector SpawnLocation = (GetComponentLocation()+OtherActor->GetActorLocation())*0.5;
-					
-					FRotator SpawnRotation = GetComponentRotation();
-					// Spawn the arrow indicator
-					ArrowIndicators.Emplace(World->SpawnActor<ASpawnActor>(SpawnArrowIndicator, SpawnLocation, SpawnRotation, SpawnParams));
-						
-
-				}
-			}
+				
 		
 		}
 	}
@@ -181,19 +139,40 @@ void UBodyCollider::OnOverlapEndBody(UPrimitiveComponent * OverlappedComp, AActo
 		OverlapNum = OverlapNum - 1;
 		if (OverlapNum == 0)
 		{
-			bDarkView = 0;
+			ArrowIndicator->SetActorHiddenInGame(true);
 		}
 		for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
 		{
 			if (OtherActor == OverlappingActors[Index])
 			{
-				ArrowIndicators[Index]->Destroy();
+				//OverlappingActors.Remove(OtherActor);
 				OverlappingActors[Index] = nullptr;
 				OtherComp->SetRenderCustomDepth(false);
+				//UE_LOG(LogTemp, Warning, TEXT("collide with object %s"), *OverlappingActors[Index]->GetName());
 			}
 				
 		}
 		
+	}
+}
+
+void UBodyCollider::SpawnArrowIndicatorFunction()
+{
+	//spawn the arrow indicator
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = GetOwner();
+
+		FVector SpawnLocation = GetComponentLocation();
+
+		FRotator SpawnRotation = GetComponentRotation();
+		// Spawn the arrow indicator
+		ArrowIndicator = World->SpawnActor<ASpawnActor>(SpawnArrowIndicator, SpawnLocation, SpawnRotation, SpawnParams);
+		ArrowIndicator->SetActorHiddenInGame(true);
+
+
 	}
 }
 

@@ -66,7 +66,7 @@ private:
 		TArray<AActor*> OverlappingActors;
 
 	UPROPERTY()
-		TArray<ASpawnActor*> ArrowIndicators;
+		ASpawnActor* ArrowIndicator;
 
 	UPROPERTY()
 		TArray<FVector> HitPosition;
@@ -80,8 +80,6 @@ private:
 	UPROPERTY()
 		int OverlapNum;
 
-	//UPROPERTY(EditAnywhere, Category = "TriggerSphere")
-		//AMCPawn* MyPawn;
 
 	UPROPERTY()
 		UCameraComponent* MyCamera;
@@ -90,5 +88,8 @@ private:
 	UPROPERTY(EditAnywhere)
 		class USoundBase* CollideSound;
 	
+	// Spawn Arrow Indicator at begin play
+	UFUNCTION()
+		void SpawnArrowIndicatorFunction();
 
 };

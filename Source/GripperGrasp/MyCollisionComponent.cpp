@@ -3,6 +3,7 @@
 #include "MyCollisionComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Classes/Engine/Scene.h"
+#include "Engine.h"
 
 
 
@@ -97,11 +98,17 @@ void UMyCollisionComponent::BeginPlay()
 void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	// Teleport the root
+	RootActorForSphere->SetActorLocation(GetComponentLocation(),
+		false, (FHitResult*)nullptr, ETeleportType::None);
+	RootActorForSphere->SetActorRotation(FRotator(0, GetComponentRotation().Yaw, 0),
+		 ETeleportType::None);
+
 	// Teleport LeftSphereVC
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereVC->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f,20.0f,-20.0f),
-			false, (FHitResult*)nullptr, ETeleportType::None);
+		/*StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f,20.0f,-20.0f),
+			false, (FHitResult*)nullptr, ETeleportType::None);*/
 		if (bLeftSphereVC)
 		{
 			LeftSphereVC->SetActorHiddenInGame(false);
@@ -114,9 +121,9 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	}
 	// Teleport RightSphereVC
 	if (UStaticMeshComponent* StaticMeshComp = RightSphereVC->GetStaticMeshComponent())
-	{
+	{/*
 		StaticMeshComp->SetWorldLocation(GetComponentLocation()+FVector(0.0f, -20.0f, -20.0f),
-			false, (FHitResult*)nullptr, ETeleportType::None);
+			false, (FHitResult*)nullptr, ETeleportType::None);*/
 		if (bRightSphereVC)
 		{
 			RightSphereVC->SetActorHiddenInGame(false);
@@ -131,16 +138,16 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// Teleport LeftSphereSmall
 	if (UStaticMeshComponent* StaticMeshComp = LeftSphereSmall->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, 20.0f, -20.0f),
-			false, (FHitResult*)nullptr, ETeleportType::None);
+		/*StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, 20.0f, -20.0f),
+			false, (FHitResult*)nullptr, ETeleportType::None);*/
 		
 	}
 	
 	// Teleport RightSphereSmall
 	if (UStaticMeshComponent* StaticMeshComp = RightSphereSmall->GetStaticMeshComponent())
 	{
-		StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, -20.0f, -20.0f),
-			false, (FHitResult*)nullptr, ETeleportType::None);
+		/*StaticMeshComp->SetWorldLocation(GetComponentLocation() + FVector(0.0f, -20.0f, -20.0f),
+			false, (FHitResult*)nullptr, ETeleportType::None);*/
 
 	}
 }
@@ -166,7 +173,7 @@ void UMyCollisionComponent::OnOverlapEndLeft(UPrimitiveComponent * OverlappedCom
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("increase damping"));
-
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("increase right damping")));
 			OtherComp->SetLinearDamping(50.0f);
 			OtherComp->SetAngularDamping(50.0f);
 			//OtherComp->SetRenderCustomDepth(true);
@@ -218,7 +225,7 @@ void UMyCollisionComponent::OnOverlapEndRight(UPrimitiveComponent * OverlappedCo
 		if (OtherActor->GetName().Contains(FString("WSGBaseRight")))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("increase right damping"));
-
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("increase right damping")));
 			OtherComp->SetLinearDamping(50.0f);
 			OtherComp->SetAngularDamping(50.0f);
 			//OtherComp->SetRenderCustomDepth(true);
@@ -247,6 +254,9 @@ void UMyCollisionComponent::OnOverlapEndRightSmall(UPrimitiveComponent * Overlap
 		}
 	}
 }
+
+
+
 
 
 

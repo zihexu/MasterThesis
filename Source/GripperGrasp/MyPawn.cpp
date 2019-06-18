@@ -220,6 +220,7 @@ void AMyPawn::SpawnDynamicObjects()
 		SpawnedActor1->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("PerceivedItems"));
 		SpawnedActor1->GetStaticMeshComponent()->SetGenerateOverlapEvents(true);
 		SpawnedActor1->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
+		
 		AllVisualObjects.Emplace(SpawnedActor1);
 		// Fill in TMap
 		RealToVisual.Emplace(DynamicStaticMeshActors[Index], SpawnedActor1);
