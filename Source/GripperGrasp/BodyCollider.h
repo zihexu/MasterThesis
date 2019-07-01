@@ -22,8 +22,7 @@ public:
 	// Sets default values for this component's properties
 	UBodyCollider();
 
-	/*UPROPERTY(EditAnywhere, Category = ViveTracker)
-		UMotionControllerComponent* ViveTracker1;*/
+
 
 	UPROPERTY(EditAnywhere, Category = ViveTracker)
 		UMotionControllerComponent* ViveTracker2;
@@ -40,19 +39,31 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
+
+	// Root Robot Actor
+	UPROPERTY(EditAnywhere, Category = "TriggerArea")
+		AStaticMeshActor* RootForRobotBase;
+
 	// Body Collider Actor
-	UPROPERTY(EditAnywhere, Category = "TriggerSphere")
+	UPROPERTY(EditAnywhere, Category = "TriggerArea")
 		AStaticMeshActor* BodyCollider;
 
+	// Body Collider Actor
+	UPROPERTY(EditAnywhere, Category = "TriggerSpArea")
+		AStaticMeshActor* VisualCueCollider;
+
+	// Declare overlap begin function
+	UFUNCTION()
+		void OnOverlapBeginBase(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 
 	// Declare overlap begin function
 	UFUNCTION()
-		void OnOverlapBeginBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		void OnOverlapBeginVisualCueCollider(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	// Declare overlap end function
 	UFUNCTION()
-		void OnOverlapEndBody(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+		void OnOverlapEndVisualCueCollider(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	// Spawn ArrowIndicator class
 	UPROPERTY(EditAnywhere, Category = ArrowIndicator)

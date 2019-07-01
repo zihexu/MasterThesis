@@ -121,6 +121,10 @@ void AMyPawn::UpdateView()
 				//UE_LOG(LogTemp, Warning, TEXT("Perceived Overlapping actors:  %s"), *OverlappingActors[Index]->GetName());
 				//UE_LOG(LogTemp, Warning, TEXT("Perceived Overlapping actors:  %s"), *VisualCorrespondingMesh->GetName());
 			}
+			else
+			{
+				VisualCorrespondingMesh->SetActorHiddenInGame(true);
+			}
 
 			/*if (bHit)
 			{
@@ -220,7 +224,7 @@ void AMyPawn::SpawnDynamicObjects()
 		SpawnedActor1->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("PerceivedItems"));
 		SpawnedActor1->GetStaticMeshComponent()->SetGenerateOverlapEvents(true);
 		SpawnedActor1->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
-		
+		SpawnedActor1->GetStaticMeshComponent()->ComponentTags.Add("PerceivedDynamicItems");
 		AllVisualObjects.Emplace(SpawnedActor1);
 		// Fill in TMap
 		RealToVisual.Emplace(DynamicStaticMeshActors[Index], SpawnedActor1);
@@ -248,6 +252,7 @@ void AMyPawn::SpawnArticulatedObjects()
 		SpawnedActor2->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("PerceivedItems"));
 		SpawnedActor2->GetStaticMeshComponent()->SetGenerateOverlapEvents(true);
 		SpawnedActor2->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
+		SpawnedActor2->GetStaticMeshComponent()->ComponentTags.Add("PerceivedArticulatedItems");
 		AllVisualObjects.Emplace(SpawnedActor2);
 		// Fill in TMap
 		RealToVisual.Emplace(ArticulatedStaticMeshActors[Index], SpawnedActor2);

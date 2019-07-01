@@ -34,6 +34,12 @@ public:
 	UPROPERTY(EditAnywhere)
 		AStaticMeshActor* RootActor;
 
+	UPROPERTY(EditAnywhere)
+		TMap < AStaticMeshActor*, AStaticMeshActor* > RealToVisual;
+
+	UPROPERTY(EditAnywhere)
+		TMap < AStaticMeshActor*, AStaticMeshActor* > VisualToReal;
+
 	
 
 private:
@@ -82,11 +88,7 @@ private:
 	UPROPERTY(EditAnywhere)
 		FVector ContactPointLoc;
 
-	UPROPERTY(EditAnywhere)
-		TMap < AStaticMeshActor*,AStaticMeshActor* > RealToVisual;
-
-	UPROPERTY(EditAnywhere)
-		TMap < AStaticMeshActor*, AStaticMeshActor* > VisualToReal;
+	
 
 
 	//Update View Function

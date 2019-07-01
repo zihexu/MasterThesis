@@ -9,6 +9,7 @@
 
 
 
+
 // Sets default values for this component's properties
 UBodyCollider::UBodyCollider()
 {
@@ -17,13 +18,10 @@ UBodyCollider::UBodyCollider()
 	PrimaryComponentTick.bCanEverTick = true;
 
 
-	/*ViveTracker1 = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ViveTracker1"));
-	ViveTracker1->MotionSource = FName(TEXT("Special_1"));*/
-	//ViveTracker1->SetupAttachment();
 
 	ViveTracker2 = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ViveTracker2"));
-	ViveTracker2->MotionSource = FName(TEXT("Special_2"));
-	//ViveTracker2->SetupAttachment(RootComponent);
+	ViveTracker2->MotionSource = FName(TEXT("Special_1"));
+
 	// ...
 }
 
@@ -50,8 +48,18 @@ void UBodyCollider::BeginPlay()
 
 		//Register Events for LeftSphereVC
 
-		BodyCollider->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UBodyCollider::OnOverlapBeginBody);
-		BodyCollider->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &UBodyCollider::OnOverlapEndBody);
+		BodyCollider->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UBodyCollider::OnOverlapBeginBase);
+		
+
+
+	}
+
+	if (UStaticMeshComponent* StaticMeshComp = VisualCueCollider->GetStaticMeshComponent())
+	{
+
+		// Register overlap event for VisualCueCollider
+		VisualCueCollider->GetStaticMeshComponent()->OnComponentBeginOverlap.AddDynamic(this, &UBodyCollider::OnOverlapBeginVisualCueCollider);
+		VisualCueCollider->GetStaticMeshComponent()->OnComponentEndOverlap.AddDynamic(this, &UBodyCollider::OnOverlapEndVisualCueCollider);
 
 
 	}
@@ -65,9 +73,9 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	//Teleport Body Collider, follow Vive trachers' location, use two trackers to balence the center point
-	if (UStaticMeshComponent* StaticMeshComp = BodyCollider->GetStaticMeshComponent())
+	if (UStaticMeshComponent* StaticMeshComp = RootForRobotBase->GetStaticMeshComponent())
 	{
-		FVector TeleportLocation = ViveTracker2->GetComponentLocation() + FVector(0.0f,OffsetValue,0.0f);
+		FVector TeleportLocation = ViveTracker2->GetComponentLocation();
 		StaticMeshComp->SetWorldLocation((FVector(TeleportLocation.X, TeleportLocation.Y, 32.5f)), false, (FHitResult*)nullptr, ETeleportType::None);
 		StaticMeshComp->SetWorldRotation(FRotator(0, ViveTracker2->GetComponentRotation().Yaw, 0), false, (FHitResult*)nullptr, ETeleportType::None);
 		//UE_LOG(LogTemp, Warning, TEXT("get tracker location: %s"), *ViveTracker2->GetComponentLocation().ToString());
@@ -85,7 +93,7 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			{
 				ArrowIndicator->SetActorHiddenInGame(false);
 				//Teleport the arrow indicator to the forward location of player's camera
-				ArrowIndicator->SetActorLocation((GetComponentLocation() + GetForwardVector() * 50), false, (FHitResult*)nullptr, ETeleportType::None);
+				ArrowIndicator->SetActorLocation((GetComponentLocation() + GetForwardVector() * 50- GetUpVector()*10 ), false, (FHitResult*)nullptr, ETeleportType::None);
 				//Keep the arrow indicator's rotation to look at the colliding actors
 				FVector LookatDirection = OverlappingActors[Index]->GetActorLocation() - (ArrowIndicator->GetActorLocation());
 				//FVector LookatDirection = HitPosition[Index] - (ArrowIndicator->GetActorLocation());
@@ -104,14 +112,23 @@ void UBodyCollider::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 }
 
-void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void UBodyCollider::OnOverlapBeginBase(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (OtherActor->ActorHasTag("RoboWorld;ObjectType,Static;") || OtherActor->ActorHasTag("RoboWorld;ObjectType,Articulated;"))
+	{
+		GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+	}
+	
+}
+
+void UBodyCollider::OnOverlapBeginVisualCueCollider(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (OtherActor!=NULL)
 	{
 		if (SpawnArrowIndicator)
 		{
-			//if (OtherActor->ActorHasTag("RoboWorld;ObjectType,Articulated;") || OtherActor->ActorHasTag("RoboWorld;ObjectType,Static;"))
-			
+			if (!OtherActor->ActorHasTag("PerceivedDynamicItems")&& !OtherActor->ActorHasTag("RoboWorld;ObjectType,Dynamic;"))
+			{
 				// play the colliding sound
 				UGameplayStatics::PlaySoundAtLocation(this, CollideSound, OtherActor->GetActorLocation());
 
@@ -123,35 +140,42 @@ void UBodyCollider::OnOverlapBeginBody(UPrimitiveComponent * OverlappedComp, AAc
 				//bShowIndicator = 1;
 				//bDarkView = 1;
 				OverlapNum = OverlapNum + 1;
-				OverlappingActors.Emplace(OtherActor);
+				OverlappingActors.Emplace(OtherActor);				
 				OtherComp->SetRenderCustomDepth(true);
-				//UE_LOG(LogTemp, Warning, TEXT("spawn arrow indicator"));
+				//UE_LOG(LogTemp, Warning, TEXT("collide with object %s"), *OtherActor->GetName());
+
+				
+			}
+				
 				
 		
 		}
 	}
 }
 
-void UBodyCollider::OnOverlapEndBody(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+void UBodyCollider::OnOverlapEndVisualCueCollider(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
 	if (OtherActor != NULL)
 	{
-		OverlapNum = OverlapNum - 1;
-		if (OverlapNum == 0)
+		if (!OtherActor->ActorHasTag("PerceivedDynamicItems") && !OtherActor->ActorHasTag("RoboWorld;ObjectType,Dynamic;"))
 		{
-			ArrowIndicator->SetActorHiddenInGame(true);
-		}
-		for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
-		{
-			if (OtherActor == OverlappingActors[Index])
+			OverlapNum = OverlapNum - 1;
+			if (OverlapNum == 0)
 			{
-				//OverlappingActors.Remove(OtherActor);
-				OverlappingActors[Index] = nullptr;
-				OtherComp->SetRenderCustomDepth(false);
-				//UE_LOG(LogTemp, Warning, TEXT("collide with object %s"), *OverlappingActors[Index]->GetName());
+				ArrowIndicator->SetActorHiddenInGame(true);
 			}
-				
+			for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
+			{
+				if (OtherActor == OverlappingActors[Index])
+				{
+					//OverlappingActors.Remove(OtherActor);
+					OverlappingActors[Index] = nullptr;
+					OtherComp->SetRenderCustomDepth(false);
+				}
+
+			}
 		}
+		
 		
 	}
 }
