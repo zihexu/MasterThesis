@@ -113,7 +113,7 @@ void AMyPawn::UpdateView()
 				// Save perceived real meshes in to CurrentVisibleMeshes Array
 				CurrentVisibleMeshes.Emplace(Cast<AStaticMeshActor>(OverlappingActors[Index]));
 				// Update the position and location of the visual meshes.
-				FVector Location = OverlappingActors[Index]->GetActorLocation() + FMath::VRand() * 0.5;
+				FVector Location = OverlappingActors[Index]->GetActorLocation() + FVector(FMath::FRandRange(0.0f,0.5f), FMath::FRandRange(0.0f, 0.5f),0.0f);
 				FRotator Rotation = OverlappingActors[Index]->GetActorRotation();
 				VisualCorrespondingMesh->SetActorLocation(Location, false, (FHitResult*)nullptr, ETeleportType::None);
 				VisualCorrespondingMesh->SetActorRotation(Rotation);
