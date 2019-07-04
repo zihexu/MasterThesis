@@ -9,6 +9,7 @@
 #include "Classes/Kismet/KismetMathLibrary.h"
 
 
+
 // Sets default values, create MCRoot and VRCamera to MyPawn.
 AMyPawn::AMyPawn()
 {
@@ -67,6 +68,11 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 // Update the perceivedItems' location 
 void AMyPawn::UpdateView()
 {
+	UE_LOG(LogTemp, Warning, TEXT("my pawn works"));
+
+	// Broadcast starting of grasp event
+	//OnUpdatePerception.Broadcast(GetWorld()->GetTimeSeconds());
+
 	// Clean up the CurrentVisibleMeshes Array every time update view.
 	CurrentVisibleMeshes.Empty();
 	// Return the objects that are inside the frustum
@@ -218,7 +224,7 @@ void AMyPawn::SpawnDynamicObjects()
 		FVector location = DynamicStaticMeshActors[Index]->GetActorLocation();
 		FRotator rotation = DynamicStaticMeshActors[Index]->GetActorRotation();		
 		AStaticMeshActor* SpawnedActor1 = (AStaticMeshActor*)World->SpawnActor(DynamicStaticMeshActors[Index]->StaticClass(), &location, &rotation);
-		SpawnedActor1->SetActorLabel("Visual" + DynamicStaticMeshActors[Index]->GetFName().ToString());
+		Cast<AActor>(SpawnedActor1)->SetActorLabel("Visual" + DynamicStaticMeshActors[Index]->GetFName().ToString());
 		SpawnedActor1->GetStaticMeshComponent()->SetStaticMesh(DynamicStaticMeshActors[Index]->GetStaticMeshComponent()->GetStaticMesh());
 		SpawnedActor1->SetActorHiddenInGame(true);
 		SpawnedActor1->GetStaticMeshComponent()->SetCollisionProfileName(TEXT("PerceivedItems"));

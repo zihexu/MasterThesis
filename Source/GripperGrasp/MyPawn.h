@@ -11,6 +11,11 @@
 #include "Components/PrimitiveComponent.h"
 #include "MyPawn.generated.h"
 
+
+/** Notify when an object is grasped */
+DECLARE_MULTICAST_DELEGATE_OneParam(FUpdatePerception, float /*Time*/);
+
+
 UCLASS()
 class GRIPPERGRASP_API AMyPawn : public APawn
 {
@@ -39,7 +44,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		TMap < AStaticMeshActor*, AStaticMeshActor* > VisualToReal;
-
+	
+	// Event called when update perception
+	FUpdatePerception OnUpdatePerception;
 	
 
 private:
