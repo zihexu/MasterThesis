@@ -1,0 +1,56 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	 google.charts.load("current", {packages:["timeline"]});
+	 google.charts.setOnLoadCallback(drawChart);
+	 function drawChart() {
+		 var container = document.getElementById('event_tl');
+		 var chart = new google.visualization.Timeline(container);
+		 var dataTable = new google.visualization.DataTable();
+
+ 		 dataTable.addColumn({ type: 'string', id: 'context' });
+		 dataTable.addColumn({ type: 'string', id: 'event_id' });
+		 dataTable.addColumn({ type: 'string', role: 'tooltip', 'p': {'html': true} });
+		 dataTable.addColumn({ type: 'number', id: 'start' });
+		 dataTable.addColumn({ type: 'number', id: 'end' });
+
+		 dataTable.addRows([
+
+		 [ 'UpdatePerception' , 'eJ6zLptntkGn3H8iqnZVzw' , createTooltipHTMLContent(27.435034, 27.435034, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 27435.033203 , 27435.033203 ],
+		 [ 'Grasp - 5173886030' , 'u9-pZ6pG0US-GM_Pyx6mkw' , createTooltipHTMLContent(29.993223, 31.880856, 'Hand','WSGBase','Id','31-32deEoEKMXMa4FBNfOg','Other','PKHandleL66','Id','cOmFymmOrU21JUyir0h7lA','Id','u9-pZ6pG0US-GM_Pyx6mkw'), 29993.222656 , 31880.855469 ],
+		 [ 'UpdatePerception' , '0DB2j8sbhkmMb_MpJ9BRGA' , createTooltipHTMLContent(32.718777, 32.718777, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 32718.777344 , 32718.777344 ],
+		 [ 'UpdatePerception' , '28fq9-5NUU6oWQFkuaZYgw' , createTooltipHTMLContent(48.490772, 48.490772, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 48490.773438 , 48490.773438 ],
+		 [ 'UpdatePerception' , 'ODfVNQqCNkCP5kofsVcDlA' , createTooltipHTMLContent(49.809139, 49.809139, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 49809.140625 , 49809.140625 ],
+		 [ 'UpdatePerception' , 'kTucrQ4qHE6YqMG4QOkXKQ' , createTooltipHTMLContent(50.657913, 50.657913, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 50657.914063 , 50657.914063 ],
+		 [ 'UpdatePerception' , '9Vcaf4E76Eip1u6lFfgfcg' , createTooltipHTMLContent(60.174992, 60.174992, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 60174.992188 , 60174.992188 ],
+		 [ 'UpdatePerception' , 'cqSavkPwzEeZoruFglhvlQ' , createTooltipHTMLContent(94.188545, 94.188545, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 94188.546875 , 94188.546875 ],
+
+		]);
+
+		 var options = {
+			 timeline: {showRowLabels: true, colorByRowLabel: true},
+			 avoidOverlappingGridLines: false,
+			 tooltip: {isHtml: true}
+		 };
+		 chart.draw(dataTable, options);
+	 }
+	 function createTooltipHTMLContent(Start, End, Key1, Val1, Key2, Val2, Key3, Val3, Key4, Val4, Key5, Val5){
+		 return '<center>' +
+			 '<font size="3">' +
+			 '<p><strong>Duration:</strong> ' + (End - Start).toFixed(3) + 's</p>' +
+			 '<p>' + Start + 's - ' + End + 's</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="2">' +
+			 '<p><strong>' + Key1 + ':</strong> ' + Val1 + '</p>' +
+			 '<p><strong>' + Key2 + ':</strong> ' + Val2 + '</p>' +
+			 '<hr/>' +
+			 '<p><strong>' + Key3 + ':</strong> ' + Val3 + '</p>' +
+			 '<p><strong>' + Key4 + ':</strong> ' + Val4 + '</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="1">' +
+			 '<p><strong>' + Key5 + ':</strong> ' + Val5 + '</p>' +
+			 '</font>' +
+			 '</center>'	 }</script>
+<div id="event_tl" style="height:900px;"></div>

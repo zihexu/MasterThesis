@@ -1,0 +1,66 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	 google.charts.load("current", {packages:["timeline"]});
+	 google.charts.setOnLoadCallback(drawChart);
+	 function drawChart() {
+		 var container = document.getElementById('event_tl');
+		 var chart = new google.visualization.Timeline(container);
+		 var dataTable = new google.visualization.DataTable();
+
+ 		 dataTable.addColumn({ type: 'string', id: 'context' });
+		 dataTable.addColumn({ type: 'string', id: 'event_id' });
+		 dataTable.addColumn({ type: 'string', role: 'tooltip', 'p': {'html': true} });
+		 dataTable.addColumn({ type: 'number', id: 'start' });
+		 dataTable.addColumn({ type: 'number', id: 'end' });
+
+		 dataTable.addRows([
+
+		 [ 'UpdatePerception' , 'BPM50UD0wUW47ThM21VC3A' , createTooltipHTMLContent(13.989442, 13.989442, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 13989.441406 , 13989.441406 ],
+		 [ 'Grasp - 5183554354' , 'tWQ-kBnsuEufxt7b_88-JA' , createTooltipHTMLContent(34.888401, 35.72625, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','tWQ-kBnsuEufxt7b_88-JA'), 34888.402344 , 35726.25 ],
+		 [ 'Grasp - 5183554354' , 'ybIjl9K2RkOch5RxS1Kp2g' , createTooltipHTMLContent(36.103977, 37.078339, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','ybIjl9K2RkOch5RxS1Kp2g'), 36103.976563 , 37078.339844 ],
+		 [ 'Grasp - 5183554354' , 'KhWntdkm40ug1TPfytU-mQ' , createTooltipHTMLContent(37.882828, 38.627304, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','KhWntdkm40ug1TPfytU-mQ'), 37882.828125 , 38627.304688 ],
+		 [ 'Grasp - 5183554354' , 'nsatsGc0ska1C1Rzo6Q92Q' , createTooltipHTMLContent(39.535877, 40.351166, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','nsatsGc0ska1C1Rzo6Q92Q'), 39535.878906 , 40351.164063 ],
+		 [ 'UpdatePerception' , '6RpdV-x0Tk272emUZmo5uA' , createTooltipHTMLContent(57.094872, 57.094872, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 57094.871094 , 57094.871094 ],
+		 [ 'UpdatePerception' , 'XTBrYxChhUalBU7isQfpOA' , createTooltipHTMLContent(58.770679, 58.770679, 'O1',' ','Id',' ','O2',' ','Id',' ','Id',' '), 58770.679688 , 58770.679688 ],
+		 [ 'Grasp - 5183554354' , 'v4TavOe98kOe5J4ermIb3g' , createTooltipHTMLContent(61.608017, 61.652466, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','v4TavOe98kOe5J4ermIb3g'), 61608.015625 , 61652.464844 ],
+		 [ 'Grasp - 5183554354' , 'fcQbJL4xjkO1ok3DxqLPBA' , createTooltipHTMLContent(61.663826, 61.675583, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','fcQbJL4xjkO1ok3DxqLPBA'), 61663.824219 , 61675.582031 ],
+		 [ 'Grasp - 5183554354' , 'LxQhTlxMD0q5MdCfCGTq2g' , createTooltipHTMLContent(61.686615, 61.686615, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','LxQhTlxMD0q5MdCfCGTq2g'), 61686.613281 , 61686.613281 ],
+		 [ 'Grasp - 5183554354' , 'AI8H6_j7R0ShgwDZIMd7Kw' , createTooltipHTMLContent(61.698776, 61.698776, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','AI8H6_j7R0ShgwDZIMd7Kw'), 61698.777344 , 61698.777344 ],
+		 [ 'Grasp - 5183554354' , 'DN_l8Jnpuk-FEHVVY_f7Pg' , createTooltipHTMLContent(61.731243, 61.731243, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','DN_l8Jnpuk-FEHVVY_f7Pg'), 61731.242188 , 61731.242188 ],
+		 [ 'Grasp - 5183554354' , '2XriPO9F7E63RtNW34TV4w' , createTooltipHTMLContent(61.753548, 61.753548, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','2XriPO9F7E63RtNW34TV4w'), 61753.546875 , 61753.546875 ],
+		 [ 'Grasp - 5191804933' , '5zVcqtKHNEO5j413dDRtUQ' , createTooltipHTMLContent(64.891556, 65.316887, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','5zVcqtKHNEO5j413dDRtUQ'), 64891.554688 , 65316.886719 ],
+		 [ 'Grasp - 5191804933' , 'uwzR-obdYUCyWIl2mAywhg' , createTooltipHTMLContent(65.359154, 65.380745, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','uwzR-obdYUCyWIl2mAywhg'), 65359.152344 , 65380.746094 ],
+		 [ 'Grasp - 5191804933' , 'n69YBjERbk-n83AyKFclGw' , createTooltipHTMLContent(65.559631, 65.637405, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','n69YBjERbk-n83AyKFclGw'), 65559.632813 , 65637.40625 ],
+		 [ 'Grasp - 5183554354' , 'zKOPBvgXj06fyZ0IdifMFg' , createTooltipHTMLContent(64.835777, 65.648766, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','zKOPBvgXj06fyZ0IdifMFg'), 64835.777344 , 65648.765625 ],
+		 [ 'Grasp - 5183554354' , 'wUDEAC4OE0uTYcU-pHG9fw' , createTooltipHTMLContent(67.684425, 67.82972, 'Hand','WSGBase','Id','so3DgyhWXkmAIyugYbn1vg','Other','KnusperSchokoKeks','Id','k7E1LKfZu0C80Qe2qu2eJg','Id','wUDEAC4OE0uTYcU-pHG9fw'), 67684.421875 , 67829.71875 ],
+
+		]);
+
+		 var options = {
+			 timeline: {showRowLabels: true, colorByRowLabel: true},
+			 avoidOverlappingGridLines: false,
+			 tooltip: {isHtml: true}
+		 };
+		 chart.draw(dataTable, options);
+	 }
+	 function createTooltipHTMLContent(Start, End, Key1, Val1, Key2, Val2, Key3, Val3, Key4, Val4, Key5, Val5){
+		 return '<center>' +
+			 '<font size="3">' +
+			 '<p><strong>Duration:</strong> ' + (End - Start).toFixed(3) + 's</p>' +
+			 '<p>' + Start + 's - ' + End + 's</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="2">' +
+			 '<p><strong>' + Key1 + ':</strong> ' + Val1 + '</p>' +
+			 '<p><strong>' + Key2 + ':</strong> ' + Val2 + '</p>' +
+			 '<hr/>' +
+			 '<p><strong>' + Key3 + ':</strong> ' + Val3 + '</p>' +
+			 '<p><strong>' + Key4 + ':</strong> ' + Val4 + '</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="1">' +
+			 '<p><strong>' + Key5 + ':</strong> ' + Val5 + '</p>' +
+			 '</font>' +
+			 '</center>'	 }</script>
+<div id="event_tl" style="height:900px;"></div>

@@ -1,0 +1,57 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+	 google.charts.load("current", {packages:["timeline"]});
+	 google.charts.setOnLoadCallback(drawChart);
+	 function drawChart() {
+		 var container = document.getElementById('event_tl');
+		 var chart = new google.visualization.Timeline(container);
+		 var dataTable = new google.visualization.DataTable();
+
+ 		 dataTable.addColumn({ type: 'string', id: 'context' });
+		 dataTable.addColumn({ type: 'string', id: 'event_id' });
+		 dataTable.addColumn({ type: 'string', role: 'tooltip', 'p': {'html': true} });
+		 dataTable.addColumn({ type: 'number', id: 'start' });
+		 dataTable.addColumn({ type: 'number', id: 'end' });
+
+		 dataTable.addRows([
+
+		 [ 'Grasp - 5352916977' , 'Sq5nfptZqk6ssjCpBLVWbg' , createTooltipHTMLContent(22.22769, 22.741665, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','Sq5nfptZqk6ssjCpBLVWbg'), 22227.689453 , 22741.664063 ],
+		 [ 'Grasp - 5352916977' , 'EoX22Fu0VEevfKFiktLzhw' , createTooltipHTMLContent(23.970942, 24.060572, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','EoX22Fu0VEevfKFiktLzhw'), 23970.941406 , 24060.572266 ],
+		 [ 'Grasp - 5352916977' , 'cBTGWBFgR0GEVYbZ67anFA' , createTooltipHTMLContent(24.149414, 24.205093, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','cBTGWBFgR0GEVYbZ67anFA'), 24149.414063 , 24205.09375 ],
+		 [ 'Grasp - 5352916977' , 'NqDH6eqZvEWqIuYVR4CSCQ' , createTooltipHTMLContent(24.461477, 24.707542, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','NqDH6eqZvEWqIuYVR4CSCQ'), 24461.476563 , 24707.542969 ],
+		 [ 'Grasp - 5352916977' , '5EPAsLiLv0C7hylu2blnbw' , createTooltipHTMLContent(25.043463, 25.277508, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','5EPAsLiLv0C7hylu2blnbw'), 25043.462891 , 25277.507813 ],
+		 [ 'Grasp - 5352916977' , 'LOUqZVbNf0aMDpZIfnCHvA' , createTooltipHTMLContent(25.556116, 25.769037, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','LOUqZVbNf0aMDpZIfnCHvA'), 25556.115234 , 25769.037109 ],
+		 [ 'Grasp - 5352916977' , 'buOMmT0_10y6G0xPLjW6jw' , createTooltipHTMLContent(26.060143, 26.338747, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','buOMmT0_10y6G0xPLjW6jw'), 26060.142578 , 26338.746094 ],
+		 [ 'Grasp - 5352916977' , '09RAFhiBeEyGZLipfYeJVQ' , createTooltipHTMLContent(30.091454, 30.281475, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','09RAFhiBeEyGZLipfYeJVQ'), 30091.453125 , 30281.474609 ],
+		 [ 'Grasp - 5352916977' , 'dDGH4DdCsU25UCQMP8PZXQ' , createTooltipHTMLContent(30.426357, 30.572281, 'Hand','WSGBase','Id','1NzYlxFd3Ei8yNOlLgSQHQ','Other','PKDrawer_56_75_39','Id','3a2z_iYJIkiNelUEucOUHw','Id','dDGH4DdCsU25UCQMP8PZXQ'), 30426.357422 , 30572.28125 ],
+
+		]);
+
+		 var options = {
+			 timeline: {showRowLabels: true, colorByRowLabel: true},
+			 avoidOverlappingGridLines: false,
+			 tooltip: {isHtml: true}
+		 };
+		 chart.draw(dataTable, options);
+	 }
+	 function createTooltipHTMLContent(Start, End, Key1, Val1, Key2, Val2, Key3, Val3, Key4, Val4, Key5, Val5){
+		 return '<center>' +
+			 '<font size="3">' +
+			 '<p><strong>Duration:</strong> ' + (End - Start).toFixed(3) + 's</p>' +
+			 '<p>' + Start + 's - ' + End + 's</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="2">' +
+			 '<p><strong>' + Key1 + ':</strong> ' + Val1 + '</p>' +
+			 '<p><strong>' + Key2 + ':</strong> ' + Val2 + '</p>' +
+			 '<hr/>' +
+			 '<p><strong>' + Key3 + ':</strong> ' + Val3 + '</p>' +
+			 '<p><strong>' + Key4 + ':</strong> ' + Val4 + '</p>' +
+			 '<hr/>' +
+			 '</font>' +
+			 '<font size="1">' +
+			 '<p><strong>' + Key5 + ':</strong> ' + Val5 + '</p>' +
+			 '</font>' +
+			 '</center>'	 }</script>
+<div id="event_tl" style="height:900px;"></div>

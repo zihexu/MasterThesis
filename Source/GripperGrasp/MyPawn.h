@@ -12,8 +12,8 @@
 #include "MyPawn.generated.h"
 
 
-/** Notify when an object is grasped */
-DECLARE_MULTICAST_DELEGATE_OneParam(FUpdatePerception, float /*Time*/);
+///** Notify when an object is grasped */
+//DECLARE_MULTICAST_DELEGATE_OneParam(FUpdatePerception, float /*Time*/);
 
 
 UCLASS()
@@ -34,7 +34,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere)
 		AStaticMeshActor* RootActor;
@@ -45,8 +45,8 @@ public:
 	UPROPERTY(EditAnywhere)
 		TMap < AStaticMeshActor*, AStaticMeshActor* > VisualToReal;
 	
-	// Event called when update perception
-	FUpdatePerception OnUpdatePerception;
+	//// Event called when update perception
+	//FUpdatePerception OnUpdatePerception;
 	
 
 private:
@@ -95,7 +95,8 @@ private:
 	UPROPERTY(EditAnywhere)
 		FVector ContactPointLoc;
 
-	
+	UFUNCTION()
+		void Start();
 
 
 	//Update View Function
