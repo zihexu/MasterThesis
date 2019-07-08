@@ -154,15 +154,15 @@ void UMyCollisionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UMyCollisionComponent::OnOverlapBeginLeft(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (OtherActor!=NULL)
-	{
-		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
-		{
-			OtherComp->SetLinearDamping(0.01f);
-			OtherComp->SetAngularDamping(0.0f);
-			//OtherComp->SetRenderCustomDepth(false);
-		}
-	}
+	//if (OtherActor!=NULL)
+	//{
+	//	if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
+	//	{
+	//		OtherComp->SetLinearDamping(0.01f);
+	//		OtherComp->SetAngularDamping(0.0f);
+	//		//OtherComp->SetRenderCustomDepth(false);
+	//	}
+	//}
 	
 }
 
@@ -173,10 +173,12 @@ void UMyCollisionComponent::OnOverlapEndLeft(UPrimitiveComponent * OverlappedCom
 		if (OtherActor->GetName().Contains(FString("WSGBaseLeft")))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("increase damping"));
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("increase right damping")));
-			OtherComp->SetLinearDamping(50.0f);
-			OtherComp->SetAngularDamping(50.0f);
+			/*GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("increase right damping")));*/
+			/*OtherComp->SetLinearDamping(50.0f);
+			OtherComp->SetAngularDamping(50.0f);*/
 			//OtherComp->SetRenderCustomDepth(true);
+			GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+
 		}
 	}
 }
@@ -207,15 +209,15 @@ void UMyCollisionComponent::OnOverlapEndLeftSmall(UPrimitiveComponent * Overlapp
 
 void UMyCollisionComponent::OnOverlapBeginRight(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (OtherActor != NULL)
-	{
-		if (OtherActor->GetName().Contains(FString("WSGBaseRight")))
-		{
-			OtherComp->SetLinearDamping(0.01f);
-			OtherComp->SetAngularDamping(0.0f);
-			//OtherComp->SetRenderCustomDepth(false);
-		}
-	}
+	//if (OtherActor != NULL)
+	//{
+	//	if (OtherActor->GetName().Contains(FString("WSGBaseRight")))
+	//	{
+	//		/*OtherComp->SetLinearDamping(0.01f);
+	//		OtherComp->SetAngularDamping(0.0f);*/
+	//		//OtherComp->SetRenderCustomDepth(false);
+	//	}
+	//}
 }
 
 void UMyCollisionComponent::OnOverlapEndRight(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
@@ -225,10 +227,12 @@ void UMyCollisionComponent::OnOverlapEndRight(UPrimitiveComponent * OverlappedCo
 		if (OtherActor->GetName().Contains(FString("WSGBaseRight")))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("increase right damping"));
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("increase right damping")));
-			OtherComp->SetLinearDamping(50.0f);
-			OtherComp->SetAngularDamping(50.0f);
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("increase right damping")));
+		/*	OtherComp->SetLinearDamping(50.0f);
+			OtherComp->SetAngularDamping(50.0f);*/
 			//OtherComp->SetRenderCustomDepth(true);
+			GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+
 		}
 	}
 }
