@@ -168,7 +168,7 @@ void AMyPawn::UpdateView()
 	for (int32 Index = 0; Index != OverlappingActors.Num(); ++Index)
 	{
 		AStaticMeshActor* RealMeshPtr = Cast<AStaticMeshActor>(OverlappingActors[Index]);
-		if (RealMeshPtr->GetStaticMeshComponent()->ComponentHasTag("PerceivedDynamicItems"))
+		if (RealMeshPtr->GetStaticMeshComponent()->ComponentHasTag("PerceivedDynamicItems")|| RealMeshPtr->GetName().Contains(FString("VisualSM_handle_2")))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("visual mesh overlap:  %s"), *OverlappingActors[Index]->GetName());
 			
@@ -207,6 +207,7 @@ void AMyPawn::UpdateView()
 			
 			
 		}
+		
 		
 
 	}
