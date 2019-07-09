@@ -116,7 +116,7 @@ void UBodyCollider::OnOverlapBeginBase(UPrimitiveComponent * OverlappedComp, AAc
 {
 	if (OtherActor->ActorHasTag("RoboWorld;ObjectType,Static;") || OtherActor->ActorHasTag("RoboWorld;ObjectType,Articulated;"))
 	{
-		GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+		//GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
 	}
 	
 }

@@ -177,7 +177,7 @@ void UMyCollisionComponent::OnOverlapEndLeft(UPrimitiveComponent * OverlappedCom
 			/*OtherComp->SetLinearDamping(50.0f);
 			OtherComp->SetAngularDamping(50.0f);*/
 			//OtherComp->SetRenderCustomDepth(true);
-			GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+			//GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
 
 		}
 	}
@@ -231,7 +231,7 @@ void UMyCollisionComponent::OnOverlapEndRight(UPrimitiveComponent * OverlappedCo
 		/*	OtherComp->SetLinearDamping(50.0f);
 			OtherComp->SetAngularDamping(50.0f);*/
 			//OtherComp->SetRenderCustomDepth(true);
-			GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+			//GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
 
 		}
 	}
