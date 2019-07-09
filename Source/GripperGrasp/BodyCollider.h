@@ -85,8 +85,8 @@ private:
 	UPROPERTY()
 		int i = -1;
 
-	UPROPERTY()
-		bool bDarkView;
+	UPROPERTY(EditAnywhere, Category = ArrowIndicator)
+		bool bEnableGameRule;
 
 	UPROPERTY()
 		int OverlapNum;
